@@ -5,6 +5,8 @@ import NotFound from "./components/pages/NotFound404/NotFound";
 import TasksiteContextProvider from "./contexts/tasksiteContext";
 import Navbar from "./components/navbar/Navbar";
 import Post from "./components/pages/Post/Post";
+import Login from "./components/pages/Login/LoginPage";
+import Register from "./components/pages/Login/RegisterPage"
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
             <div className="container">
               <Routes>
                 <Route exact path="/" element={<Login />} />
-                <Route exact path="/login" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
