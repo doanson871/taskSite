@@ -6,7 +6,6 @@ interface Props {}
 const Post: React.FC<Props> = () => {
   return (
     <div className="post">
-      <Navbar />
       <CenterFilter />
     </div>
   );

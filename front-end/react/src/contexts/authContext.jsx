@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   // Context data
-  const authContextData = { };
+  const authContextData = {  };
 
   // Return provider
   return (
