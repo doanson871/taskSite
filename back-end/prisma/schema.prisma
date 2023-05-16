@@ -31,6 +31,8 @@ model User {
   employeeContract     Contract[]     @relation(name: "employee")
   NotificationSender   Notification[]
   NotificationReceiver Notification[] @relation(name: "receiver")
+  RoomChat             RoomChat[]
+  Message              Message[]
 
   @@map("users") // users id "table's name" in PostgreSQL
 }
@@ -126,9 +128,20 @@ model Notification {
   @@map("notifications")
 }
 
+model RoomChat {
+  id             Int          @id @default(autoincrement())
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  @@map("roomchats")
+}
+
 model Conversation {
-  id      Int       @id @default(autoincrement())
-  Message Message[]
+  id       Int        @id @default(autoincrement())
+  Message  Message[]
+  RoomChat RoomChat[]
 
   @@map("conversations")
 }
@@ -137,6 +150,8 @@ model Message {
   id               Int          @id @default(autoincrement())
   conversationId   Int
   conversationUser Conversation @relation(fields: [conversationId], references: [id])
+  userId           Int
+  user             User         @relation(fields: [userId], references: [id])
   content          String
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
