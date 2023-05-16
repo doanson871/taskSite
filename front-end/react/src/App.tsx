@@ -5,9 +5,9 @@ import AccContextProvider from "./contexts/accContext";
 import NotFound from "./components/pages/NotFound404/NotFound";
 import TasksiteContextProvider from "./contexts/tasksiteContext";
 import Post from "./components/pages/Post/Post";
-import Login from "./components/pages/Login/LoginPage";
-import Register from "./components/pages/Login/RegisterPage";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
+import Login from "./components/pages/login/Login";
+import Register from "./components/pages/register/Register";
 
 const App = () => {
   return (
@@ -23,8 +23,9 @@ const App = () => {
         >
           <BrowserRouter>
             <Routes>
-              {/* <Route path="/" element={<Login />} />  */}
+              <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               {/* <Route path="/signup" element={<NewAccount />} />   */}
               <Route path="/" element={<ProtectedRoute />}>
                 <Route path="/post" element={<Post />} />

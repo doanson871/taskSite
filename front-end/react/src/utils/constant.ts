@@ -1,3 +1,20 @@
+export const apiURL = "http://localhost:3000";
+export const LOCAL_STORAGE_TOKEN_NAME = "LOCAL_TOKEN";
+
+export interface AccountType {
+  id: number;
+  address: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  photoUrl: string;
+  role: string;
+  createAt: Date;
+  updateAt: Date;
+  description: string | null;
+}
+
 export const navBarList = [
   {
     id: 1,

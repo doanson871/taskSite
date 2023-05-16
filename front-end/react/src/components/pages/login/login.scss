@@ -1,0 +1,43 @@
+.login {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  position: relative;
+  height: 100vh;
+}
+
+.paperStyle {
+  padding: 20px 32px;
+  height: 390px;
+  width: 280px;
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+}
+
+.btnStyle {
+  margin-top: 20px;
+}
+
+.paperStyle form {
+  margin-top: 20px;
+}
+
+.paperStyle h2 {
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 375px) {
+  .paperStyle {
+    width: 90%;
+    padding: 20px 10px;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .paperStyle {
+    height: 80%;
+    position: relative;
+    margin-top: 0;
+  }
+}
