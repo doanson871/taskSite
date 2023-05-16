@@ -12,7 +12,7 @@ import { RolesGuard } from './utils/roleGuard/roles.gurad';
 import { MyJwtGuard } from './auth/guard';
 import { ApplicationModule } from './application/application.module';
 import { PostJobModule } from './postJob/postJob.module';
-
+import { GatewayModule } from './gateway/gateway.module';
 @Module({
   imports: [
     ConfigModule,
@@ -25,6 +25,7 @@ import { PostJobModule } from './postJob/postJob.module';
     UsersOnWorkModule,
     ApplicationModule,
     PostJobModule,
+    GatewayModule,
   ],
   providers: [
     // {

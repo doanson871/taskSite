@@ -11,24 +11,26 @@ datasource db {
 }
 
 model User {
-  id               Int            @id @default(autoincrement())
-  email            String         @unique
-  hashedPassword   String
-  firstName        String?
-  lastName         String?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  role             Role           @default(USER)
-  photoURL         String?
-  description      String?
-  phoneNumber      String?
-  address          String?
-  notes            Note[]
-  works            UsersOnWorks[]
-  postJob          PostJob[]
-  Application      Application[]
-  Contract         Contract[]
-  employeeContract Contract[]     @relation(name: "employee")
+  id                   Int            @id @default(autoincrement())
+  email                String         @unique
+  hashedPassword       String
+  firstName            String?
+  lastName             String?
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  role                 Role           @default(USER)
+  photoURL             String?
+  description          String?
+  phoneNumber          String?
+  address              String?
+  notes                Note[]
+  works                UsersOnWorks[]
+  postJob              PostJob[]
+  Application          Application[]
+  Contract             Contract[]
+  employeeContract     Contract[]     @relation(name: "employee")
+  NotificationSender   Notification[]
+  NotificationReceiver Notification[] @relation(name: "receiver")
 
   @@map("users") // users id "table's name" in PostgreSQL
 }
@@ -86,12 +88,14 @@ model PostJob {
 }
 
 model Application {
-  id         Int     @id @default(autoincrement())
-  employee   User    @relation(fields: [employeeId], references: [id])
+  id         Int      @id @default(autoincrement())
+  employee   User     @relation(fields: [employeeId], references: [id])
   employeeId Int
   content    String?
-  postJob    PostJob @relation(fields: [postJobId], references: [id])
+  postJob    PostJob  @relation(fields: [postJobId], references: [id])
   postJobId  Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   status     Boolean
 
   @@map("applications")
@@ -107,6 +111,37 @@ model Contract {
   status  Status
 
   @@map("contracts")
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  sender     User     @relation(fields: [senderId], references: [id])
+  receiverId Int
+  receiver   User     @relation(name: "receiver", fields: [receiverId], references: [id])
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("notifications")
+}
+
+model Conversation {
+  id      Int       @id @default(autoincrement())
+  Message Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id               Int          @id @default(autoincrement())
+  conversationId   Int
+  conversationUser Conversation @relation(fields: [conversationId], references: [id])
+  content          String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@map("messages")
 }
 
 enum Status {

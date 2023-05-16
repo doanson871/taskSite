@@ -39,6 +39,30 @@ export class PostJobService {
         where: {
           id: postJobId,
         },
+        select: {
+          id: true,
+          address: true,
+          Application: {
+            select: {
+              id: true,
+              employee: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  photoURL: true,
+                },
+              },
+              employeeId: true,
+            },
+          },
+          createdAt: true,
+          descrition: true,
+          userId: true,
+          user: true,
+          workId: true,
+          work: true,
+          time: true,
+        },
       });
 
       if (!postJob) {
@@ -64,7 +88,7 @@ export class PostJobService {
         userId: userId,
         time: insertPostJobDTO.time,
         address: insertPostJobDTO.address,
-        workId: parseInt(insertPostJobDTO.workId),
+        workId: insertPostJobDTO.workId,
         descrition: insertPostJobDTO.descrition,
       },
     });

@@ -9,9 +9,9 @@ export class InsertPostJobDTO {
   @IsNotEmpty()
   address: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  workId: string;
+  workId: number;
 
   @IsString()
   @IsOptional()
