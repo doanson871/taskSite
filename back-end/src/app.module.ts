@@ -13,6 +13,8 @@ import { MyJwtGuard } from './auth/guard';
 import { ApplicationModule } from './application/application.module';
 import { PostJobModule } from './postJob/postJob.module';
 import { GatewayModule } from './gateway/gateway.module';
+import { MessageModule } from './message/message.module';
+import { ConversationModule } from './conversation/conversation.module';
 @Module({
   imports: [
     ConfigModule,
@@ -26,6 +28,8 @@ import { GatewayModule } from './gateway/gateway.module';
     ApplicationModule,
     PostJobModule,
     GatewayModule,
+    MessageModule,
+    ConversationModule,
   ],
   providers: [
     // {

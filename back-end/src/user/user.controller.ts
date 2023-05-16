@@ -13,16 +13,14 @@ export class UserController {
   @UseGuards(MyJwtGuard)
   @Get('me')
   me(@Req() req: Request) {
-    console.log((req as any).user);
+    console.log((req as any).user.id);
 
     return (req as any).user;
   }
 
-  @Get('notes')
-  getNotes(@GetUser() user) {
-    console.log(user);
-
-    return this.userService.getNotes();
+  @Get(':id')
+  getUser(@GetUser('id') userId: number) {
+    return this.userService.getUser(userId);
   }
 
   @UseGuards(MyJwtGuard)
