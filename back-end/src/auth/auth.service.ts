@@ -25,8 +25,9 @@ export class AuthService {
         data: {
           email: authDTO.email,
           hashedPassword: hashedPassword,
-          firstName: '',
-          lastName: '',
+          name: authDTO.name,
+          thanhpho: authDTO.thanhpho,
+          age: authDTO.age,
         },
         select: {
           email: true,

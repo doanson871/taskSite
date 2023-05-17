@@ -29,9 +29,22 @@ export class UpdatePostJobDTO {
 
   @IsNumber()
   @IsOptional()
-  wordId?: number;
+  workId?: number;
 
   @IsString()
   @IsOptional()
   descrition?: string;
+}
+
+export class SearchPostJobDTO {
+  @IsString()
+  @IsOptional()
+  time?: string;
+
+  @IsString()
+  @IsOptional()
+  address?: string;
+
+  @IsOptional()
+  workId?: any;
 }

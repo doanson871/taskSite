@@ -1,6 +1,12 @@
 // define a type of "authentication request"
 
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class AuthDTO {
   @IsEmail()
@@ -9,4 +15,16 @@ export class AuthDTO {
 
   @IsNotEmpty()
   password: string;
+
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsString()
+  @IsOptional()
+  thanhpho?: string;
+
+  @IsNumber()
+  @IsOptional()
+  age?: number;
 }

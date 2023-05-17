@@ -1,10 +1,7 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class InsertMessageDto {
-  @IsNotEmpty()
+export class ConversationDTO {
   @IsNumber()
-  conversationId: number;
-
   @IsNotEmpty()
-  content: any;
+  userId: number;
 }

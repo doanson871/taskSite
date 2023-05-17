@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { InsertPostJobDTO, UpdatePostJobDTO } from './dto';
+import { InsertPostJobDTO, SearchPostJobDTO, UpdatePostJobDTO } from './dto';
 
 @Injectable()
 export class PostJobService {
@@ -48,7 +48,7 @@ export class PostJobService {
               employee: {
                 select: {
                   id: true,
-                  firstName: true,
+                  name: true,
                   photoURL: true,
                 },
               },
@@ -82,6 +82,32 @@ export class PostJobService {
       return error;
     }
   }
+
+  async searchPostJob(data: SearchPostJobDTO) {
+    const postJobSearch = await this.prismaService.postJob.findMany({
+      where: {
+        address: data.address
+          ? data.address
+          : {
+              gt: '',
+            },
+        workId: data.workId
+          ? parseInt(data.workId)
+          : {
+              gt: 0,
+            },
+        time: {
+          gt: data.time,
+        },
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data: postJobSearch,
+    };
+  }
+
   async postPostJob(userId: number, insertPostJobDTO: InsertPostJobDTO) {
     const postJob = await this.prismaService.postJob.create({
       data: {
