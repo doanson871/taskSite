@@ -1,38 +1,30 @@
 import React, { useContext, useState } from "react";
 import { AccContext } from "../../../contexts/accContext";
 import { useNavigate } from "react-router";
-
-const initialDistrict = [
-  "Chọn quận huyện",
-  "hà đông",
-  "ba đình",
-  "đống đa",
-  "cầu giấy",
-];
+import { Link } from "react-router-dom";
+import "./register.scss";
 export interface RegisterForm {
-  firstname: string;
-  lastname: string;
+  fullname: string;
   email: string;
   password: string;
-  district: string;
   role: string;
 }
 
-const initialRole = ["người tìm việc", "người tuyển dụng"];
+const initialRole = ["Người tìm việc", "Người tuyển dụng"];
 
 const Register: React.FC = () => {
   const [registerForm, setRegisterForm] = useState({
-    firstname: "",
-    lastname: "",
+    fullname: "",
     email: "",
     password: "",
     repassword: "",
-    district: "",
     role: "người tìm việc",
   });
   const navigate = useNavigate();
 
   const { createNewAccount } = useContext(AccContext);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const [isVisibleRePassword, setIsVisibleRePassword] = useState(false);
 
   const handleRegister = async (e: any) => {
     e.preventDefault();
@@ -42,17 +34,14 @@ const Register: React.FC = () => {
       return;
     } else {
       const accountForm: RegisterForm = {
-        firstname: registerForm.firstname,
-        lastname: registerForm.lastname,
+        fullname: registerForm.fullname,
         email: registerForm.email,
         password: registerForm.password,
-        district: registerForm.district,
         role: registerForm.role,
       };
 
       try {
         const accountData = await createNewAccount(accountForm);
-        console.log(accountData);
         if (accountData.status === 201) {
           navigate("/login");
         } else {
@@ -63,117 +52,150 @@ const Register: React.FC = () => {
       }
     }
   };
+  const togglePassword = () => {
+    setIsVisiblePassword(!isVisiblePassword);
+  };
+  const toggleRePassword = () => {
+    setIsVisibleRePassword(!isVisibleRePassword);
+  };
   return (
-    <form className="row g-3" onSubmit={handleRegister}>
-      <div className="col-md-6">
-        <label htmlFor="inputFirstname4" className="form-label">
-          Họ
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="inputFirstname4"
-          value={registerForm.firstname}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, firstname: e.target.value })
-          }
-        />
+    <div className="register-container d-flex">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6 text-center mb-5">
+            <h1 className="heading-section">Đăng ký tài khoản</h1>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-4">
+            <div className="login-wrap p-0">
+              <form
+                action="#"
+                className="signin-form"
+                onSubmit={handleRegister}
+              >
+                <div className="form-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Họ và tên"
+                    required
+                    value={registerForm.fullname}
+                    onChange={(e) =>
+                      setRegisterForm({
+                        ...registerForm,
+                        fullname: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Email"
+                    required
+                    value={registerForm.email}
+                    onChange={(e) =>
+                      setRegisterForm({
+                        ...registerForm,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="form-group mb-3 mb-3 position-relative">
+                  <input
+                    type={!isVisiblePassword ? "password" : "text"}
+                    required
+                    id="password-field1"
+                    className="form-control"
+                    placeholder="Mật khẩu"
+                    value={registerForm.password}
+                    onChange={(e) =>
+                      setRegisterForm({
+                        ...registerForm,
+                        password: e.target.value,
+                      })
+                    }
+                  />
+                  <span className="eye-icon" onClick={togglePassword}>
+                    {isVisiblePassword ? (
+                      <i className="bi bi-eye"></i>
+                    ) : (
+                      <i className="bi bi-eye-slash"></i>
+                    )}
+                  </span>
+                </div>
+                <div className="form-group mb-3 mb-3 position-relative">
+                  <input
+                    type={!isVisibleRePassword ? "password" : "text"}
+                    required
+                    id="password-field"
+                    className="form-control"
+                    placeholder="Nhập lại mật khẩu"
+                    value={registerForm.repassword}
+                    onChange={(e) =>
+                      setRegisterForm({
+                        ...registerForm,
+                        repassword: e.target.value,
+                      })
+                    }
+                  />
+                  <span className="eye-icon" onClick={toggleRePassword}>
+                    {isVisibleRePassword ? (
+                      <i className="bi bi-eye"></i>
+                    ) : (
+                      <i className="bi bi-eye-slash"></i>
+                    )}
+                  </span>
+                </div>
+                <div className="form-group mb-3 mb-3 d-flex role-select">
+                  {initialRole.map((role, index) => (
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id={`flexRadioDefault-${index}`}
+                        onClick={(e) => {
+                          setRegisterForm({
+                            ...registerForm,
+                            role: initialRole[index],
+                          });
+                        }}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor={`flexRadioDefault${index}`}
+                      >
+                        {role}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <div className="form-group mb-3 mb-3">
+                  <button
+                    type="submit"
+                    className="form-control btn btn-primary submit px-3"
+                  >
+                    Tạo tài khoản
+                  </button>
+                </div>
+                <div className="form-group mb-3 d-flex login-form">
+                  <Link to="/" className="login">
+                    Đăng nhập
+                  </Link>
+                  <span className="checkbox-wrap checkbox-primary">
+                    Bạn đã có tài khoản?
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="col-md-6">
-        <label htmlFor="inputLastname4" className="form-label">
-          Tên đệm và tên
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="inputLastname4"
-          value={registerForm.lastname}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, lastname: e.target.value })
-          }
-        />
-      </div>
-      <div className="col-12">
-        <label htmlFor="inputEmail" className="form-label">
-          Email
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="inputEmail"
-          placeholder="Nhập email"
-          value={registerForm.email}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, email: e.target.value })
-          }
-        />
-      </div>
-      <div className="col-12">
-        <label htmlFor="inputPassword2" className="form-label">
-          Mật khẩu
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="inputPassword2"
-          value={registerForm.password}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, password: e.target.value })
-          }
-        />
-      </div>
-      <div className="col-12">
-        <label htmlFor="inputPassword4" className="form-label">
-          Nhập lại mật khẩu
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="inputPassword4"
-          value={registerForm.repassword}
-          onChange={(e) => {
-            setRegisterForm({ ...registerForm, repassword: e.target.value });
-          }}
-        />
-      </div>
-      <div className="col-md-4">
-        <label htmlFor="inputState" className="form-label">
-          Địa chỉ
-        </label>
-        <select
-          id="inputState"
-          className="form-select"
-          onChange={(e) => {
-            setRegisterForm({ ...registerForm, district: e.target.value });
-          }}
-        >
-          {initialDistrict.map((district) => (
-            <option key={district}>{district}</option>
-          ))}
-        </select>
-      </div>
-      <div className="col-md-4">
-        <label htmlFor="inputRole" className="form-label">
-          Chọn quyền
-        </label>
-        <select
-          id="inputRole"
-          className="form-select"
-          onChange={(e) => {
-            setRegisterForm({ ...registerForm, role: e.target.value });
-          }}
-        >
-          {initialRole.map((role) => (
-            <option key={role}>{role}</option>
-          ))}
-        </select>
-      </div>
-      <div className="col-12">
-        <button type="submit" className="btn btn-primary">
-          Sign in
-        </button>
-      </div>
-    </form>
+    </div>
   );
 };
 

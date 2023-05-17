@@ -7,6 +7,7 @@ export const AccContext = createContext<any>(null);
 
 const AccContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const createNewAccount = async (accountForm: RegisterForm) => {
+    console.log(accountForm);
     try {
       const response = await axios.post(`${apiURL}/auth/register`, accountForm);
       return response;

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const setAuthToken = (token: string | null) => {
-  // console.log(token);
   if (token) {
     // Set header mặc định là Authorization:{token}  khi gửi request lên server
 

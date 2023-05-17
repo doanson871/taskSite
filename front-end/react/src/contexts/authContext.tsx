@@ -1,10 +1,7 @@
-import { PropsWithChildren, createContext, useReducer } from "react";
+import { PropsWithChildren, createContext, useEffect, useReducer } from "react";
 import { AuthActionKind, authReducer } from "../reducers/authReducer";
 import setAuthToken from "../utils/setAuthToken";
-import {
-  LOCAL_STORAGE_TOKEN_NAME,
-  apiURL,
-} from "../utils/constant";
+import { LOCAL_STORAGE_TOKEN_NAME, apiURL } from "../utils/constant";
 import axios from "axios";
 
 export interface LoginUserForm {
@@ -47,6 +44,9 @@ const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
     }
   };
+  useEffect(() => {
+    loadAccount();
+  }, []);
 
   // Login
   const loginUser = async (userForm: LoginUserForm) => {
