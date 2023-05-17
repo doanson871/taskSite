@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { Role } from 'src/utils/roleGuard/role.enum';
 
 export class AuthDTO {
   @IsEmail()
@@ -27,4 +28,7 @@ export class AuthDTO {
   @IsNumber()
   @IsOptional()
   age?: number;
+
+  @IsOptional()
+  role?: Role;
 }

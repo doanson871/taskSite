@@ -4,7 +4,7 @@ import { AuthContext } from "../../../contexts/authContext";
 import { Navigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 
-const Login = () => {
+const Login: React.FC = () => {
   //
   // const navigate = useNavigate();
   const {

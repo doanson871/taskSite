@@ -3,7 +3,10 @@ import { User, Note } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2';
 import { AuthDTO } from './dto';
-import { ForbiddenException } from '@nestjs/common/exceptions';
+import {
+  ForbiddenException,
+  NotFoundException,
+} from '@nestjs/common/exceptions';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
@@ -28,6 +31,7 @@ export class AuthService {
           name: authDTO.name,
           thanhpho: authDTO.thanhpho,
           age: authDTO.age,
+          role: authDTO.role,
         },
         select: {
           email: true,
@@ -41,6 +45,8 @@ export class AuthService {
         throw new ForbiddenException(
           'Users name with this email already exists',
         );
+      } else {
+        throw new NotFoundException('Invalid user');
       }
     }
   }

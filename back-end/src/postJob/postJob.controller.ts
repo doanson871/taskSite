@@ -14,6 +14,8 @@ import { GetUser } from 'src/auth/decorator';
 import { MyJwtGuard } from 'src/auth/guard';
 import { PostJobService } from './postJob.service';
 import { InsertPostJobDTO, SearchPostJobDTO, UpdatePostJobDTO } from './dto';
+import { Roles } from 'src/utils/roleGuard/role.decorator';
+import { Role } from 'src/utils/roleGuard/role.enum';
 
 @UseGuards(MyJwtGuard)
 @Controller('postJob')
@@ -25,7 +27,7 @@ export class PostJobController {
     return this.postJobService.getAllPostJobs(userId);
   }
 
-  @Get('/postJob/:id')
+  @Get('/postJob/:id/details')
   getPostJob(@Param('id', ParseIntPipe) postJobId: number) {
     return this.postJobService.getPostJob(postJobId);
   }
@@ -34,7 +36,6 @@ export class PostJobController {
   searchPostJob(@Query() data: SearchPostJobDTO) {
     console.log(data);
     const dataSearch: SearchPostJobDTO = {
-      time: new Date().toISOString(),
       address: '',
       workId: undefined,
       ...data,

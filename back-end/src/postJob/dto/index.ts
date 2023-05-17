@@ -39,12 +39,11 @@ export class UpdatePostJobDTO {
 export class SearchPostJobDTO {
   @IsString()
   @IsOptional()
-  time?: string;
-
-  @IsString()
-  @IsOptional()
   address?: string;
 
   @IsOptional()
   workId?: any;
+
+  @IsOptional()
+  name?: string;
 }

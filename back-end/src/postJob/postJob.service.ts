@@ -96,8 +96,12 @@ export class PostJobService {
           : {
               gt: 0,
             },
-        time: {
-          gt: data.time,
+        work: {
+          name: data.name
+            ? data.name
+            : {
+                gt: '',
+              },
         },
       },
     });
