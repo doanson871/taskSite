@@ -1,0 +1,19 @@
+.message-wrap {
+  margin-bottom: 10px;
+  display: flex;
+  min-height: 36px;
+
+  .message-author {
+    margin-left: 5px;
+    font-weight: bold;
+  }
+
+  .message-content {
+    background-color: #efefef;
+    padding: 7px 12px;
+    margin-left: 10px;
+    border-radius: 10px;
+    max-width: 200px;
+    height: auto;
+  }
+}

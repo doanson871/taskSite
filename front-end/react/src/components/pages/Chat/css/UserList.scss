@@ -1,0 +1,45 @@
+.user-list-item {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 60px;
+  padding-left: 10px;
+
+  .user-list-avatar {
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 37px;
+    font-size: 20px;
+  }
+
+  .user-list-text {
+    flex: 1;
+
+    .user-list-message {
+      display: flex;
+      justify-content: space-between;
+
+      .user-list-time {
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+.user-list-item:hover {
+  background-color: rgb(230, 230, 230);
+  cursor: pointer;
+}
+
+.user-list-lastmessage {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  position: relative;
+  display: block;
+  padding-bottom: 1px;
+  overflow-y: hidden;
+  font-size: 14px;
+  max-width: 150px;
+}

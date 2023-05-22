@@ -1,0 +1,9 @@
+.wrap-sidebar {
+    margin-left: 30px;
+    border-right: 1px solid #ccc;
+    height: calc(100vh - 5em);
+
+    .wrap-userinfo {
+        padding-right: 0;
+    }
+}

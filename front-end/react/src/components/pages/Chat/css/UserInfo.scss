@@ -1,0 +1,13 @@
+.user-info {
+  display: flex;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  height: 5em;
+  border-bottom: 1px solid rgba(82, 38, 83);
+  align-items: center;
+  margin-bottom: 5px;
+
+  .user-name {
+    margin-left: 5px;
+  }
+}

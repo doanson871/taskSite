@@ -20,8 +20,6 @@ export class UserController {
 
   @Get('me')
   me(@Req() req: Request) {
-    console.log((req as any).user.id);
-
     return (req as any).user;
   }
 
