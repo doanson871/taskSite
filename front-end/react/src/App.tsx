@@ -5,11 +5,11 @@ import AccContextProvider from "./contexts/accContext";
 import NotFound from "./components/pages/NotFound404/NotFound";
 import TasksiteContextProvider from "./contexts/tasksiteContext";
 import Post from "./components/pages/Post/Post";
-import Chat from "./components/pages/Chat/Chat";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/register/Register";
 import ChatContextProvider from "./contexts/chatContext";
+import Login from "./components/pages/login/Login";
+import Chat from "./components/pages/Chat/chat";
 
 const App = () => {
   return (

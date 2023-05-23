@@ -10,7 +10,10 @@ export interface RegisterForm {
   role: string;
 }
 
-const initialRole = ["Người tìm việc", "Người tuyển dụng"];
+const initialRole = [
+  { name: "Người tìm việc", role: "EMPLOYEE" },
+  { name: "Người tuyển dụng", role: "USER" },
+];
 
 const Register: React.FC = () => {
   const [registerForm, setRegisterForm] = useState({
@@ -161,7 +164,7 @@ const Register: React.FC = () => {
                         onClick={(e) => {
                           setRegisterForm({
                             ...registerForm,
-                            role: initialRole[index],
+                            role: initialRole[index].role,
                           });
                         }}
                       />
@@ -169,7 +172,7 @@ const Register: React.FC = () => {
                         className="form-check-label"
                         htmlFor={`flexRadioDefault${index}`}
                       >
-                        {role}
+                        {role.name}
                       </label>
                     </div>
                   ))}

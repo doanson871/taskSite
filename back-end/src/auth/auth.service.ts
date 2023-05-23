@@ -31,7 +31,7 @@ export class AuthService {
           name: authDTO.name,
           thanhpho: authDTO.thanhpho,
           age: authDTO.age,
-          role: 'USER',
+          role: authDTO.role,
         },
         select: {
           email: true,

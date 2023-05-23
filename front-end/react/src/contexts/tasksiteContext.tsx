@@ -2,10 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { useContext } from "react";
 
 interface TasksiteContextProps {
-  element: {
-    showNavbar: boolean;
-    setShowNavbar: (c: boolean) => void;
-  };
+  element: {};
 }
 
 interface TasksiteContextProviderProps
@@ -21,12 +18,8 @@ export const useTasksiteContext = () => {
 export const TasksiteContextProvider: React.FC<
   TasksiteContextProviderProps
 > = ({ element, children }) => {
-  const [showNavbar, setShowNavbar] = React.useState<boolean>(false);
   const value = {
-    element: {
-      showNavbar,
-      setShowNavbar,
-    },
+    element: {},
   };
   return (
     <TasksiteContext.Provider value={value}>

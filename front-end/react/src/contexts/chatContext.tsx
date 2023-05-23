@@ -5,7 +5,6 @@ import React, {
   useState,
 } from "react";
 import { chatReducer } from "../reducers/chatReducer";
-import { io } from "socket.io-client";
 
 export const ChatContext = createContext<any>(null);
 

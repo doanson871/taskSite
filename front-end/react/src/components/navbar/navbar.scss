@@ -1,12 +1,15 @@
 .header {
-  grid-template-columns: 5em auto;
   width: 100%;
   height: 5em;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  justify-content: center;
   .icon-menu {
     font-size: 2em;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
   }
   .nav-bar-name {
     font-family: "Italiana";
