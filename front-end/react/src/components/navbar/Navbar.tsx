@@ -10,8 +10,8 @@ const Navbar: React.FC<Props> = () => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   return (
-    <div className={`header d-grid`}>
-      <div className="icon-menu d-flex">
+    <div className={`header d-flex`}>
+      <div className="icon-menu">
         <i className="bi bi-list" onClick={() => setShowNavbar(true)}></i>
       </div>
       <div className="nav-bar-name d-flex">Task Site</div>
