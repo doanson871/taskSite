@@ -1,25 +1,26 @@
 import { Avatar, Typography } from "antd";
 import React, { useContext } from "react";
-import { Col, Row } from "react-bootstrap";
 import "./css/UserList.scss";
 import { useNavigate } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
 
 interface Props {
+  conversationId: number;
   photoURL?: string;
   name?: string;
-  conversationId: number;
 }
 
 const UserList: React.FC<Props> = (props: Props) => {
+  // console.log(props);
+
   const {
     ChatContextData: { currentConversationId, setCurrentConversationId },
   } = useContext(ChatContext);
 
-  console.log(currentConversationId, setCurrentConversationId);
-
   const navigation = useNavigate();
   const handleClick = () => {
+    console.log(props.conversationId);
+
     setCurrentConversationId(props.conversationId);
     navigation(`/message/${props.conversationId ? props.conversationId : 1}`);
   };
@@ -29,6 +30,7 @@ const UserList: React.FC<Props> = (props: Props) => {
       className={"user-list-item"}
       onClick={handleClick}
       style={
+        currentConversationId !== undefined &&
         currentConversationId === props.conversationId
           ? {
               backgroundColor: "#a0a0a0",

@@ -83,7 +83,6 @@ model PostJob {
   work        Work          @relation(fields: [workId], references: [id])
   workId      Int
   address     String
-  time        DateTime
   descrition  String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

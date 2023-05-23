@@ -4,10 +4,15 @@ import UserInfo from "./UserInfo";
 import UserList from "./UserList";
 import "./css/Sidebar.scss";
 import { ChatContext } from "../../../contexts/chatContext";
+import { IConversation } from "../../../reducers/chatReducer";
 
 interface Props {}
 
 const SideBar: React.FC<Props> = (props) => {
+  const {
+    ChatContextData: { chatState },
+  } = useContext(ChatContext);
+
   return (
     <div className="wrap-sidebar">
       <Row>
@@ -15,10 +20,22 @@ const SideBar: React.FC<Props> = (props) => {
           <UserInfo />
         </Col>
         <Col xl={12} lg={12}>
-          <UserList conversationId={1} />
+          {chatState.conversations.map(
+            (conversation: IConversation, id: number) => {
+              return (
+                <UserList
+                  key={id}
+                  conversationId={conversation.conversationId}
+                  name={conversation.name}
+                  photoURL={conversation.photoURL}
+                />
+              );
+            }
+          )}
+          {/* <UserList conversationId={1} />
           <UserList conversationId={2} />
           <UserList conversationId={3} />
-          <UserList conversationId={4} />
+          <UserList conversationId={4} /> */}
         </Col>
       </Row>
     </div>

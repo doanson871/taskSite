@@ -1,5 +1,10 @@
+import { io } from "socket.io-client";
+
 export const apiURL = "http://localhost:3000";
 export const LOCAL_STORAGE_TOKEN_NAME = "LOCAL_TOKEN";
+export const socket = io(apiURL, {
+  autoConnect: false,
+});
 
 export interface AccountType {
   id: number;

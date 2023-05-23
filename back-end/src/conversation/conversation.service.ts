@@ -6,6 +6,7 @@ import { ConversationDTO } from './dto';
 export class ConversationService {
   constructor(private prismaService: PrismaService) {}
 
+  // get list of conversations
   async getUsersInConversation(userId: number) {
     try {
       const user = await this.prismaService.user.findUnique({

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar, Typography } from "antd";
 import "./css/Message.scss";
+import { AuthContext } from "../../../contexts/authContext";
 
-interface Props {}
+interface Props {
+  content: string;
+  userId?: number;
+}
 
 // const formDate = (seconds) => {
 //   let formattedDate = "";
@@ -17,16 +21,29 @@ interface Props {}
 // };
 
 const Message: React.FC<Props> = (props) => {
+  const {
+    authState: {
+      account: { id },
+    },
+  } = useContext(AuthContext);
+
   return (
-    <div className="message-wrap">
-      <div>
-        <Avatar size={"small"} src={""}>
-          C
-        </Avatar>
-        <Typography.Text className="message-author"></Typography.Text>
-      </div>
-      <div className="message-content">
-        <Typography.Text>Hello asdfsa fdsa fdsafdsa</Typography.Text>
+    <div
+      className="message-wrap"
+      style={props.userId === id ? { justifyContent: "flex-end" } : {}}
+    >
+      {props.userId !== id && (
+        <div>
+          <Avatar size={"small"} src={""}>
+            C
+          </Avatar>
+        </div>
+      )}
+      <div
+        className="message-content"
+        style={props.userId === id ? { backgroundColor: "#0d6efd" } : {}}
+      >
+        <Typography.Text>{props.content}</Typography.Text>
       </div>
     </div>
   );

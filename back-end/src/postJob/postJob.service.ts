@@ -61,7 +61,6 @@ export class PostJobService {
           user: true,
           workId: true,
           work: true,
-          time: true,
         },
       });
 
@@ -116,7 +115,6 @@ export class PostJobService {
     const postJob = await this.prismaService.postJob.create({
       data: {
         userId: userId,
-        time: insertPostJobDTO.time,
         address: insertPostJobDTO.address,
         workId: insertPostJobDTO.workId,
         descrition: insertPostJobDTO.descrition,

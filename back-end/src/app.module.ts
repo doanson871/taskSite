@@ -7,9 +7,6 @@ import { ConfigModule } from '@nestjs/config';
 import { ContactModule } from './contract/contract.module';
 import { WorkModule } from './work/work.module';
 import { UsersOnWorkModule } from './users-on-work/users-on-work.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './utils/roleGuard/roles.gurad';
-import { MyJwtGuard } from './auth/guard';
 import { ApplicationModule } from './application/application.module';
 import { PostJobModule } from './postJob/postJob.module';
 import { GatewayModule } from './gateway/gateway.module';
@@ -31,16 +28,7 @@ import { ConversationModule } from './conversation/conversation.module';
     MessageModule,
     ConversationModule,
   ],
-  providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: MyJwtGuard,
-    // },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {
   // configure(consumer: MiddlewareConsumer) {

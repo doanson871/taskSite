@@ -3,10 +3,6 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 export class InsertPostJobDTO {
   @IsString()
   @IsNotEmpty()
-  time: string;
-
-  @IsString()
-  @IsNotEmpty()
   address: string;
 
   @IsNumber()
@@ -19,10 +15,6 @@ export class InsertPostJobDTO {
 }
 
 export class UpdatePostJobDTO {
-  @IsString()
-  @IsOptional()
-  time?: string;
-
   @IsString()
   @IsOptional()
   address?: string;

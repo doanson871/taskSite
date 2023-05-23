@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./css/Chat.scss";
-import { Col, Container, Row } from "react-bootstrap";
 import SideBar from "./SideBar";
 import ChatWindow from "./ChatWindow";
 import { AuthContext } from "../../../contexts/authContext";
@@ -14,12 +13,17 @@ const Chat: React.FC<Props> = (props) => {
 
   console.log(id);
 
-  const authContextData = useContext(AuthContext);
   const {
-    ChatContextData: { currentConversationId },
+    ChatContextData: { getControvations, currentConversationId },
   } = useContext(ChatContext);
 
-  console.log(authContextData);
+  const authContextData = useContext(AuthContext);
+
+  // console.log(authContextData);
+
+  useEffect(() => {
+    getControvations();
+  }, []);
 
   return (
     <div className="chat-wrap">
