@@ -15,14 +15,7 @@ const App = () => {
   return (
     <AuthContextProvider>
       <AccContextProvider>
-        <TasksiteContextProvider
-          element={{
-            showNavbar: false,
-            setShowNavbar: function (c: boolean): void {
-              throw new Error("Function not implemented.");
-            },
-          }}
-        >
+        <TasksiteContextProvider>
           <ChatContextProvider>
             <BrowserRouter>
               <Routes>
