@@ -2,6 +2,7 @@ export enum ChatActionKind {
   GET_CONVERSATION = "GET_CONVERSATION",
   GET_MESSAGES = "GET_MESSAGES",
   RECV_MESSAGE = "RECV_MESSAGE",
+  UPDATE_LASTMESSSAGE = "UPDATE_LASTMESSSAGE",
 }
 
 export interface IMessage {
@@ -78,6 +79,23 @@ export const chatReducer = (state: ChatState, action: ChatAction) => {
             messages: [...action.payload.messages],
           };
         } else return conversation;
+      });
+
+      return {
+        ...state,
+      };
+    }
+    case ChatActionKind.UPDATE_LASTMESSSAGE: {
+      state.conversations = state.conversations.map((item) => {
+        const payload = action.payload as payload_recv_message;
+        if (item.conversationId === payload.conversationId) {
+          return {
+            ...item,
+            lastMessage: payload.message.content,
+          };
+        } else {
+          return item;
+        }
       });
 
       return {

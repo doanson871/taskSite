@@ -20,10 +20,10 @@ const UserList: React.FC<Props> = (props: Props) => {
 
   const navigation = useNavigate();
   const handleClick = () => {
-    console.log(props.conversationId);
-
-    setCurrentConversationId(props.conversationId);
-    navigation(`/message/${props.conversationId ? props.conversationId : 1}`);
+    if (props.conversationId !== currentConversationId) {
+      setCurrentConversationId(props.conversationId);
+      navigation(`/message/${props.conversationId ? props.conversationId : 1}`);
+    }
   };
 
   return (

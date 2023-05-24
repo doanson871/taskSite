@@ -10,9 +10,9 @@ import { socket } from "../../../utils/constant";
 interface Props {}
 
 const Chat: React.FC<Props> = (props) => {
-  const { idParams } = useParams();
+  const { idChat } = useParams();
 
-  console.log(idParams);
+  // console.log(idChat);
 
   const {
     ChatContextData: {
@@ -27,20 +27,12 @@ const Chat: React.FC<Props> = (props) => {
       account: { id },
     },
   } = useContext(AuthContext);
-  setCurrentConversationId(idParams);
   // console.log(authContextData);
 
   useEffect(() => {
     getControvations();
+    if (currentConversationId !== idChat) setCurrentConversationId(idChat);
   }, []);
-
-  useEffect(() => {
-    socket.connect();
-
-    socket.on(`onLastMessageUser${id}`, (data) => {
-      console.log(data);
-    });
-  }, [id]);
 
   return (
     <div className="chat-wrap">

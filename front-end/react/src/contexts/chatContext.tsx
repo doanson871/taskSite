@@ -33,11 +33,13 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     chatDispatch({ type: ChatActionKind.RECV_MESSAGE, payload });
   };
 
+  const updateLastMessage = async (payload: payload_recv_message) => {
+    chatDispatch({ type: ChatActionKind.UPDATE_LASTMESSSAGE, payload });
+  };
+
   const getControvations = async () => {
     const data = await UseFetchData(`${apiURL}/conversation`);
     if (data.statusCode === 200) {
-      console.log(data);
-
       const payload: Array<IConversation> = (data.members as Array<any>).map(
         (member) => {
           return {
@@ -46,7 +48,7 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
             userId: member.user.id,
             name: member.user.name,
             photoURL: member.user.photoURL,
-            lastMessage: member.conversation.lastMessage,
+            lastMessage: member.lastMessage,
           };
         }
       );
@@ -56,8 +58,6 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const getConversationMessages = async (id: number) => {
     const data: any = await UseFetchData(`${apiURL}/conversation/${id}`);
-
-    console.log(data);
 
     if (data.statusCode === 200) {
       const messages = (data.data.Message as Array<any>).map((message: any) => {
@@ -84,6 +84,7 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     getControvations,
     getConversationMessages,
     recvMessage,
+    updateLastMessage,
   };
 
   return (

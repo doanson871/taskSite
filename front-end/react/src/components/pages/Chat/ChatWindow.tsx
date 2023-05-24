@@ -42,11 +42,9 @@ const ChatWindow: React.FC<Props> = (props) => {
 
   // console.log(currentConversationId);
 
-  const messages: Array<IMessage> = (
-    chatState.conversations as Array<any>
-  ).find(
+  const messages: Array<any> = (chatState.conversations as Array<any>).find(
     (conversation) => conversation.conversationId === currentConversationId
-  ).messages;
+  )?.messages;
 
   useEffect(() => {
     getConversationMessages(currentConversationId);
@@ -57,7 +55,6 @@ const ChatWindow: React.FC<Props> = (props) => {
     // (socketRef.current as any).socket = socket;
 
     socket.on(`onMessageRoom${currentConversationId}`, (data) => {
-      console.log(data.data);
       recvMessage(data.data);
     });
 

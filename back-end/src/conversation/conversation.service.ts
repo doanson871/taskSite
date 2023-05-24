@@ -67,6 +67,7 @@ export class ConversationService {
         data.push({
           conversationId: members[i].conversationId,
           user: users[i],
+          lastMessage: members[i].conversation.lastMessage,
         });
       }
 

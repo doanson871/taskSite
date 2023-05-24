@@ -1,17 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import UserInfo from "./UserInfo";
 import UserList from "./UserList";
 import "./css/Sidebar.scss";
 import { ChatContext } from "../../../contexts/chatContext";
 import { IConversation } from "../../../reducers/chatReducer";
+import { socket } from "../../../utils/constant";
 
 interface Props {}
 
 const SideBar: React.FC<Props> = (props) => {
   const {
-    ChatContextData: { chatState },
+    ChatContextData: { chatState, updateLastMessage },
   } = useContext(ChatContext);
+
+  const conversations: Array<IConversation> = chatState.conversations;
+
+  useEffect(() => {
+    socket.connect();
+
+    conversations.forEach((conversation) => {
+      socket.on(`onLastMessageRoom${conversation.conversationId}`, (data) => {
+        console.log(data.data);
+        updateLastMessage(data.data);
+      });
+    });
+
+    socket.on("lastMessageRoom", () => {});
+
+    return () => {
+      conversations.forEach((conversation) => {
+        socket.removeListener(
+          `onLastMessageRoom${conversation.conversationId}`
+        );
+      });
+    };
+  }, [conversations]);
 
   return (
     <div className="wrap-sidebar">
@@ -20,19 +44,17 @@ const SideBar: React.FC<Props> = (props) => {
           <UserInfo />
         </Col>
         <Col xl={12} lg={12}>
-          {chatState.conversations.map(
-            (conversation: IConversation, id: number) => {
-              return (
-                <UserList
-                  key={id}
-                  conversationId={conversation.conversationId}
-                  name={conversation.name}
-                  photoURL={conversation.photoURL}
-                  lastMessage={conversation.lastMessage}
-                />
-              );
-            }
-          )}
+          {conversations.map((conversation, id: number) => {
+            return (
+              <UserList
+                key={id}
+                conversationId={conversation.conversationId}
+                name={conversation.name}
+                photoURL={conversation.photoURL}
+                lastMessage={conversation.lastMessage}
+              />
+            );
+          })}
           {/* <UserList conversationId={1} />
           <UserList conversationId={2} />
           <UserList conversationId={3} />

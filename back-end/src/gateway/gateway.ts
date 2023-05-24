@@ -34,8 +34,6 @@ export class MyGateWay implements OnModuleInit {
 
   @SubscribeMessage('newMessage')
   async onNewMessage(@MessageBody() body: any) {
-    console.log(body);
-
     const data = await this.postMessage(body.message.userId, {
       content: body.message.content,
       conversationId: body.conversationId,
@@ -46,6 +44,10 @@ export class MyGateWay implements OnModuleInit {
 
     this.server.emit(`onMessageRoom${body.conversationId}`, {
       id: this.id,
+      data: body,
+    });
+
+    this.server.emit(`onLastMessageRoom${body.conversationId}`, {
       data: body,
     });
   }
