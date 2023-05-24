@@ -46,6 +46,7 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
             userId: member.user.id,
             name: member.user.name,
             photoURL: member.user.photoURL,
+            lastMessage: member.conversation.lastMessage,
           };
         }
       );

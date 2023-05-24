@@ -26,6 +26,9 @@ export class UpdatePostJobDTO {
   @IsString()
   @IsOptional()
   descrition?: string;
+
+  @IsOptional()
+  status?: boolean;
 }
 
 export class SearchPostJobDTO {

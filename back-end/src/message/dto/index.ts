@@ -6,5 +6,5 @@ export class InsertMessageDto {
   conversationId: number;
 
   @IsNotEmpty()
-  content: any;
+  content: string;
 }

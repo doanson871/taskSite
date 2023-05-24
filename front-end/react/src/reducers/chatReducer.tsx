@@ -15,6 +15,7 @@ export interface IConversation {
   userId: number;
   name?: string;
   photoURL?: string;
+  lastMessage?: string;
   messages: Array<IMessage>;
 }
 
@@ -47,7 +48,11 @@ export const chatReducer = (state: ChatState, action: ChatAction) => {
           newMessages.push({
             ...payload.message,
           });
-          return { ...item, messages: newMessages };
+          return {
+            ...item,
+            messages: newMessages,
+            lastMessage: payload.message.content,
+          };
         } else {
           return item;
         }

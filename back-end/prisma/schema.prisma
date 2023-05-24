@@ -84,6 +84,7 @@ model PostJob {
   workId      Int
   address     String
   descrition  String?
+  status      Boolean       @default(true)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   Application Application[]
@@ -151,11 +152,12 @@ model Member {
 }
 
 model Conversation {
-  id        Int       @id @default(autoincrement())
-  Message   Message[]
-  Member    Member[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          Int       @id @default(autoincrement())
+  Message     Message[]
+  Member      Member[]
+  lastMessage String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("conversations")
 }

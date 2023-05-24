@@ -20,7 +20,7 @@ export class PostJobService {
 
       const postJobs = await this.prismaService.postJob.findMany({
         where: {
-          id: userId,
+          userId: userId,
         },
       });
       return {

@@ -8,6 +8,7 @@ interface Props {
   conversationId: number;
   photoURL?: string;
   name?: string;
+  lastMessage?: string;
 }
 
 const UserList: React.FC<Props> = (props: Props) => {
@@ -44,9 +45,7 @@ const UserList: React.FC<Props> = (props: Props) => {
       <div className="user-list-text">
         <Typography.Text>Chu Huy Thai</Typography.Text>
         <div className="user-list-message">
-          <span className="user-list-lastmessage">
-            Message asdf sadf safsd adsfs d
-          </span>
+          <span className="user-list-lastmessage">{props.lastMessage}</span>
           <Typography.Text className="user-list-time">Time</Typography.Text>
         </div>
       </div>

@@ -80,6 +80,15 @@ export class MyGateWay implements OnModuleInit {
         },
       });
 
+      await this.prismaService.conversation.update({
+        where: {
+          id: insertMessageDTO.conversationId,
+        },
+        data: {
+          lastMessage: insertMessageDTO.content,
+        },
+      });
+
       if (message)
         return {
           statusCode: 200,

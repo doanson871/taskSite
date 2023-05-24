@@ -28,6 +28,7 @@ const SideBar: React.FC<Props> = (props) => {
                   conversationId={conversation.conversationId}
                   name={conversation.name}
                   photoURL={conversation.photoURL}
+                  lastMessage={conversation.lastMessage}
                 />
               );
             }

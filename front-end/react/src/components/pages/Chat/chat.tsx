@@ -5,25 +5,42 @@ import ChatWindow from "./ChatWindow";
 import { AuthContext } from "../../../contexts/authContext";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
+import { socket } from "../../../utils/constant";
 
 interface Props {}
 
 const Chat: React.FC<Props> = (props) => {
-  const { id } = useParams();
+  const { idParams } = useParams();
 
-  console.log(id);
+  console.log(idParams);
 
   const {
-    ChatContextData: { getControvations, currentConversationId },
+    ChatContextData: {
+      getControvations,
+      currentConversationId,
+      setCurrentConversationId,
+    },
   } = useContext(ChatContext);
 
-  const authContextData = useContext(AuthContext);
-
+  const {
+    authState: {
+      account: { id },
+    },
+  } = useContext(AuthContext);
+  setCurrentConversationId(idParams);
   // console.log(authContextData);
 
   useEffect(() => {
     getControvations();
   }, []);
+
+  useEffect(() => {
+    socket.connect();
+
+    socket.on(`onLastMessageUser${id}`, (data) => {
+      console.log(data);
+    });
+  }, [id]);
 
   return (
     <div className="chat-wrap">

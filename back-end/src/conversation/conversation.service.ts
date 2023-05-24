@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConversationDTO } from './dto';
 
@@ -34,6 +38,11 @@ export class ConversationService {
         select: {
           userId: true,
           conversationId: true,
+          conversation: {
+            select: {
+              lastMessage: true,
+            },
+          },
         },
       });
 
@@ -96,9 +105,34 @@ export class ConversationService {
   }
 
   async createConversation(userId: number, data: ConversationDTO) {
+    if (userId === data.userId) {
+      throw new ConflictException('duplicate user');
+    }
+
     try {
+      const members = await this.prismaService.member.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      const otherMember = await this.prismaService.member.findFirst({
+        where: {
+          conversationId: {
+            in: [...members.map((c) => c.conversationId)],
+          },
+          userId: data.userId,
+        },
+      });
+
+      if (otherMember) {
+        throw new ConflictException('duplicate');
+      }
+
       const newConversation = await this.prismaService.conversation.create({
-        data: {},
+        data: {
+          lastMessage: '',
+        },
       });
 
       await this.prismaService.member.create({
