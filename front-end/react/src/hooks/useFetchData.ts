@@ -2,13 +2,14 @@ import { LOCAL_STORAGE_TOKEN_NAME } from "../utils/constant";
 
 export const UseFetchData = async (
   url: string,
-  payload?: { method?: string }
+  payload?: { method?: string; body?: any }
 ) => {
   const data = await fetch(url, {
     headers: {
+      "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME),
     },
-    method: payload?.method || "GET",
+    ...payload,
   });
 
   return data.json();

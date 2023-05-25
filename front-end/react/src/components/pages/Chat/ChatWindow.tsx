@@ -5,7 +5,6 @@ import Message from "./Message";
 import { socket } from "../../../utils/constant";
 import { ChatContext } from "../../../contexts/chatContext";
 import { AuthContext } from "../../../contexts/authContext";
-import { IMessage } from "../../../reducers/chatReducer";
 
 interface Props {}
 
@@ -24,6 +23,7 @@ const ChatWindow: React.FC<Props> = (props) => {
       getConversationMessages,
       chatState,
       recvMessage,
+      currentUserChat,
     },
   } = useContext(ChatContext);
 
@@ -48,9 +48,6 @@ const ChatWindow: React.FC<Props> = (props) => {
 
   useEffect(() => {
     getConversationMessages(currentConversationId);
-  }, [currentConversationId]);
-
-  useEffect(() => {
     socket.connect();
     // (socketRef.current as any).socket = socket;
 
@@ -68,10 +65,17 @@ const ChatWindow: React.FC<Props> = (props) => {
     <div className="chat-window-wrap">
       <div className="chat-window-header">
         <div className="chat-window-header-content">
-          <Avatar src="" className="chat-window-header-avatar">
-            D
+          <Avatar
+            src={currentUserChat.photoURL}
+            className="chat-window-header-avatar"
+          >
+            {currentUserChat.photoURL
+              ? ""
+              : currentUserChat.name?.charAt(0)?.toUpperCase()}
           </Avatar>
-          <span className="chat-window-header-name">Doan Hoang Son</span>
+          <span className="chat-window-header-name">
+            {currentUserChat.name}
+          </span>
         </div>
       </div>
       <div className="chat-window-content">

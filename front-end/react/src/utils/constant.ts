@@ -57,3 +57,30 @@ export const navBarList = [
     icon: "bi bi-person-circle",
   },
 ];
+
+export const getDOB = (dateTest: string) => {
+  if (!dateTest) return dateTest;
+
+  const date = new Date(dateTest);
+  // console.log(date);
+  const day =
+    date.getDate().toString().length === 2
+      ? date.getDate()
+      : `0${date.getDate()}`;
+  const month =
+    (date.getMonth() + 1).toString().length === 2
+      ? date.getMonth() + 1
+      : `0${date.getMonth() + 1}`;
+  const year = date.getFullYear();
+
+  return day + "/" + month + "/" + year;
+};
+
+export const compare = (a: string, b: string) => {
+  const date1 = new Date(a);
+  const date2 = new Date(b);
+
+  if (date1.getTime() < date2.getTime()) {
+    return 1;
+  } else return -1;
+};

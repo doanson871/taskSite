@@ -3,6 +3,7 @@ export enum ChatActionKind {
   GET_MESSAGES = "GET_MESSAGES",
   RECV_MESSAGE = "RECV_MESSAGE",
   UPDATE_LASTMESSSAGE = "UPDATE_LASTMESSSAGE",
+  UPDATE_STATUS_CONVERSATION = "UPDATE_STATUS_CONVERSATION",
 }
 
 export interface IMessage {
@@ -18,6 +19,8 @@ export interface IConversation {
   photoURL?: string;
   lastMessage?: string;
   messages: Array<IMessage>;
+  updateTime: string;
+  seen?: boolean;
 }
 
 interface ChatState {
@@ -53,6 +56,7 @@ export const chatReducer = (state: ChatState, action: ChatAction) => {
             ...item,
             messages: newMessages,
             lastMessage: payload.message.content,
+            seen: true,
           };
         } else {
           return item;
@@ -77,6 +81,7 @@ export const chatReducer = (state: ChatState, action: ChatAction) => {
           return {
             ...conversation,
             messages: [...action.payload.messages],
+            seen: true,
           };
         } else return conversation;
       });
@@ -92,6 +97,24 @@ export const chatReducer = (state: ChatState, action: ChatAction) => {
           return {
             ...item,
             lastMessage: payload.message.content,
+            updateTime: new Date().toISOString(),
+          };
+        } else {
+          return item;
+        }
+      });
+
+      return {
+        ...state,
+      };
+    }
+    case ChatActionKind.UPDATE_STATUS_CONVERSATION: {
+      state.conversations = state.conversations.map((item) => {
+        const payload = action.payload;
+        if (item.conversationId === payload) {
+          return {
+            ...item,
+            seen: false,
           };
         } else {
           return item;

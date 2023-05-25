@@ -18,18 +18,27 @@ export class ConversationService {
           id: userId,
         },
         select: {
-          Member: true,
+          Member: {
+            select: {
+              seen: true,
+              conversationId: true,
+            },
+          },
         },
       });
 
-      const listId: Array<number> = user.Member.map((member) => {
-        return member.conversationId;
-      });
+      const listId: Array<{ conversationId: number; seen: boolean }> =
+        user.Member.map((member) => {
+          return {
+            conversationId: member.conversationId,
+            seen: member.seen,
+          };
+        });
 
       const members = await this.prismaService.member.findMany({
         where: {
           conversationId: {
-            in: [...listId],
+            in: [...listId.map((v) => v.conversationId)],
           },
           userId: {
             not: userId,
@@ -37,37 +46,32 @@ export class ConversationService {
         },
         select: {
           userId: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              photoURL: true,
+            },
+          },
           conversationId: true,
           conversation: {
             select: {
               lastMessage: true,
+              updatedAt: true,
             },
           },
         },
       });
 
-      const users = await this.prismaService.user.findMany({
-        where: {
-          id: {
-            in: members.map((member) => {
-              return member.userId;
-            }),
-          },
-        },
-        select: {
-          name: true,
-          id: true,
-          photoURL: true,
-        },
-      });
-
       const data = [];
 
-      for (let i = 0; i < users.length; i++) {
+      for (let i = 0; i < members.length; i++) {
         data.push({
           conversationId: members[i].conversationId,
-          user: users[i],
+          user: members[i].user,
           lastMessage: members[i].conversation.lastMessage,
+          updateTime: members[i].conversation.updatedAt,
+          seen: listId[i].seen,
         });
       }
 

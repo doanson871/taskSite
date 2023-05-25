@@ -19,6 +19,10 @@ export const ChatContext = createContext<any>(null);
 
 const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [currentConversationId, setCurrentConversationId] = useState(undefined);
+  const [currentUserChat, setCurrentUserChat] = useState({
+    name: undefined,
+    photoURL: undefined,
+  });
 
   const [chatState, chatDispatch] = useReducer(chatReducer, {
     conversations: [],
@@ -49,6 +53,8 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
             name: member.user.name,
             photoURL: member.user.photoURL,
             lastMessage: member.lastMessage,
+            updateTime: member.updateTime,
+            seen: member.seen,
           };
         }
       );
@@ -75,16 +81,35 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const updateStatusConversation = async (conversateionId: number) => {
+    UseFetchData(`${apiURL}/member/${conversateionId}`, {
+      method: "PATCH",
+      body: JSON.stringify({}),
+    }).then((data) => {
+      console.log(data);
+
+      if (data.statusCode === 200) {
+        chatDispatch({
+          type: ChatActionKind.UPDATE_STATUS_CONVERSATION,
+          payload: conversateionId,
+        });
+      }
+    });
+  };
+
   const ChatContextData = {
     chatState,
     chatDispatch,
     currentConversationId,
     setCurrentConversationId,
+    currentUserChat,
+    setCurrentUserChat,
     sendMessage,
     getControvations,
     getConversationMessages,
     recvMessage,
     updateLastMessage,
+    updateStatusConversation,
   };
 
   return (

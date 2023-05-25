@@ -12,6 +12,7 @@ import { PostJobModule } from './postJob/postJob.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { MessageModule } from './message/message.module';
 import { ConversationModule } from './conversation/conversation.module';
+import { MemberModule } from './member/member.module';
 @Module({
   imports: [
     ConfigModule,
@@ -27,6 +28,7 @@ import { ConversationModule } from './conversation/conversation.module';
     GatewayModule,
     MessageModule,
     ConversationModule,
+    MemberModule,
   ],
   providers: [],
 })

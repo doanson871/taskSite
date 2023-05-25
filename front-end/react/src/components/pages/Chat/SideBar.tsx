@@ -5,13 +5,18 @@ import UserList from "./UserList";
 import "./css/Sidebar.scss";
 import { ChatContext } from "../../../contexts/chatContext";
 import { IConversation } from "../../../reducers/chatReducer";
-import { socket } from "../../../utils/constant";
+import { compare, socket } from "../../../utils/constant";
 
 interface Props {}
 
 const SideBar: React.FC<Props> = (props) => {
   const {
-    ChatContextData: { chatState, updateLastMessage },
+    ChatContextData: {
+      chatState,
+      updateLastMessage,
+      currentConversationId,
+      updateStatusConversation,
+    },
   } = useContext(ChatContext);
 
   const conversations: Array<IConversation> = chatState.conversations;
@@ -23,10 +28,12 @@ const SideBar: React.FC<Props> = (props) => {
       socket.on(`onLastMessageRoom${conversation.conversationId}`, (data) => {
         console.log(data.data);
         updateLastMessage(data.data);
+
+        if (currentConversationId !== conversation.conversationId) {
+          updateStatusConversation(conversation.conversationId);
+        }
       });
     });
-
-    socket.on("lastMessageRoom", () => {});
 
     return () => {
       conversations.forEach((conversation) => {
@@ -35,7 +42,11 @@ const SideBar: React.FC<Props> = (props) => {
         );
       });
     };
-  }, [conversations]);
+  }, [conversations, updateLastMessage]);
+
+  conversations.sort((a, b) => {
+    return compare(a.updateTime, b.updateTime);
+  });
 
   return (
     <div className="wrap-sidebar">
@@ -52,6 +63,8 @@ const SideBar: React.FC<Props> = (props) => {
                 name={conversation.name}
                 photoURL={conversation.photoURL}
                 lastMessage={conversation.lastMessage}
+                updateTime={conversation.updateTime}
+                seen={conversation.seen}
               />
             );
           })}
