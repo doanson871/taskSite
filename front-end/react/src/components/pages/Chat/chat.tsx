@@ -5,7 +5,6 @@ import ChatWindow from "./ChatWindow";
 import { AuthContext } from "../../../contexts/authContext";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
-import { socket } from "../../../utils/constant";
 
 interface Props {}
 

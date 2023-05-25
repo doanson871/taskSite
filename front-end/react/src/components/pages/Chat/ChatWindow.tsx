@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Input, Button, Avatar } from "antd";
 import "./css/ChatWindow.scss";
 import Message from "./Message";
@@ -9,11 +9,22 @@ import { AuthContext } from "../../../contexts/authContext";
 interface Props {}
 
 const ChatWindow: React.FC<Props> = (props) => {
+  const messageEl: any = useRef(null);
+
   const {
     authState: {
       account: { id },
     },
   } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current?.addEventListener("DOMNodeInserted", (event: any) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight });
+      });
+    }
+  }, []);
 
   const [value, setValue] = useState("");
   const {
@@ -37,6 +48,7 @@ const ChatWindow: React.FC<Props> = (props) => {
         userId: id,
       },
     });
+
     setValue("");
   };
 
@@ -79,7 +91,7 @@ const ChatWindow: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="chat-window-content">
-        <div className="chat-window-message-list">
+        <div className="chat-window-message-list" ref={messageEl}>
           {messages.map((message, id) => {
             return (
               <Message
@@ -102,6 +114,11 @@ const ChatWindow: React.FC<Props> = (props) => {
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                handleClick();
+              }
             }}
           />
           <Button type="primary" onClick={handleClick}>

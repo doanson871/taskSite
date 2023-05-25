@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Avatar, Typography } from "antd";
 import "./css/Message.scss";
 import { AuthContext } from "../../../contexts/authContext";
@@ -21,6 +21,20 @@ interface Props {
 // };
 
 const Message: React.FC<Props> = (props) => {
+  // const scrollIntoView = (index: string) => {
+  //   if (isStart) {
+  //     const element = document.getElementById(q-${index});
+  //     if (element) {
+  //       element.scrollIntoView({
+  //         block: 'center',
+  //         inline: 'center',
+  //         behavior: 'smooth',
+  //       });
+  //     }
+  //   }
+  // };
+
+  const refMsg = useRef();
   const {
     authState: {
       account: { id },

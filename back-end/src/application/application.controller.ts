@@ -12,7 +12,9 @@ import {
 import { GetUser } from 'src/auth/decorator';
 import { ApplicationService } from './application.service';
 import { InsertApplicationDTO, UpdateApplicationDTO } from './dto';
+import { MyGateWay } from 'src/gateway/gateway';
 
+@UseGuards(MyGateWay)
 @Controller('application')
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
