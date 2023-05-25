@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "./register.scss";
 export interface RegisterForm {
-  fullname: string;
+  name: string;
   email: string;
   password: string;
   role: string;
@@ -37,7 +37,7 @@ const Register: React.FC = () => {
       return;
     } else {
       const accountForm: RegisterForm = {
-        fullname: registerForm.fullname,
+        name: registerForm.fullname,
         email: registerForm.email,
         password: registerForm.password,
         role: registerForm.role,

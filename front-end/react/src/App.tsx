@@ -8,8 +8,9 @@ import Post from "./components/pages/Post/Post";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Register from "./components/pages/register/Register";
 import ChatContextProvider from "./contexts/chatContext";
-import Login from "./components/pages/Login/Login";
-import Chat from "./components/pages/Chat/Chat";
+import Profile from "./components/pages/profile/Profile";
+import Chat from "./components/pages/Chat/chat";
+import Login from "./components/pages/login/Login";
 
 const App = () => {
   return (
@@ -30,7 +31,7 @@ const App = () => {
                     <Route path=":idChat" element={<Chat />} />
                   </Route>
                   <Route path="/notify" element={<Post />} />
-                  <Route path="/profile" element={<Post />} />
+                  <Route path="/profile" element={<Profile />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
