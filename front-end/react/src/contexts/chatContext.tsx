@@ -63,6 +63,12 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const getConversationMessages = async (id: number) => {
+    const mes = await UseFetchData(`${apiURL}/member/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        seen: true,
+      }),
+    });
     const data: any = await UseFetchData(`${apiURL}/conversation/${id}`);
 
     if (data.statusCode === 200) {
@@ -84,7 +90,9 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const updateStatusConversation = async (conversateionId: number) => {
     UseFetchData(`${apiURL}/member/${conversateionId}`, {
       method: "PATCH",
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        seen: false,
+      }),
     }).then((data) => {
       console.log(data);
 

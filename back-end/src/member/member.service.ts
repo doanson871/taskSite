@@ -5,7 +5,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class MemberService {
   constructor(private prismService: PrismaService) {}
 
-  async updateMember(conversationId: number, userId: number) {
+  async updateMember(conversationId: number, userId: number, data: any) {
+    console.log(data, conversationId, userId);
+
     try {
       const member = await this.prismService.member.findFirst({
         where: {
@@ -22,7 +24,7 @@ export class MemberService {
           id: member.id,
         },
         data: {
-          seen: !member.seen,
+          seen: data.seen,
         },
       });
 
