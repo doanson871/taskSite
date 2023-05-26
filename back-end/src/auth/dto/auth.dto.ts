@@ -32,3 +32,12 @@ export class AuthDTO {
   @IsOptional()
   role?: Role;
 }
+
+export class ResetPw {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsNotEmpty()
+  password: string;
+}

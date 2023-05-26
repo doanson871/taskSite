@@ -33,6 +33,11 @@ export class UserController {
     return this.userService.updateUser(userId, data);
   }
 
+  @Patch('change-password')
+  resetPassword(@Body() data: any, @GetUser('id') userId: number) {
+    return this.userService.changePassword(userId, data);
+  }
+
   // @UseGuards(MyJwtGuard)
   // // @Roles(Role.ADMIN, Role.USER)
   // @Get('allUsers')

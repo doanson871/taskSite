@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User, Note } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon from 'argon2';
-import { AuthDTO } from './dto';
+import { AuthDTO, ResetPw } from './dto';
 import {
   ForbiddenException,
   NotFoundException,
@@ -70,6 +70,38 @@ export class AuthService {
     }
     delete user.hashedPassword;
     return await this.signJwtToken(user.id, user.email);
+  }
+
+  async resetPassword(body: ResetPw) {
+    try {
+      const user = await this.prismaService.user.findFirst({
+        where: {
+          email: body.email,
+        },
+      });
+
+      if (!user) {
+        throw new ForbiddenException('User not found');
+      }
+
+      const newHashPassword = await argon.hash(body.password);
+
+      await this.prismaService.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          hashedPassword: newHashPassword,
+        },
+      });
+
+      return {
+        statusCode: 200,
+        message: `Password reset successfully`,
+      };
+    } catch (error) {
+      throw new NotFoundException('Error');
+    }
   }
 
   async signJwtToken(

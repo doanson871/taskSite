@@ -39,8 +39,11 @@ export class PostJobController {
   searchPostJob(@Query() data: SearchPostJobDTO) {
     console.log(data);
     const dataSearch: SearchPostJobDTO = {
-      address: '',
+      thanhpho: '',
       workId: undefined,
+      // workName: '',
+      quanhuyen: '',
+      salary: 0,
       ...data,
     };
 

@@ -12,6 +12,18 @@ export class InsertPostJobDTO {
   @IsString()
   @IsOptional()
   descrition?: string;
+
+  @IsString()
+  @IsOptional()
+  thanhpho?: string;
+
+  @IsString()
+  @IsOptional()
+  quanhuyen?: string;
+
+  @IsNumber()
+  @IsOptional()
+  salary?: number;
 }
 
 export class UpdatePostJobDTO {
@@ -29,16 +41,35 @@ export class UpdatePostJobDTO {
 
   @IsOptional()
   status?: boolean;
+
+  @IsString()
+  @IsOptional()
+  thanhpho?: string;
+
+  @IsString()
+  @IsOptional()
+  quanhuyen?: string;
+
+  @IsNumber()
+  @IsOptional()
+  salary?: number;
 }
 
 export class SearchPostJobDTO {
   @IsString()
   @IsOptional()
-  address?: string;
+  thanhpho?: string;
+
+  @IsString()
+  @IsOptional()
+  quanhuyen?: string;
+
+  @IsOptional()
+  salary?: any;
 
   @IsOptional()
   workId?: any;
 
-  @IsOptional()
-  name?: string;
+  // @IsOptional()
+  // workName?: string;
 }

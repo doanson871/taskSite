@@ -83,6 +83,9 @@ model PostJob {
   work        Work          @relation(fields: [workId], references: [id])
   workId      Int
   address     String
+  thanhpho    String?
+  quanhuyen   String?
+  salary      Int?
   descrition  String?
   photoURL    String?
   status      Boolean       @default(true)

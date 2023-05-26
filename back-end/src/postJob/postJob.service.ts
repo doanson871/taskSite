@@ -85,23 +85,52 @@ export class PostJobService {
   async searchPostJob(data: SearchPostJobDTO) {
     const postJobSearch = await this.prismaService.postJob.findMany({
       where: {
-        address: data.address
-          ? data.address
+        thanhpho: data.thanhpho
+          ? data.thanhpho
           : {
-              gt: '',
+              gte: '',
+            },
+        quanhuyen: data.quanhuyen
+          ? data.quanhuyen
+          : {
+              gte: '',
             },
         workId: data.workId
           ? parseInt(data.workId)
           : {
               gt: 0,
             },
-        work: {
-          name: data.name
-            ? data.name
-            : {
-                gt: '',
-              },
+        salary: {
+          gte: data.salary ? parseInt(data.salary) : 0,
         },
+        // work: {
+        //   name: data.workName
+        //     ? data.workName
+        //     : {
+        //         gt: '',
+        //       },
+        // },
+      },
+      select: {
+        id: true,
+        address: true,
+        descrition: true,
+        createdAt: true,
+        photoURL: true,
+        quanhuyen: true,
+        salary: true,
+        status: true,
+        thanhpho: true,
+        userId: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            photoURL: true,
+          },
+        },
+        work: true,
+        workId: true,
       },
     });
 
@@ -118,6 +147,9 @@ export class PostJobService {
         address: insertPostJobDTO.address,
         workId: insertPostJobDTO.workId,
         descrition: insertPostJobDTO.descrition,
+        salary: insertPostJobDTO.salary,
+        thanhpho: insertPostJobDTO.thanhpho ?? '',
+        quanhuyen: insertPostJobDTO.quanhuyen ?? '',
       },
     });
 
