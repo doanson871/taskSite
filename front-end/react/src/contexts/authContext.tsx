@@ -44,8 +44,28 @@ const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
     }
   };
+
+  // get data profile
+  const profileData = async () => {
+    try {
+      const response = await axios.get(`${apiURL}/users/me`);
+      if (response.status === 200) {
+        authDispatch({
+          type: AuthActionKind.SETAUTH,
+          payload: {
+            isAuthenticated: true,
+            account: response.data,
+          },
+        });
+      }
+    } catch (error: any) {
+      if (error.response?.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
   useEffect(() => {
     loadAccount();
+    profileData();
   }, []);
 
   // Login

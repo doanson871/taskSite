@@ -20,7 +20,7 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
       else return { success: false, message: error.message };
     }
   };
-  const createNewuserPost = async (postForm: any) => {
+  const createNewUserPost = async (postForm: any) => {
     try {
       const response = await axios.post(`${apiURL}/postjob`, postForm);
       return response;
@@ -30,7 +30,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
   const value = {
-    getAllWorks
+    getAllWorks,
+    createNewUserPost,
   };
   return (
     <TasksiteContext.Provider value={value}>

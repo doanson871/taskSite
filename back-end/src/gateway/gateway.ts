@@ -25,7 +25,7 @@ export class MyGateWay implements OnModuleInit {
   socket: any;
 
   onModuleInit() {
-    this.server.on('connection', (socket) => {
+    this.server?.on('connection', (socket) => {
       console.log(socket.id);
       this.socket = socket;
       this.id = socket.id;
