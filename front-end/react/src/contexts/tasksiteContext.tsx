@@ -29,9 +29,19 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
       else return { success: false, message: error.message };
     }
   };
+  const updateProfile = async (accountForm: any) => {
+    try {
+      const response = await axios.patch(`${apiURL}/users/update`, accountForm);
+      return response;
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
   const value = {
     getAllWorks,
     createNewUserPost,
+    updateProfile,
   };
   return (
     <TasksiteContext.Provider value={value}>

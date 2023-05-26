@@ -20,6 +20,13 @@ export interface AccountType {
   description: string | null;
 }
 
+export const initialRole = [
+  { name: "Người tìm việc", role: "EMPLOYEE" },
+  { name: "Người tuyển dụng", role: "USER" },
+];
+
+export const initialGender = ["Không xác định", "Nam", "Nữ"];
+
 export const navBarList = [
   {
     id: 1,

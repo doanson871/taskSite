@@ -32,6 +32,9 @@ const Navbar: React.FC<Props> = () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [showFeature]);
+  const handleclick = () => {
+    setShowFeature(false);
+  };
 
   return (
     <div className={`header d-grid`}>
@@ -59,7 +62,9 @@ const Navbar: React.FC<Props> = () => {
             />
             <span>{account.name}</span>
           </div>
-          <div className="item">Thông tin cá nhân</div>
+          <Link className="item" to={"/profile"} onClick={handleclick}>
+            Thông tin cá nhân
+          </Link>
           <div className="item">Tin nhắn</div>
           <div className="item">Thông báo</div>
           <div className="item" onClick={() => logOut()}>

@@ -3,17 +3,13 @@ import { AccContext } from "../../../contexts/accContext";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import "./register.scss";
+import { initialRole } from "../../../utils/constant";
 export interface RegisterForm {
   name: string;
   email: string;
   password: string;
   role: string;
 }
-
-const initialRole = [
-  { name: "Người tìm việc", role: "EMPLOYEE" },
-  { name: "Người tuyển dụng", role: "USER" },
-];
 
 const Register: React.FC = () => {
   const [registerForm, setRegisterForm] = useState({

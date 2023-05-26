@@ -4,5 +4,23 @@
   grid-template-columns: 1fr 3fr 1fr;
   background-color: #f0f2f5;
   height: calc(100vh - 5em);
-  
+  .right-profile {
+    justify-content: center;
+    align-items: baseline;
+    grid-template-rows: 1fr 10fr 1fr;
+    .button-profile {
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      border-radius: 1rem;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid #000;
+      cursor: pointer;
+      &:hover,
+      &.active {
+        background-color: #00b4ff;
+        color: #fff;
+      }
+    }
+  }
 }
