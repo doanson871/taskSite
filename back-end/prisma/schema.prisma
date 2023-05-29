@@ -25,6 +25,7 @@ model User {
   quanhuyen            String?
   age                  Int?
   sex                  String?
+  isReadNotification   Boolean?       @default(false)
   notes                Note[]
   works                UsersOnWorks[]
   postJob              PostJob[]
@@ -129,6 +130,8 @@ model Notification {
   receiverId Int
   receiver   User     @relation(name: "receiver", fields: [receiverId], references: [id])
   content    String
+  isRead     Boolean  @default(false)
+  postId     Int?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

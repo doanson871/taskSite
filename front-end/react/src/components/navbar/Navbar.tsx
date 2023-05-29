@@ -1,17 +1,25 @@
 import { Offcanvas } from "react-bootstrap";
-import { navBarList } from "../../utils/constant";
+import { navBarList, socket } from "../../utils/constant";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
-import { Avatar } from "antd";
+import { Avatar, Badge } from "antd";
+import NotifiList from "./NotifiList";
+import { NotiContext } from "../../contexts/notiContext";
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
   const [showNavbar, setShowNavbar] = useState(false);
+
   const {
     authState: { account },
   } = useContext(AuthContext);
+
+  const { isShowNoti, setIsShowNoti } = useContext(NotiContext);
+
+  // console.log(notiContext);
+
   const [showFeature, setShowFeature] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const { logOut } = useContext(AuthContext);
@@ -36,12 +44,41 @@ const Navbar: React.FC<Props> = () => {
     setShowFeature(false);
   };
 
+  useEffect(() => {
+    socket.on(`onNoti-user${account.id}`, (data) => {});
+
+    return () => {
+      socket.removeListener("");
+    };
+  }, []);
+
   return (
     <div className={`header d-grid`}>
       <div className="icon-menu d-flex">
         <i className="bi bi-list" onClick={() => setShowNavbar(true)}></i>
       </div>
       <div className="nav-bar-name d-flex">Task Site</div>
+      <div className="nav-noti d-flex">
+        <Badge count={1} overflowCount={10} dot size={"default"}>
+          <i
+            className="bi bi-bell"
+            onClick={() => {
+              setIsShowNoti(!isShowNoti);
+              console.log(isShowNoti);
+            }}
+            style={{ fontSize: 30 }}
+          ></i>
+        </Badge>
+
+        {isShowNoti && (
+          <div
+            className="position-absolute nav-noti-details"
+            style={{ zIndex: 99 }}
+          >
+            <NotifiList />
+          </div>
+        )}
+      </div>
       <div className="avatar-nav d-flex position-relative">
         <Avatar
           src={account.photoURL || ""}

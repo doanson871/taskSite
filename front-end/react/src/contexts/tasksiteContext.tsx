@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { useContext } from "react";
 import { apiURL } from "../utils/constant";
 
@@ -11,6 +11,8 @@ export const useTasksiteContext = () => {
 export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
+  const [isOpenApplyModal, setIsOpenApplyModal] = useState(false);
+
   const getAllWorks = async () => {
     try {
       const response = await axios.get(`${apiURL}/work/works`);
@@ -42,6 +44,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     getAllWorks,
     createNewUserPost,
     updateProfile,
+    isOpenApplyModal,
+    setIsOpenApplyModal,
   };
   return (
     <TasksiteContext.Provider value={value}>

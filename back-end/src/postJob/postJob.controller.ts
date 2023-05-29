@@ -25,12 +25,12 @@ export class PostJobController {
 
   @Roles(Role.USER)
   @UseGuards(RolesGuard)
-  @Get('/allPostJobs')
+  @Get('allPostJobs')
   getAllPostJobs(@GetUser('id') userId: number) {
     return this.postJobService.getAllPostJobs(userId);
   }
 
-  @Get('/postJob/:id/details')
+  @Get(':id')
   getPostJob(@Param('id', ParseIntPipe) postJobId: number) {
     return this.postJobService.getPostJob(postJobId);
   }

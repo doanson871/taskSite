@@ -11,6 +11,8 @@ import ChatContextProvider from "./contexts/chatContext";
 import Profile from "./components/pages/profile/Profile";
 import Chat from "./components/pages/Chat/Chat";
 import Login from "./components/pages/Login/Login";
+import NotiContextProvider from "./contexts/notiContext";
+import ApplyModel from "./components/model/ApplyModel";
 
 const App = () => {
   return (
@@ -18,24 +20,27 @@ const App = () => {
       <AccContextProvider>
         <TasksiteContextProvider>
           <ChatContextProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                {/* <Route path="/signup" element={<NewAccount />} />   */}
-                <Route path="/" element={<ProtectedRoute />}>
-                  <Route path="/post" element={<Post />} />
-                  <Route path="/joblist" element={<Post />} />
-                  <Route path="/message" element={<Chat />}>
-                    <Route path=":idChat" element={<Chat />} />
+            <NotiContextProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  {/* <Route path="/signup" element={<NewAccount />} />   */}
+                  <Route path="/" element={<ProtectedRoute />}>
+                    <Route path="/post" element={<Post />} />
+                    <Route path="/joblist" element={<Post />} />
+                    <Route path="/message" element={<Chat />}>
+                      <Route path=":idChat" element={<Chat />} />
+                    </Route>
+                    <Route path="/notify" element={<Post />} />
+                    <Route path="/profile" element={<Profile />} />
                   </Route>
-                  <Route path="/notify" element={<Post />} />
-                  <Route path="/profile" element={<Profile />} />
-                </Route>
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <ApplyModel />
+              </BrowserRouter>
+            </NotiContextProvider>
           </ChatContextProvider>
         </TasksiteContextProvider>
       </AccContextProvider>

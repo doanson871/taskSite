@@ -104,6 +104,8 @@ export class MyGateWay implements OnModuleInit {
     }
   }
 
-  // @SubscribeMessage('newNotification')
-  // onNewNotification(@MessageBody() body: any) {}
+  @SubscribeMessage('newNotification')
+  onNewNotification(@MessageBody() body: any) {
+    console.log(body);
+  }
 }

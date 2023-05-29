@@ -13,6 +13,7 @@ import { GatewayModule } from './gateway/gateway.module';
 import { MessageModule } from './message/message.module';
 import { ConversationModule } from './conversation/conversation.module';
 import { MemberModule } from './member/member.module';
+import { NotificationModule } from './notification/notification.module';
 @Module({
   imports: [
     ConfigModule,
@@ -29,6 +30,7 @@ import { MemberModule } from './member/member.module';
     MessageModule,
     ConversationModule,
     MemberModule,
+    NotificationModule,
   ],
   providers: [],
 })
