@@ -27,6 +27,13 @@ export const initialRole = [
 
 export const initialGender = ["Không xác định", "Nam", "Nữ"];
 
+// export const openNotification = () => {
+//   api.open({
+//     message: "Đăng bài thành công",
+//     icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+//   });
+// };
+
 export const navBarList = [
   {
     id: 1,

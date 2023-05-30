@@ -12,6 +12,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [isOpenApplyModal, setIsOpenApplyModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [postList, setPostList] = useState<any>([]);
 
   const getAllWorks = async () => {
     try {
@@ -23,10 +25,14 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
   const createNewUserPost = async (postForm: any) => {
-    console.log(postForm);
     try {
       const response = await axios.post(`${apiURL}/postjob`, postForm);
-      return response;
+
+      if (response.status === 201) {
+        setPostList([...postList, response.data.data]);
+        return { status: 200 };
+      }
+      // return response;
     } catch (error: any) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
@@ -46,8 +52,16 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
 
   const getAllPostJob = async () => {
     try {
-      const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
-      return response;
+      if (!isLoading) {
+        const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
+        console.log(response);
+
+        if (response.status === 200) {
+          setIsLoading(true);
+          setPostList(response.data.data.postJobs);
+        }
+        // return response;
+      }
     } catch (error: any) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
@@ -72,6 +86,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     setIsOpenApplyModal,
     getAllPostJob,
     getJobName,
+    postList,
+    setPostList,
   };
   return (
     <TasksiteContext.Provider value={value}>

@@ -63,7 +63,7 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const getConversationMessages = async (id: number) => {
-    const mes = await UseFetchData(`${apiURL}/member/${id}`, {
+    await UseFetchData(`${apiURL}/member/${id}`, {
       method: "PATCH",
       body: JSON.stringify({
         seen: true,

@@ -3,31 +3,42 @@ import { Form, Modal } from "react-bootstrap";
 import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { listAddress } from "../../../utils/constant";
-import { notification } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import queryString from "query-string";
 
 interface Props {
   showModal: boolean;
   handleClose: () => void;
 }
-const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
+const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
   const { getAllWorks } = useTasksiteContext();
   const [jobs, setjobs] = useState<any[]>([]);
   const [workId, setWorkId] = useState<number>(0);
   const [city, setCity] = useState<string>("");
   const [distric, setDistric] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const [salary, setSalary] = useState<number>(0);
-  const { createNewUserPost } = useTasksiteContext();
 
-  const [api, contextHolder] = notification.useNotification();
+  const [isChanged, setIsChanged] = useState<boolean>(false);
 
-  const openNotification = () => {
-    api.open({
-      message: "Đăng bài thành công",
-      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
-    });
+  const checkData = () => {
+    const filterForm = {
+      workId: workId,
+      thanhpho: city,
+      quanhuyen: distric,
+      salary: salary,
+    };
+
+    for (const key in filterForm) {
+      if ((filterForm as any)[key]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleExit = () => {
+    if (isChanged) {
+      console.log(checkData());
+    }
   };
 
   useEffect(() => {
@@ -35,15 +46,16 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     // eslint-disable-next-line
   }, []);
   const listCity = useMemo(() => {
-    let _listCity = ["Hãy chọn thành phố"];
+    let _listCity = [""];
     listAddress.forEach((address) => {
       _listCity.push(address.city);
     });
+
     return _listCity;
     // eslint-disable-next-line
   }, [listAddress]);
   const listDistric = useMemo(() => {
-    let _listDistric = ["Hãy chọn quận"];
+    let _listDistric = [""];
     listAddress.forEach((address) => {
       if (address.city === city) {
         _listDistric = _listDistric.concat(address.district);
@@ -61,27 +73,18 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     }
   };
   const uploadImage = () => {};
-  const postJob = async () => {
-    const postForm = {
-      address: address,
-      descrition: description,
+  const filterJob = async () => {
+    const filterForm = {
       workId: workId,
       thanhpho: city,
       quanhuyen: distric,
       salary: salary,
     };
+    console.log(queryString.stringify(filterForm));
     try {
-      const data = await createNewUserPost(postForm);
-      if (data.status === 200) {
-        openNotification();
-      }
+      console.log(filterForm);
 
       handleClose();
-      // console.log(response);
-      // if (response.data.statusCode === 200) {
-      //   openNotification();
-      //   handleClose();
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -89,27 +92,26 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
 
   return (
     <>
-      {contextHolder}
       <Modal
         show={showModal}
         onHide={handleClose}
+        onShow={() => {
+          setWorkId(0);
+          setSalary(0);
+          setDistric("");
+          setCity("");
+          setIsChanged(false);
+        }}
+        onExit={handleExit}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tạo bài viết</Modal.Title>
+          <Modal.Title>Lọc bài viết</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="post-job container">
-            <div className="row mb-2">
-              <div className="col-2 fs-6 address">Địa chỉ</div>
-              <input
-                type="text"
-                className="col-10 address-input box-input"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
             <div className="row mb-2">
               <div className="col-2 fs-6 distric">Thành phố</div>
               <div className="col-4 fs-6 box-input p-0">
@@ -117,9 +119,11 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                   aria-label="Default select example"
                   className="select-box fs-6"
                   onChange={(e) => {
+                    setIsChanged(true);
                     setCity(e.target.value);
-                    setDistric("Hãy chọn quận");
+                    // setDistric("Hãy chọn quận");
                   }}
+                  placeholder="Hay chọn thành phố"
                 >
                   {listCity.map((city, id) => (
                     <option key={id} value={city}>
@@ -134,9 +138,11 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                   aria-label="Default select example"
                   className="select-box fs-6"
                   onChange={(e) => {
+                    setIsChanged(true);
                     setDistric(e.target.value);
                   }}
                   value={distric}
+                  placeholder="Hay chọn quận"
                 >
                   {listDistric.map((distric, id) => (
                     <option key={id} value={distric}>
@@ -152,7 +158,10 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                 <Form.Select
                   aria-label="Default select example"
                   className="select-box fs-6"
-                  onChange={(e) => setWorkId(+e.target.value)}
+                  onChange={(e) => {
+                    setIsChanged(true);
+                    setWorkId(+e.target.value);
+                  }}
                 >
                   {jobs.map((job) => (
                     <option value={job.id}>{job.name}</option>
@@ -166,31 +175,21 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                 type="text"
                 className="col-10 cost box-input"
                 value={salary}
-                onChange={(e) => setSalary(+e.target.value)}
-              />
-            </div>
-            <div className="row mb-2">
-              <div className="col-12 fs-6">Mô tả công việc</div>
-            </div>
-            <div className="row mb-2 position-relative">
-              <textarea
-                className="col-12 description-job"
-                rows={5}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setIsChanged(true);
+                  setSalary(+e.target.value);
+                }}
               />
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer className="footer-post">
-          <div className="btn btn-secondary" onClick={uploadImage}>
-            <i className="bi bi-camera"></i>
-          </div>
-          <button className="btn btn-primary" onClick={postJob}>
-            Đăng bài
+          <button className="btn btn-primary" onClick={filterJob}>
+            Lọc
           </button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
-export default AddPostJob;
+export default FilterModal;

@@ -27,7 +27,6 @@ const PostJob: React.FC<Props> = (element) => {
     getName();
     // eslint-disable-next-line
   }, []);
-  console.log(account);
   return (
     <div className="post-job-item">
       <div className="item-header d-flex justify-content-between">

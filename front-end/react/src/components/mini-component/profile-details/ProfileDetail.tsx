@@ -6,7 +6,11 @@ import { initialGender, initialRole } from "../../../utils/constant";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { SmileOutlined } from "@ant-design/icons";
 
-const ProfileDetail: React.FC = () => {
+interface Props {
+  data: any;
+}
+
+const ProfileDetail: React.FC = (props) => {
   const {
     authState: { account },
   } = useContext(AuthContext);

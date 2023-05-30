@@ -3,21 +3,24 @@ import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
+import { FilterOutlined, FilterTwoTone } from "@ant-design/icons";
+import { useRef } from "react";
+import FilterModal from "../../mini-component/filter/FilterModal";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const { getAllPostJob } = useTasksiteContext();
-  const [listPostJob, setListPostJob] = useState<any[]>([]);
-  console.log(listPostJob);
+
+  const [showFilter, setShowFilter] = useState(false);
+  const handleCloseFilter = () => setShowFilter(false);
+  const { postList, getAllPostJob } = useTasksiteContext();
+  const refElement = useRef<HTMLElement>(null);
+  // const [listPostJob, setListPostJob] = useState<any[]>([]);
+  // console.log(listPostJob);
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllPostJob();
-      if (response.status === 200) setListPostJob(response.data.data.postJobs);
-    };
-    fetchData();
-    // eslint-disable-next-line
-  }, []);
+    getAllPostJob();
+  }, [getAllPostJob]);
+
   return (
     <>
       <div className="post d-grid">
@@ -35,21 +38,17 @@ const Post: React.FC<Props> = () => {
               Bạn muốn tìm người giúp bạn hoàn thành công việc?
             </div>
             <div className="m-auto">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="green"
-                className="bi bi-image image-post"
-                viewBox="0 0 16 16"
-              >
-                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
-              </svg>
+              <FilterTwoTone
+                style={{ fontSize: "24px" }}
+                ref={refElement}
+                onClick={() => {
+                  setShowFilter(true);
+                }}
+              />
             </div>
           </div>
           <div className="list-post-jobs d-flex">
-            {listPostJob.map((postJob) => (
+            {postList.map((postJob: any) => (
               <PostJob
                 element={{
                   address: `${postJob.quanhuyen}, ${postJob.thanhpho}`,
@@ -65,6 +64,7 @@ const Post: React.FC<Props> = () => {
         <div className="right-post"></div>
       </div>
       <AddPostJob showModal={show} handleClose={handleClose} />
+      <FilterModal showModal={showFilter} handleClose={handleCloseFilter} />
     </>
   );
 };
