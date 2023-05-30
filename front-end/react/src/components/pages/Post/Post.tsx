@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.scss";
+import { useTasksiteContext } from "../../../contexts/tasksiteContext";
+import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const { getAllPostJob } = useTasksiteContext();
+  const [listPostJob, setListPostJob] = useState<any[]>([]);
+  console.log(listPostJob);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAllPostJob();
+      if (response.status === 200) setListPostJob(response.data.data.postJobs);
+    };
+    fetchData();
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <div className="post d-grid">
@@ -35,10 +48,23 @@ const Post: React.FC<Props> = () => {
               </svg>
             </div>
           </div>
+          <div className="list-post-jobs d-flex">
+            {listPostJob.map((postJob) => (
+              <PostJob
+                element={{
+                  address: `${postJob.quanhuyen}, ${postJob.thanhpho}`,
+                  photoUrl: postJob.photoURL,
+                  description: postJob.descrition,
+                  status: postJob.status,
+                  workId: postJob.workId,
+                }}
+              />
+            ))}
+          </div>
         </div>
         <div className="right-post"></div>
       </div>
-      <PostJob showModal={show} handleClose={handleClose} />
+      <AddPostJob showModal={show} handleClose={handleClose} />
     </>
   );
 };

@@ -9,10 +9,10 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Register from "./components/pages/register/Register";
 import ChatContextProvider from "./contexts/chatContext";
 import Profile from "./components/pages/profile/Profile";
-import Chat from "./components/pages/Chat/Chat";
-import Login from "./components/pages/Login/Login";
 import NotiContextProvider from "./contexts/notiContext";
 import ApplyModel from "./components/model/ApplyModel";
+import Chat from "./components/pages/Chat/chat";
+import Login from "./components/pages/login/Login";
 
 const App = () => {
   return (

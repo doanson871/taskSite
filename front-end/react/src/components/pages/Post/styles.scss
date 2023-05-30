@@ -1,11 +1,11 @@
 .post {
   width: 100%;
   height: auto;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   background-color: #f0f2f5;
   .center-post {
     margin-top: 1rem;
-    width: 100%;
+    width: 50vw;
 
     min-height: 100px;
     .add-post {
@@ -27,15 +27,26 @@
         background-color: #f0f2f5;
         padding: 0 1rem;
         align-items: center;
-        opacity: 80%;
+        opacity: 60%;
         min-height: 60px;
         &:hover {
-          opacity: 100%;
+          opacity: 85%;
         }
       }
       .image-post {
         margin: auto 0;
       }
     }
+    .list-post-jobs {
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-direction: column-reverse;
+    }
+  }
+  .left-post {
+    width: 25vw;
+  }
+  .right-post {
+    width: 25vw;
   }
 }

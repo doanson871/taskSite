@@ -1,23 +1,47 @@
-.post-job {
-  font-size: larger;
-  .box-input {
-    border-radius: 0.5rem;
-    line-height: 2.5rem;
+.post-job-item {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  .item-header {
+    font-weight: 600;
+    color: #000;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid;
+    i {
+      padding-right: 0.5rem;
+    }
   }
-  .select-box {
-    line-height: 2rem;
-    border: 1px solid #000;
-    border-radius: 0.5rem;
+  .image-item {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    max-height: 18%;
+    img {
+      height: 100%;
+      width: auto;
+      max-height: 30vh;
+      max-width: 100%;
+    }
   }
-  .description-job {
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    width: 100%;
+  .description-item {
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+    .text {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
-  .row {
-    line-height: 2.5rem;
+  .list-btn {
+    .button-post {
+      background-color: #77a7ff;
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
   }
-}
-.footer-post {
-  justify-content: space-between;
 }
