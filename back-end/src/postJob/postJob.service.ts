@@ -82,7 +82,66 @@ export class PostJobService {
     }
   }
 
-  async searchPostJob(data: SearchPostJobDTO) {
+  async searchPostJobByUser(data: SearchPostJobDTO, userId: number) {
+    const postJobSearch = await this.prismaService.postJob.findMany({
+      where: {
+        thanhpho: data.thanhpho
+          ? data.thanhpho
+          : {
+              gte: '',
+            },
+        quanhuyen: data.quanhuyen
+          ? data.quanhuyen
+          : {
+              gte: '',
+            },
+        workId: parseInt(data.workId)
+          ? parseInt(data.workId)
+          : {
+              gt: 0,
+            },
+        salary: {
+          gte: parseInt(data.salary) ? parseInt(data.salary) : 0,
+        },
+        // work: {
+        //   name: data.workName
+        //     ? data.workName
+        //     : {
+        //         gt: '',
+        //       },
+        // },
+        userId: userId,
+      },
+      select: {
+        id: true,
+        address: true,
+        descrition: true,
+        createdAt: true,
+        photoURL: true,
+        quanhuyen: true,
+        salary: true,
+        status: true,
+        thanhpho: true,
+        userId: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            photoURL: true,
+          },
+        },
+        work: true,
+        workId: true,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data: postJobSearch,
+    };
+  }
+
+  async searchPostJobByEmployee(data: SearchPostJobDTO) {
     const postJobSearch = await this.prismaService.postJob.findMany({
       where: {
         thanhpho: data.thanhpho

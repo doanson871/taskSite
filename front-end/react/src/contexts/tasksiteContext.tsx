@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { PropsWithChildren, useState } from "react";
 import { useContext } from "react";
 import { apiURL } from "../utils/constant";
+import { AuthContext } from "./authContext";
 
 const TasksiteContext = React.createContext<any>(null);
 export const useTasksiteContext = () => {
@@ -16,11 +17,15 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const [postList, setPostList] = useState<any>([]);
   const [isFilter, setIsFilter] = useState(false);
 
+  const {
+    authState: { account },
+  } = useContext(AuthContext);
+
   const resetData = () => {
     setIsLoading(false);
     setPostList([]);
     setIsFilter(false);
-  }
+  };
 
   const getAllWorks = async () => {
     try {
@@ -73,9 +78,16 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   };
 
   const filterPostJobs = async (url: string) => {
-    const data = await axios.get(`${apiURL}/postJob/search?${url}`);
-    if (data.status === 200) {
-      setPostList(data.data.data);
+    if (account.role === "USER") {
+      const data = await axios.get(`${apiURL}/postJob/searchByUser?${url}`);
+      if (data.status === 200) {
+        setPostList(data.data.data);
+      }
+    } else if (account.role === "EMPLOYEE") {
+      const data = await axios.get(`${apiURL}/postJob/searchByEmployee?${url}`);
+      if (data.status === 200) {
+        setPostList(data.data.data);
+      }
     }
   };
 
@@ -113,7 +125,7 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     setIsFilter,
     filterPostJobs,
     changeStatusPost,
-    resetData
+    resetData,
   };
   return (
     <TasksiteContext.Provider value={value}>
