@@ -14,6 +14,7 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const [isOpenApplyModal, setIsOpenApplyModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState<any>([]);
+  const [isFilter, setIsFilter] = useState(false);
 
   const getAllWorks = async () => {
     try {
@@ -78,6 +79,14 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
 
+  const filterPostJobs = async (url: string) => {
+    const data = await axios.get(`${apiURL}/postJob/search?${url}`);
+    console.log(data);
+    if (data.status === 200) {
+      setPostList(data.data.data);
+    }
+  };
+
   const value = {
     getAllWorks,
     createNewUserPost,
@@ -88,6 +97,9 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     getJobName,
     postList,
     setPostList,
+    isFilter,
+    setIsFilter,
+    filterPostJobs,
   };
   return (
     <TasksiteContext.Provider value={value}>

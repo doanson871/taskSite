@@ -54,4 +54,25 @@ export class WorkService {
       console.log(error);
     }
   }
+
+  async postWorkMany(insertWorkManyDTO: any) {
+    const manyWork = await this.prismaService.work.createMany({
+      data: [
+        { name: 'rua bat' },
+        { name: 'lai xe' },
+        { name: 'trong tre' },
+        { name: 'quet nha' },
+        { name: 'xay dung' },
+        { name: 'son tuong' },
+        { name: 'shipper' },
+        ...insertWorkManyDTO.data,
+      ],
+    });
+
+    return {
+      statusCode: 200,
+      message: 'success',
+      data: manyWork,
+    };
+  }
 }

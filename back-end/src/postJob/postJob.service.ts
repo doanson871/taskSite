@@ -83,6 +83,10 @@ export class PostJobService {
   }
 
   async searchPostJob(data: SearchPostJobDTO) {
+    if (data.workId) {
+      console.log(1);
+    } else console.log(3);
+
     const postJobSearch = await this.prismaService.postJob.findMany({
       where: {
         thanhpho: data.thanhpho
@@ -95,13 +99,13 @@ export class PostJobService {
           : {
               gte: '',
             },
-        workId: data.workId
+        workId: parseInt(data.workId)
           ? parseInt(data.workId)
           : {
               gt: 0,
             },
         salary: {
-          gte: data.salary ? parseInt(data.salary) : 0,
+          gte: parseInt(data.salary) ? parseInt(data.salary) : 0,
         },
         // work: {
         //   name: data.workName
@@ -156,6 +160,7 @@ export class PostJobService {
     return {
       statusCode: 200,
       message: 'OK',
+      data: postJob,
     };
   }
   async updatePostJob(postJobId: number, updatePostJobDTO: UpdatePostJobDTO) {

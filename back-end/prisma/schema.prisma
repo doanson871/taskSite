@@ -66,13 +66,16 @@ model Work {
 }
 
 model UsersOnWorks {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  workId    Int
-  work      Work     @relation(fields: [workId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+  photoURL      String?
+  description   String?
+  priceExpected String?
+  workId        Int
+  work          Work     @relation(fields: [workId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("usersonworks")
 }

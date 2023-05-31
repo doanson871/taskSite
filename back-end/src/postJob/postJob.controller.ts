@@ -23,18 +23,6 @@ import { RolesGuard } from 'src/utils/roleGuard/roles.gurad';
 export class PostJobController {
   constructor(private postJobService: PostJobService) {}
 
-  @Roles(Role.USER)
-  @UseGuards(RolesGuard)
-  @Get('allPostJobs')
-  getAllPostJobs(@GetUser('id') userId: number) {
-    return this.postJobService.getAllPostJobs(userId);
-  }
-
-  @Get(':id')
-  getPostJob(@Param('id', ParseIntPipe) postJobId: number) {
-    return this.postJobService.getPostJob(postJobId);
-  }
-
   @Get('search')
   searchPostJob(@Query() data: SearchPostJobDTO) {
     console.log(data);
@@ -49,6 +37,18 @@ export class PostJobController {
 
     console.log(dataSearch);
     return this.postJobService.searchPostJob(dataSearch);
+  }
+
+  @Roles(Role.USER)
+  @UseGuards(RolesGuard)
+  @Get('allPostJobs')
+  getAllPostJobs(@GetUser('id') userId: number) {
+    return this.postJobService.getAllPostJobs(userId);
+  }
+
+  @Get(':id')
+  getPostJob(@Param('id', ParseIntPipe) postJobId: number) {
+    return this.postJobService.getPostJob(postJobId);
   }
 
   @Roles(Role.USER)

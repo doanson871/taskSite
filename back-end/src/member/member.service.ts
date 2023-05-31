@@ -6,8 +6,6 @@ export class MemberService {
   constructor(private prismService: PrismaService) {}
 
   async updateMember(conversationId: number, userId: number, data: any) {
-    console.log(data, conversationId, userId);
-
     try {
       const member = await this.prismService.member.findFirst({
         where: {

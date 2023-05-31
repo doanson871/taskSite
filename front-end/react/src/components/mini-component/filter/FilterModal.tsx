@@ -10,14 +10,12 @@ interface Props {
   handleClose: () => void;
 }
 const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
-  const { getAllWorks } = useTasksiteContext();
+  const { getAllWorks, setIsFilter, filterPostJobs } = useTasksiteContext();
   const [jobs, setjobs] = useState<any[]>([]);
-  const [workId, setWorkId] = useState<number>(0);
+  const [workId, setWorkId] = useState<number | undefined>(undefined);
   const [city, setCity] = useState<string>("");
   const [distric, setDistric] = useState<string>("");
   const [salary, setSalary] = useState<number>(0);
-
-  const [isChanged, setIsChanged] = useState<boolean>(false);
 
   const checkData = () => {
     const filterForm = {
@@ -36,9 +34,7 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
   };
 
   const handleExit = () => {
-    if (isChanged) {
-      console.log(checkData());
-    }
+    console.log(checkData());
   };
 
   useEffect(() => {
@@ -80,9 +76,11 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
       quanhuyen: distric,
       salary: salary,
     };
-    console.log(queryString.stringify(filterForm));
+    setIsFilter(checkData());
     try {
-      console.log(filterForm);
+      console.log(queryString.stringify(filterForm));
+      const query = queryString.stringify(filterForm);
+      filterPostJobs(query);
 
       handleClose();
     } catch (error) {
@@ -100,7 +98,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
           setSalary(0);
           setDistric("");
           setCity("");
-          setIsChanged(false);
         }}
         onExit={handleExit}
         size="lg"
@@ -119,7 +116,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                   aria-label="Default select example"
                   className="select-box fs-6"
                   onChange={(e) => {
-                    setIsChanged(true);
                     setCity(e.target.value);
                     // setDistric("Hãy chọn quận");
                   }}
@@ -138,7 +134,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                   aria-label="Default select example"
                   className="select-box fs-6"
                   onChange={(e) => {
-                    setIsChanged(true);
                     setDistric(e.target.value);
                   }}
                   value={distric}
@@ -159,7 +154,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                   aria-label="Default select example"
                   className="select-box fs-6"
                   onChange={(e) => {
-                    setIsChanged(true);
                     setWorkId(+e.target.value);
                   }}
                 >
@@ -176,7 +170,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                 className="col-10 cost box-input"
                 value={salary}
                 onChange={(e) => {
-                  setIsChanged(true);
                   setSalary(+e.target.value);
                 }}
               />

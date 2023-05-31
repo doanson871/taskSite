@@ -33,4 +33,9 @@ export class WorkController {
   postWork(@Body() insertWorkDTO: insertWorkDTO) {
     return this.workService.postWork(insertWorkDTO);
   }
+
+  @Post('many')
+  postWorkMany(@Body() insertWorkManyDTO: any) {
+    return this.workService.postWorkMany(insertWorkManyDTO);
+  }
 }

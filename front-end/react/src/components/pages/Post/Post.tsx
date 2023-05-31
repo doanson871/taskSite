@@ -4,7 +4,6 @@ import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
 import { FilterOutlined, FilterTwoTone } from "@ant-design/icons";
-import { useRef } from "react";
 import FilterModal from "../../mini-component/filter/FilterModal";
 interface Props {}
 const Post: React.FC<Props> = () => {
@@ -13,8 +12,7 @@ const Post: React.FC<Props> = () => {
 
   const [showFilter, setShowFilter] = useState(false);
   const handleCloseFilter = () => setShowFilter(false);
-  const { postList, getAllPostJob } = useTasksiteContext();
-  const refElement = useRef<HTMLElement>(null);
+  const { postList, getAllPostJob, isFilter } = useTasksiteContext();
   // const [listPostJob, setListPostJob] = useState<any[]>([]);
   // console.log(listPostJob);
   useEffect(() => {
@@ -38,13 +36,21 @@ const Post: React.FC<Props> = () => {
               Bạn muốn tìm người giúp bạn hoàn thành công việc?
             </div>
             <div className="m-auto">
-              <FilterTwoTone
-                style={{ fontSize: "24px" }}
-                ref={refElement}
-                onClick={() => {
-                  setShowFilter(true);
-                }}
-              />
+              {isFilter ? (
+                <FilterTwoTone
+                  style={{ fontSize: "24px" }}
+                  onClick={() => {
+                    setShowFilter(true);
+                  }}
+                />
+              ) : (
+                <FilterOutlined
+                  style={{ fontSize: "24px" }}
+                  onClick={() => {
+                    setShowFilter(true);
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className="list-post-jobs d-flex">
