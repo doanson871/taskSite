@@ -47,7 +47,8 @@
       grid-auto-rows: 1fr;
       grid-gap: 0.3rem;
       .details {
-        gap: 0.5rem;
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
         span {
           font-size: 1.3rem;
         }

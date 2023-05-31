@@ -4,7 +4,7 @@ import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { listAddress } from "../../../utils/constant";
 import { notification } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import { SmileOutlined, WarningTwoTone } from "@ant-design/icons";
 
 interface Props {
   showModal: boolean;
@@ -27,6 +27,12 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     api.open({
       message: "Đăng bài thành công",
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
+  };
+  const failAddPost = () => {
+    api.open({
+      message: "Đăng bài thất bại",
+      icon: <WarningTwoTone style={{ color: "#red" }} />,
     });
   };
 
@@ -71,17 +77,13 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
       salary: salary,
     };
     try {
-      const data = await createNewUserPost(postForm);
-      if (data.status === 200) {
+      const { status } = await createNewUserPost(postForm);
+      if (status === 200) {
         openNotification();
+        handleClose();
+      } else {
+        failAddPost();
       }
-
-      handleClose();
-      // console.log(response);
-      // if (response.data.statusCode === 200) {
-      //   openNotification();
-      //   handleClose();
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -121,10 +123,8 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                     setDistric("Hãy chọn quận");
                   }}
                 >
-                  {listCity.map((city, id) => (
-                    <option key={id} value={city}>
-                      {city}
-                    </option>
+                  {listCity.map((city) => (
+                    <option value={city}>{city}</option>
                   ))}
                 </Form.Select>
               </div>
@@ -138,10 +138,8 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                   }}
                   value={distric}
                 >
-                  {listDistric.map((distric, id) => (
-                    <option key={id} value={distric}>
-                      {distric}
-                    </option>
+                  {listDistric.map((distric) => (
+                    <option value={distric}>{distric}</option>
                   ))}
                 </Form.Select>
               </div>
@@ -165,7 +163,6 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
               <input
                 type="text"
                 className="col-10 cost box-input"
-                value={salary}
                 onChange={(e) => setSalary(+e.target.value)}
               />
             </div>

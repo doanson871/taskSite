@@ -42,6 +42,8 @@ const SideBar: React.FC<Props> = (props) => {
         );
       });
     };
+
+    // eslint-disable-next-line
   }, [conversations, updateLastMessage]);
 
   conversations.sort((a, b) => {

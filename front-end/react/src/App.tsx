@@ -11,8 +11,8 @@ import ChatContextProvider from "./contexts/chatContext";
 import Profile from "./components/pages/profile/Profile";
 import NotiContextProvider from "./contexts/notiContext";
 import ApplyModel from "./components/model/ApplyModel";
-import Chat from "./components/pages/Chat/Chat";
-import Login from "./components/pages/Login/Login";
+import Chat from "./components/pages/Chat/chat";
+import Login from "./components/pages/login/Login";
 
 const App = () => {
   return (
@@ -29,7 +29,7 @@ const App = () => {
                   {/* <Route path="/signup" element={<NewAccount />} />   */}
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="/post" element={<Post />}>
-                      <Route path=":id" element={<Post />} />
+                      <Route path=":idPost" element={<Post />} />
                     </Route>
                     <Route path="/joblist" element={<Post />} />
                     <Route path="/message" element={<Chat />}>

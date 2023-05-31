@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./styles.scss";
 import ProfileDetail from "../../mini-component/profile-details/ProfileDetail";
 import { AuthContext } from "../../../contexts/authContext";
 import ChangePassword from "../../mini-component/change-password/ChangePassword";
-import { useParams } from "react-router-dom";
+import { useTasksiteContext } from "../../../contexts/tasksiteContext";
+import WorkList from "../../mini-component/work-list/WorkList";
 
 enum FeatureType {
   Profile,
@@ -14,17 +15,9 @@ enum FeatureType {
 }
 
 const Profile: React.FC = () => {
-  const [profileInfo, setProfileInfo] = useState(undefined);
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (id) {
-      // handle
-      // get information
-    }
-  }, []);
-
+  // const [profileInfo, setProfileInfo] = useState(undefined); 
   const { logOut } = useContext(AuthContext);
+  const { resetData } = useTasksiteContext();
   const [profileType, setProfileType] = useState<FeatureType>(
     FeatureType.Profile
   );
@@ -36,7 +29,10 @@ const Profile: React.FC = () => {
     { name: "Đăng xuất", type: FeatureType.Logout },
   ];
   const handleClickButton = (type: FeatureType) => {
-    type === FeatureType.Logout && logOut();
+    if (type === FeatureType.Logout) {
+      resetData();
+      logOut();
+    }
     setProfileType(type);
   };
   return (
@@ -45,6 +41,7 @@ const Profile: React.FC = () => {
       <div className="center-profile">
         {profileType === FeatureType.Profile && <ProfileDetail />}
         {profileType === FeatureType.Password && <ChangePassword />}
+        {profileType === FeatureType.MyJob && <WorkList/> }
       </div>
       <div className="right-profile d-grid">
         <span></span>

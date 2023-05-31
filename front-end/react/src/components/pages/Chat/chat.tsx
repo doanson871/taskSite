@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import "./css/Chat.scss";
 import SideBar from "./SideBar";
 import ChatWindow from "./ChatWindow";
-import { AuthContext } from "../../../contexts/authContext";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
 interface Props {}
@@ -20,16 +19,13 @@ const Chat: React.FC<Props> = (props) => {
     },
   } = useContext(ChatContext);
 
-  const {
-    authState: {
-      account: { id },
-    },
-  } = useContext(AuthContext);
+  // } = useContext(AuthContext);
   // console.log(authContextData);
 
   useEffect(() => {
     getControvations();
     if (currentConversationId !== idChat) setCurrentConversationId(idChat);
+     // eslint-disable-next-line
   }, []);
 
   return (

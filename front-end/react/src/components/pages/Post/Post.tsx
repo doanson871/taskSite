@@ -3,8 +3,10 @@ import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
-import { FilterOutlined, FilterTwoTone } from "@ant-design/icons";
 import FilterModal from "../../mini-component/filter/FilterModal";
+import { useParams } from "react-router-dom";
+import AddPostModal from "./AddPostModal";
+import PostDetails from "../../mini-component/post-detail/PostDetails";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
@@ -13,59 +15,53 @@ const Post: React.FC<Props> = () => {
   const [showFilter, setShowFilter] = useState(false);
   const handleCloseFilter = () => setShowFilter(false);
   const { postList, getAllPostJob, isFilter } = useTasksiteContext();
+  const [postDetail, setPostDetail] = useState<any>({});
   // const [listPostJob, setListPostJob] = useState<any[]>([]);
   // console.log(listPostJob);
   useEffect(() => {
-    getAllPostJob();
-  }, [getAllPostJob]);
+    getAllPostJob(); 
+
+    // eslint-disable-next-line
+  }, []);
+  const { idPost } = useParams();
+  useEffect(() => {
+    const _postDetail =
+      idPost && postList.find((post: any) => post.id === +idPost);
+    idPost && setPostDetail(_postDetail);
+  }, [postList, idPost]);
 
   return (
     <>
+      {" "}
       <div className="post d-grid">
         <div className="left-post"></div>
         <div className="center-post">
-          <div className="add-post d-flex">
-            <div className="m-auto">
-              <img
-                src="https://images.pexels.com/photos/6461482/pexels-photo-6461482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1  "
-                className="avatar-post"
-                alt="avtar"
-              />
-            </div>
-            <div className="input-post" onClick={() => setShow(true)}>
-              Bạn muốn tìm người giúp bạn hoàn thành công việc?
-            </div>
-            <div className="m-auto">
-              {isFilter ? (
-                <FilterTwoTone
-                  style={{ fontSize: "24px" }}
-                  onClick={() => {
-                    setShowFilter(true);
-                  }}
-                />
-              ) : (
-                <FilterOutlined
-                  style={{ fontSize: "24px" }}
-                  onClick={() => {
-                    setShowFilter(true);
-                  }}
-                />
-              )}
-            </div>
-          </div>
-          <div className="list-post-jobs d-flex">
-            {postList.map((postJob: any) => (
-              <PostJob
+          {idPost && <PostDetails post={postDetail}/>}
+          {!idPost && (
+            <>
+              <AddPostModal
                 element={{
-                  address: `${postJob.quanhuyen}, ${postJob.thanhpho}`,
-                  photoUrl: postJob.photoURL,
-                  description: postJob.descrition,
-                  status: postJob.status,
-                  workId: postJob.workId,
+                  setShow: setShow,
+                  setShowFilter: setShowFilter,
+                  isFilter: isFilter,
                 }}
               />
-            ))}
-          </div>
+              <div className="list-post-jobs d-flex">
+                {postList.map((postJob: any) => (
+                  <PostJob
+                    element={{
+                      id: postJob.id,
+                      address: `${postJob.quanhuyen}, ${postJob.thanhpho}`,
+                      photoUrl: postJob.photoURL,
+                      description: postJob.descrition,
+                      status: postJob.status,
+                      workId: postJob.workId,
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <div className="right-post"></div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { Avatar, Typography } from "antd";
 import "./css/Message.scss";
 import { AuthContext } from "../../../contexts/authContext";
@@ -34,7 +34,6 @@ const Message: React.FC<Props> = (props) => {
   //   }
   // };
 
-  const refMsg = useRef();
   const {
     authState: {
       account: { id },

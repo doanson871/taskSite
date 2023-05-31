@@ -71,6 +71,8 @@ const ChatWindow: React.FC<Props> = (props) => {
     return () => {
       socket.removeListener(`onMessageRoom${currentConversationId}`);
     };
+
+    // eslint-disable-next-line
   }, [currentConversationId]);
 
   return (

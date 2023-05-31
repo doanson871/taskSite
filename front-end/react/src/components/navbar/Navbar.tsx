@@ -7,6 +7,7 @@ import { AuthContext } from "../../contexts/authContext";
 import { Avatar, Badge } from "antd";
 import NotifiList from "./NotifiList";
 import { NotiContext } from "../../contexts/notiContext";
+import { useTasksiteContext } from "../../contexts/tasksiteContext";
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
@@ -17,9 +18,7 @@ const Navbar: React.FC<Props> = () => {
   } = useContext(AuthContext);
 
   const { isShowNoti, setIsShowNoti } = useContext(NotiContext);
-
-  // console.log(notiContext);
-
+  const { resetData } = useTasksiteContext();
   const [showFeature, setShowFeature] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
   const { logOut } = useContext(AuthContext);
@@ -64,7 +63,6 @@ const Navbar: React.FC<Props> = () => {
             className="bi bi-bell"
             onClick={() => {
               setIsShowNoti(!isShowNoti);
-              console.log(isShowNoti);
             }}
             style={{ fontSize: 30 }}
           ></i>
@@ -92,10 +90,11 @@ const Navbar: React.FC<Props> = () => {
           }`}
           ref={selectRef}
         >
-          <div className="details d-flex">
+          <div className="details d-grid">
             <Avatar
               src={account.photoURL || ""}
               icon={!account.photoURL && <i className="bi bi-person"></i>}
+              className="avatar-details"
             />
             <span>{account.name}</span>
           </div>
@@ -104,7 +103,13 @@ const Navbar: React.FC<Props> = () => {
           </Link>
           <div className="item">Tin nhắn</div>
           <div className="item">Thông báo</div>
-          <div className="item" onClick={() => logOut()}>
+          <div
+            className="item"
+            onClick={() => {
+              resetData();
+              logOut();
+            }}
+          >
             Đăng xuất
           </div>
         </div>

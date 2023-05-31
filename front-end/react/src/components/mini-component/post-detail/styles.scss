@@ -1,0 +1,35 @@
+.post-detail-item {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  .item-header {
+    font-weight: 600;
+    color: #000;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid;
+    gap: 1rem;
+    font-size: 1.2rem;
+  }
+  .image-item {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    max-height: 18%;
+    img {
+      height: 100%;
+      width: auto;
+      max-height: 30vh;
+      max-width: 100%;
+    }
+  }
+  .list-btn {
+    .button-post {
+      background-color: #77a7ff;
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}

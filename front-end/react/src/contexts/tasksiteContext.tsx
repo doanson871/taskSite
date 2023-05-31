@@ -16,6 +16,12 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const [postList, setPostList] = useState<any>([]);
   const [isFilter, setIsFilter] = useState(false);
 
+  const resetData = () => {
+    setIsLoading(false);
+    setPostList([]);
+    setIsFilter(false);
+  }
+
   const getAllWorks = async () => {
     try {
       const response = await axios.get(`${apiURL}/work/works`);
@@ -44,8 +50,6 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     try {
       if (!isLoading) {
         const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
-        console.log(response);
-
         if (response.status === 200) {
           setIsLoading(true);
           setPostList(response.data.data.postJobs);
@@ -70,9 +74,29 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
 
   const filterPostJobs = async (url: string) => {
     const data = await axios.get(`${apiURL}/postJob/search?${url}`);
-    console.log(data);
     if (data.status === 200) {
       setPostList(data.data.data);
+    }
+  };
+
+  const changeStatusPost = async (id: number, status: boolean) => {
+    try {
+      const response = await axios.patch(`${apiURL}/postJob/${id}`, {
+        status: !status,
+      });
+      if (response.status === 200) {
+        const newPostList = postList.map((post: any) => {
+          if (post.id === id) {
+            post.status = !status;
+          }
+          return post;
+        });
+        setPostList(newPostList);
+        return response;
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
     }
   };
 
@@ -88,6 +112,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     isFilter,
     setIsFilter,
     filterPostJobs,
+    changeStatusPost,
+    resetData
   };
   return (
     <TasksiteContext.Provider value={value}>
