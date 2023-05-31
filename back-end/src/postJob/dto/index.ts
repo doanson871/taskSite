@@ -24,6 +24,9 @@ export class InsertPostJobDTO {
   @IsNumber()
   @IsOptional()
   salary?: number;
+
+  @IsOptional()
+  photoURL?: string;
 }
 
 export class UpdatePostJobDTO {
@@ -53,6 +56,9 @@ export class UpdatePostJobDTO {
   @IsNumber()
   @IsOptional()
   salary?: number;
+
+  @IsOptional()
+  photoURL?: string;
 }
 
 export class SearchPostJobDTO {

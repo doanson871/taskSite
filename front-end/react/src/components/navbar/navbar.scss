@@ -36,6 +36,7 @@
     justify-content: space-around;
     cursor: pointer;
     .avatar-feature {
+      z-index: 99;
       background-color: #fff;
       border-radius: 1rem;
       transform: translate(-50%, 65%);

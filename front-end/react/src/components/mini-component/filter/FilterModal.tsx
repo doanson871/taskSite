@@ -115,7 +115,7 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                 <Form.Select
                   aria-label="Default select example"
                   className="select-box fs-6"
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setCity(e.target.value);
                     // setDistric("Hãy chọn quận");
                   }}
@@ -133,7 +133,7 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                 <Form.Select
                   aria-label="Default select example"
                   className="select-box fs-6"
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setDistric(e.target.value);
                   }}
                   value={distric}
@@ -153,7 +153,7 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                 <Form.Select
                   aria-label="Default select example"
                   className="select-box fs-6"
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setWorkId(+e.target.value);
                   }}
                 >
@@ -169,7 +169,7 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
                 type="text"
                 className="col-10 cost box-input"
                 value={salary}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setSalary(+e.target.value);
                 }}
               />

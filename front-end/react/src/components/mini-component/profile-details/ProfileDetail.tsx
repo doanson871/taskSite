@@ -1,20 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
 import { Avatar, notification } from "antd";
 import { initialGender, initialRole } from "../../../utils/constant";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { SmileOutlined } from "@ant-design/icons";
-
+import { UseUploadImage } from "../../../hooks/useUploadImg";
 interface Props {
   data: any;
 }
 
 const ProfileDetail: React.FC = (props) => {
-  const {
-    authState: { account },
-  } = useContext(AuthContext);
+  const { authState, updateProfile } = useContext(AuthContext);
+
+  const account = authState.account;
   const [api, contextHolder] = notification.useNotification();
+
+  const [accountForm, setAccountForm] = useState(account);
+
+  const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageURL, setImageURL] = useState<string>(account.photoURL);
+
+  const handleUpdateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = (e.target as any).files[0];
+    setImageUpload(file);
+
+    if (file) {
+      setImageURL(URL.createObjectURL(file));
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      imageURL && URL.revokeObjectURL(imageURL);
+    };
+  }, [imageURL]);
 
   const openNotification = () => {
     api.open({
@@ -22,10 +42,17 @@ const ProfileDetail: React.FC = (props) => {
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
-  const { updateProfile } = useTasksiteContext();
-  const [accountForm, setAccountForm] = useState(account);
+
   const handleUpdateProfile = async () => {
-    const response = await updateProfile(accountForm);
+    const photoURL = await UseUploadImage(imageUpload);
+    let dataSubmit = { ...accountForm };
+    if (photoURL) {
+      setAccountForm({ ...accountForm, photoURL });
+      dataSubmit = { ...dataSubmit, photoURL };
+    }
+
+    const response = await updateProfile(dataSubmit, account);
+
     if (response.status === 200) {
       openNotification();
     }
@@ -68,9 +95,15 @@ const ProfileDetail: React.FC = (props) => {
           </div>
           <div className="col-5 my-2 d-flex avatar-profile">
             <Avatar
-              src={accountForm.photoURL || ""}
+              src={imageURL}
               icon={!accountForm.photoURL && <i className="bi bi-person"></i>}
               size={150}
+            />
+            <input
+              type="file"
+              onChange={(event) => {
+                handleUpdateImage(event);
+              }}
             />
           </div>
         </div>

@@ -39,17 +39,6 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
       else return { success: false, message: error.message };
     }
   };
-  const updateProfile = async (accountForm: any) => {
-    try {
-      const response = await axios.patch(`${apiURL}/users/update`, accountForm);
-      if (response.status === 200) {
-        return response.data;
-      }
-    } catch (error: any) {
-      if (error.response.data) return error.response.data;
-      else return { success: false, message: error.message };
-    }
-  };
 
   const getAllPostJob = async () => {
     try {
@@ -90,7 +79,6 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const value = {
     getAllWorks,
     createNewUserPost,
-    updateProfile,
     isOpenApplyModal,
     setIsOpenApplyModal,
     getAllPostJob,

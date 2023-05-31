@@ -83,10 +83,6 @@ export class PostJobService {
   }
 
   async searchPostJob(data: SearchPostJobDTO) {
-    if (data.workId) {
-      console.log(1);
-    } else console.log(3);
-
     const postJobSearch = await this.prismaService.postJob.findMany({
       where: {
         thanhpho: data.thanhpho
@@ -154,6 +150,7 @@ export class PostJobService {
         salary: insertPostJobDTO.salary,
         thanhpho: insertPostJobDTO.thanhpho ?? '',
         quanhuyen: insertPostJobDTO.quanhuyen ?? '',
+        photoURL: insertPostJobDTO.photoURL ?? '',
       },
     });
 

@@ -98,7 +98,28 @@ const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     });
   };
   // Context data
-  const authContextData = { loginUser, authState, logOut };
+  const updateProfile = async (accountForm: any) => {
+    try {
+      const response = await axios.patch(`${apiURL}/users/update`, accountForm);
+      if (response.status === 200) {
+        // return response.data;
+        console.log(response.data);
+        authDispatch({
+          type: AuthActionKind.UPDATE,
+          payload: accountForm,
+        });
+
+        return {
+          status: 200,
+        };
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const authContextData = { loginUser, authState, logOut, updateProfile };
 
   // Return provider
   return (

@@ -1,6 +1,7 @@
 export enum AuthActionKind {
   SETAUTH = "SET_AUTH",
   RESET = "RESET",
+  UPDATE = "UPDATE",
 }
 
 interface AuthState {
@@ -21,6 +22,11 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
       };
     case "RESET":
       return action.payload;
+    case "UPDATE": {
+      const newState = { ...state };
+      newState.account = action.payload;
+      return newState;
+    }
     default:
       return state;
   }

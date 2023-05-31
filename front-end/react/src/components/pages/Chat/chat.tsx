@@ -5,7 +5,6 @@ import ChatWindow from "./ChatWindow";
 import { AuthContext } from "../../../contexts/authContext";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
-
 interface Props {}
 
 const Chat: React.FC<Props> = (props) => {
