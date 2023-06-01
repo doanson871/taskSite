@@ -2,4 +2,34 @@
   background-color: #fff;
   border-radius: 0.5rem;
   margin: 1rem 0;
+  padding: 3rem;
+  .add-work-btn {
+    padding: 3rem;
+    justify-content: center;
+    .button {
+      color: #fff;
+      border-radius: 0.5rem;
+      background-color: #00b4ff;
+      padding: 1rem;
+      cursor: pointer;
+      opacity: 60%;
+      &:hover {
+        opacity: 100%;
+      }
+      i {
+        font-size: 1.5rem;
+        margin-left: 1rem;
+      }
+    }
+  }
+  .table-work {
+    width: 100%;
+    margin: auto;
+    .item {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      cursor: pointer;
+    }
+  }
 }

@@ -13,6 +13,9 @@ export class InsertUserOnWorkDTO {
 
   @IsOptional()
   priceExpected?: string;
+
+  @IsOptional()
+  status?: boolean;
 }
 
 export class UpdateUserOnWorkDTO {
@@ -28,4 +31,7 @@ export class UpdateUserOnWorkDTO {
 
   @IsOptional()
   priceExpected?: string;
+
+  @IsOptional()
+  status?: boolean;
 }

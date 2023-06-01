@@ -54,5 +54,6 @@ export class UsersOnWorkservice {
         id: UserOnWorkId,
       },
     });
+    return { statusCode: 200 };
   }
 }

@@ -21,7 +21,7 @@ export class UsersOnWorkController {
 
   @Get('/allUserOnWorks')
   getAllUserOnWorks(@GetUser('id') userId: number) {
-    return this.getAllUserOnWorks(userId);
+    return this.userOnWorkService.getAllUserOnWorks(userId);
   }
 
   @Post('postUserOnWork')

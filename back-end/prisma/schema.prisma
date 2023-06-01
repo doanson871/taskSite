@@ -72,6 +72,7 @@ model UsersOnWorks {
   photoURL      String?
   description   String?
   priceExpected String?
+  status        Boolean? @default(true)
   workId        Int
   work          Work     @relation(fields: [workId], references: [id])
   createdAt     DateTime @default(now())

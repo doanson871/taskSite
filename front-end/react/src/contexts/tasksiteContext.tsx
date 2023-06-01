@@ -16,6 +16,7 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState<any>([]);
   const [isFilter, setIsFilter] = useState(false);
+  const [workList, setWorkList] = useState<any>([]);
 
   const {
     authState: { account },
@@ -25,6 +26,7 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     setIsLoading(false);
     setPostList([]);
     setIsFilter(false);
+    setWorkList([]);
   };
 
   const getAllWorks = async () => {
@@ -112,6 +114,77 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
 
+  const postUserOnWork = async (workForm: any) => {
+    try {
+      const response = await axios.post(
+        `${apiURL}/users-on-work/postUserOnWork`,
+        workForm
+      );
+      if (response.status === 201) {
+        setWorkList([...workList, response.data.data]);
+        return { statusCode: 200 };
+      } else {
+        return { statusCode: 400 };
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getAllUserOnWork = async () => {
+    try {
+      if (!isLoading) {
+        const response = await axios.get(
+          `${apiURL}/users-on-work/allUserOnWorks`
+        );
+        if (response.status === 200) {
+          setIsLoading(true);
+          setWorkList(response.data.data);
+        }
+        // return response;
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+  const deleteUserOnWork = async (id: number) => {
+    try {
+      const response = await axios.delete(`${apiURL}/users-on-work/${id}`);
+      if (response.status === 200) {
+        const newWorkList = workList.filter((work: any) => work.id !== id);
+        setWorkList(newWorkList);
+        return response;
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const updateUserOnWork = async (id: number, updateForm: any) => {
+    try {
+      const response = await axios.patch(
+        `${apiURL}/users-on-work/${id}`,
+        updateForm
+      );
+      if (response.status === 200) {
+        const newWorkList = workList.map((work: any) => {
+          if (work.id === id) {
+            work = { ...updateForm };
+          }
+          return work;
+        });
+        setWorkList(newWorkList);
+        return response;
+      }
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
   const value = {
     getAllWorks,
     createNewUserPost,
@@ -126,6 +199,11 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     filterPostJobs,
     changeStatusPost,
     resetData,
+    postUserOnWork,
+    getAllUserOnWork,
+    workList,
+    deleteUserOnWork,
+    updateUserOnWork,
   };
   return (
     <TasksiteContext.Provider value={value}>
