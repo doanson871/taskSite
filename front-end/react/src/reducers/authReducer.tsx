@@ -24,7 +24,7 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
       return action.payload;
     case "UPDATE": {
       const newState = { ...state };
-      newState.account = action.payload;
+      newState.account = { ...newState.account, ...action.payload };
       return newState;
     }
     default:

@@ -12,7 +12,18 @@ import * as argon from 'argon2';
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
-  async getUser(userId: number) {}
+  async getUser(userId: number) {
+    const user = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data: user,
+    };
+  }
 
   async getUsers() {
     const users = await this.prismaService.user.findMany({

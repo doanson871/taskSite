@@ -35,9 +35,8 @@ const App = () => {
                       <Route path=":idChat" element={<Chat />} />
                     </Route>
                     <Route path="/notify" element={<Post />} />
-                    <Route path="/profile" element={<Profile />}>
-                      <Route path=":id" element={<Profile />} />
-                    </Route>
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/:idProfile" element={<Profile />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>

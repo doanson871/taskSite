@@ -6,12 +6,12 @@ import {
   Request,
   Body,
   Patch,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator';
 import { MyJwtGuard } from '../auth/guard';
 import { UserService } from './user.service';
-import { Roles } from 'src/utils/roleGuard/role.decorator';
-import { Role } from 'src/utils/roleGuard/role.enum';
 import { UserDTO } from './dto';
 @UseGuards(MyJwtGuard)
 @Controller('users')
@@ -24,7 +24,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getUser(@GetUser('id') userId: number) {
+  getUser(@Param('id', ParseIntPipe) userId: number) {
     return this.userService.getUser(userId);
   }
 

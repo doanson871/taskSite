@@ -3,6 +3,7 @@ import { AuthActionKind, authReducer } from "../reducers/authReducer";
 import setAuthToken from "../utils/setAuthToken";
 import { LOCAL_STORAGE_TOKEN_NAME, apiURL } from "../utils/constant";
 import axios from "axios";
+import { UseFetchData } from "../hooks/useFetchData";
 
 export interface LoginUserForm {
   email: string;
@@ -119,7 +120,18 @@ const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const authContextData = { loginUser, authState, logOut, updateProfile };
+  const getInfoUserById = async (id: number) => {
+    const data = await UseFetchData(`${apiURL}/users/${id}`);
+    return data;
+  };
+
+  const authContextData = {
+    loginUser,
+    authState,
+    logOut,
+    updateProfile,
+    getInfoUserById,
+  };
 
   // Return provider
   return (

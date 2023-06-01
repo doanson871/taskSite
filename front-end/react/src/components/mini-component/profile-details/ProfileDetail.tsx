@@ -7,19 +7,21 @@ import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { SmileOutlined } from "@ant-design/icons";
 import { UseUploadImage } from "../../../hooks/useUploadImg";
 interface Props {
-  data: any;
+  data?: any;
+  idProfile: number;
 }
 
-const ProfileDetail: React.FC = (props) => {
-  const { authState, updateProfile } = useContext(AuthContext);
+const ProfileDetail: React.FC<Props> = (props) => {
+  const { authState, updateProfile, getInfoUserById } = useContext(AuthContext);
 
   const account = authState.account;
   const [api, contextHolder] = notification.useNotification();
 
   const [accountForm, setAccountForm] = useState(account);
+  const [disabled, setDisabled] = useState(false);
 
   const [imageUpload, setImageUpload] = useState<any>(null);
-  const [imageURL, setImageURL] = useState<string>(account.photoURL);
+  const [imageURL, setImageURL] = useState<string>(accountForm.photoURL);
 
   const handleUpdateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = (e.target as any).files[0];
@@ -35,6 +37,27 @@ const ProfileDetail: React.FC = (props) => {
       imageURL && URL.revokeObjectURL(imageURL);
     };
   }, [imageURL]);
+
+  useEffect(() => {
+    if (props.idProfile && props.idProfile !== account.id) {
+      getInfoUserById(props.idProfile).then((data: any) => {
+        console.log(data);
+        if (data.statusCode === 200) {
+          setAccountForm(data.data);
+          setDisabled(true);
+          setImageURL(data.data.photoURL);
+        }
+      });
+    } else {
+      setAccountForm(account);
+      setDisabled(false);
+      setImageURL(account.photoURL);
+    }
+  }, [props.idProfile]);
+
+  console.log(disabled);
+
+  console.log(accountForm);
 
   const openNotification = () => {
     api.open({
@@ -75,6 +98,7 @@ const ProfileDetail: React.FC = (props) => {
             <div className="my-2">
               Họ và tên
               <input
+                disabled={disabled}
                 type="text"
                 className="form-control"
                 value={accountForm.name}
@@ -86,6 +110,7 @@ const ProfileDetail: React.FC = (props) => {
             <div className="my-2">
               Email
               <input
+                disabled={disabled}
                 type="text"
                 className="form-control"
                 value={accountForm.email}
@@ -101,19 +126,22 @@ const ProfileDetail: React.FC = (props) => {
               icon={!accountForm.photoURL && <i className="bi bi-person"></i>}
               size={150}
             />
-            <input
-              type="file"
-              onChange={(event) => {
-                handleUpdateImage(event);
-              }}
-              accept="image/*"
-            />
+            {!disabled && (
+              <input
+                type="file"
+                onChange={(event) => {
+                  handleUpdateImage(event);
+                }}
+                accept="image/*"
+              />
+            )}
           </div>
         </div>
         <div className="row justify-content-between">
           <div className="col-5 my-2">
             Số điện thoại{" "}
             <input
+              disabled={disabled}
               type="text"
               className="form-control"
               value={accountForm.phoneNumber}
@@ -125,6 +153,7 @@ const ProfileDetail: React.FC = (props) => {
           <div className="col-5 my-2">
             Vai trò
             <select
+              disabled
               className="form-select"
               aria-label="Default select example"
               value={accountForm.role}
@@ -142,6 +171,7 @@ const ProfileDetail: React.FC = (props) => {
           <div className="col-5 my-2">
             Giới tính
             <select
+              disabled={disabled}
               className="form-select"
               aria-label="Default select example"
               value={accountForm.sex}
@@ -157,6 +187,7 @@ const ProfileDetail: React.FC = (props) => {
           <div className="col-5 my-2">
             Tuổi
             <input
+              disabled={disabled}
               type="text"
               className="form-control"
               value={accountForm.age}
@@ -170,6 +201,7 @@ const ProfileDetail: React.FC = (props) => {
           <div className="col-12 my-2">
             Địa chỉ chi tiết
             <input
+              disabled={disabled}
               type="text"
               className="form-control"
               value={accountForm.quanhuyen}
@@ -179,11 +211,13 @@ const ProfileDetail: React.FC = (props) => {
             />
           </div>
         </div>
-        <div className="d-flex justify-content-end py-3">
-          <span className="update-button" onClick={handleUpdateProfile}>
-            Cập nhật hồ sơ
-          </span>
-        </div>
+        {!disabled && (
+          <div className="d-flex justify-content-end py-3">
+            <span className="update-button" onClick={handleUpdateProfile}>
+              Cập nhật hồ sơ
+            </span>
+          </div>
+        )}
       </div>
     </>
   );

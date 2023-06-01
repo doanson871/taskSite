@@ -55,7 +55,12 @@ const Apply: React.FC<props> = (props) => {
   return (
     <div className="apply-item">
       <div className="apply-info">
-        <div className="apply-profile">
+        <div
+          className="apply-profile"
+          onClick={() => {
+            navigation(`/profile/${props.userId}`);
+          }}
+        >
           <Avatar src={props.photoURL} className="apply-avatar">
             C
           </Avatar>

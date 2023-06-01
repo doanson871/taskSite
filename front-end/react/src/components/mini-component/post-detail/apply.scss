@@ -11,9 +11,16 @@
 .apply-profile {
   margin-right: 5px;
 }
+.apply-profile:hover {
+  margin-right: 5px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .apply-name {
   margin-left: 5px;
 }
+
 .apply-time {
   font-size: 14px;
   color: #828282;
