@@ -8,14 +8,14 @@ export const NotiContext = createContext<any>(null);
 
 const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isShowNoti, setIsShowNoti] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [notificationList, setNotificaitionList] = useState([]);
 
   const getAllNotifications = async (userId: number) => {
     const data = await UseFetchData(`${apiURL}/notification`);
     console.log(data);
     if (data.statusCode === 200) {
-      setIsLoading(true);
+      // setIsLoading(true);
       setNotificaitionList(data.data);
     }
   };

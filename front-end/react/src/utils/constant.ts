@@ -34,6 +34,12 @@ export const initialGender = ["Không xác định", "Nam", "Nữ"];
 //   });
 // };
 
+export enum StatusApply {
+  PROCESSING,
+  ACCEPTED,
+  REJECTED,
+}
+
 export const navBarList = [
   {
     id: 1,

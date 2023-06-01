@@ -63,15 +63,15 @@ export class PostJobService {
           address: true,
           Application: {
             select: {
-              id: true,
+              content: true,
               employee: {
                 select: {
-                  id: true,
-                  name: true,
                   photoURL: true,
+                  name: true,
+                  id: true,
                 },
               },
-              employeeId: true,
+              createdAt: true,
             },
           },
           createdAt: true,

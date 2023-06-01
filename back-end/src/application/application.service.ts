@@ -5,7 +5,7 @@ import { InsertApplicationDTO, UpdateApplicationDTO } from './dto';
 @Injectable()
 export class ApplicationService {
   constructor(private prismaService: PrismaService) {}
-  async getAllApplications(userId: number) {}
+  async getAllApplications(postId: number) {}
   async postApplication(
     userId: number,
     insertApplicationDTO: InsertApplicationDTO,
@@ -26,7 +26,7 @@ export class ApplicationService {
           content: insertApplicationDTO.content,
           postJobId: insertApplicationDTO.postJobId,
           employeeId: userId,
-          status: false,
+          status: 'PROCESSING',
         },
       });
 
@@ -41,6 +41,21 @@ export class ApplicationService {
   async updateApplication(
     ApplicationId: number,
     updateApplicationDTO: UpdateApplicationDTO,
-  ) {}
+  ) {
+    const data = await this.prismaService.application.update({
+      where: {
+        id: ApplicationId,
+      },
+      data: {
+        content: updateApplicationDTO.content,
+        status: updateApplicationDTO.status,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
   async deleteApplication(ApplicationId: number) {}
 }

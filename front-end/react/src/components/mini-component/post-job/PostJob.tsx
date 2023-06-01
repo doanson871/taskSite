@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
-import { notification } from "antd";
+import { Image, notification } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,8 @@ const PostJob: React.FC<Props> = (element) => {
     authState: { account },
   } = useContext(AuthContext);
   const { getJobName, changeStatusPost } = useTasksiteContext();
-  const { address, description, status, workId, id } = element.element;
+  const { address, description, status, workId, id, photoUrl } =
+    element.element;
   const [jobName, setjobName] = React.useState<string>("");
 
   const [api, contextHolder] = notification.useNotification();
@@ -75,12 +76,7 @@ const PostJob: React.FC<Props> = (element) => {
           <div className="item-job-name">{jobName.toLocaleUpperCase()}</div>
         </div>
         <div className="image-item">
-          <img
-            src={
-              "https://th.bing.com/th/id/OIP.F2JR1gcD1m3EAWIqcY2WtwHaEo?w=285&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-            }
-            alt=""
-          />
+          <Image src={photoUrl} alt="" />
         </div>
         <div className="description-item">
           <p className="text">{description}</p>

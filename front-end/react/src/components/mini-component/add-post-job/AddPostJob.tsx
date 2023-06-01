@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { listAddress } from "../../../utils/constant";
-import { notification } from "antd";
+import { Image, notification } from "antd";
 import { SmileOutlined, WarningTwoTone } from "@ant-design/icons";
+import { UseUploadImage } from "../../../hooks/useUploadImg";
 
 interface Props {
   showModal: boolean;
@@ -22,6 +23,26 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
   const { createNewUserPost } = useTasksiteContext();
 
   const [api, contextHolder] = notification.useNotification();
+
+  const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageURL, setImageURL] = useState<string>("");
+
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = (e.target as any).files[0];
+    setImageUpload(file);
+
+    if (file) {
+      setImageURL(URL.createObjectURL(file));
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      imageURL && URL.revokeObjectURL(imageURL);
+    };
+  }, [imageURL]);
+
+  const refFile: any = useRef();
 
   const openNotification = () => {
     api.open({
@@ -66,23 +87,30 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
       console.log(error);
     }
   };
-  const uploadImage = () => {};
+
   const postJob = async () => {
-    const postForm = {
+    let postForm = {
       address: address,
       descrition: description,
       workId: workId,
       thanhpho: city,
       quanhuyen: distric,
       salary: salary,
+      photoURL: "",
     };
     try {
+      const photoURL: string | undefined = await UseUploadImage(imageUpload);
+      if (photoURL) {
+        postForm = { ...postForm, photoURL };
+      }
+
       const { status } = await createNewUserPost(postForm);
       if (status === 200) {
         openNotification();
         handleClose();
       } else {
         failAddPost();
+        handleClose();
       }
     } catch (error) {
       console.log(error);
@@ -172,19 +200,40 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
             <div className="row mb-2 position-relative">
               <textarea
                 className="col-12 description-job"
-                rows={5}
+                rows={3}
                 onChange={(e) => setDescription(e.target.value)}
               />
+            </div>
+            <div>
+              <Image
+                width={200}
+                src={imageURL}
+                fallback="https://raw.githubusercontent.com/koehlersimon/fallback/master/Resources/Public/Images/placeholder.jpg"
+              ></Image>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer className="footer-post">
-          <div className="btn btn-secondary" onClick={uploadImage}>
+          <div
+            className="btn btn-secondary"
+            onClick={() => {
+              refFile.current.click();
+            }}
+          >
             <i className="bi bi-camera"></i>
           </div>
           <button className="btn btn-primary" onClick={postJob}>
             Đăng bài
           </button>
+          <input
+            type="file"
+            className="d-none"
+            ref={refFile}
+            onChange={(e) => {
+              handleUploadImage(e);
+            }}
+            accept="image/*"
+          />
         </Modal.Footer>
       </Modal>
     </>

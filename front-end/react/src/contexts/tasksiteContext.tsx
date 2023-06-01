@@ -12,7 +12,7 @@ export const useTasksiteContext = () => {
 
 const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isOpenApplyModal, setIsOpenApplyModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState<any>([]);
   const [isFilter, setIsFilter] = useState(false);
   const [workList, setWorkList] = useState<any>([]);
@@ -22,7 +22,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   } = useContext(AuthContext);
 
   const resetData = () => {
-    setIsLoading(false);
+    // setIsLoading(false);
     setPostList([]);
     setIsFilter(false);
     setWorkList([]);
@@ -54,25 +54,21 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const getAllPostJob = async () => {
     try {
-      if (!isLoading) {
-        if (account.role === "USER") {
-          const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
-          if (response.status === 200) {
-            setIsLoading(true);
-            setPostList(response.data.data.postJobs);
-          }
-        } else if (account.role === "EMPLOYEE") {
-          const response = await axios.get(
-            `${apiURL}/postJob/allPostJobsByEmployee`
-          );
-          if (response.status === 200) {
-            setIsLoading(true);
-            setPostList(response.data.data.postJobs);
-          }
+      if (account.role === "USER") {
+        const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
+        if (response.status === 200) {
+          setPostList(response.data.data.postJobs);
         }
-
-        // return response;
+      } else if (account.role === "EMPLOYEE") {
+        const response = await axios.get(
+          `${apiURL}/postJob/allPostJobsByEmployee`
+        );
+        if (response.status === 200) {
+          setPostList(response.data.data.postJobs);
+        }
       }
+
+      // return response;
     } catch (error: any) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
@@ -144,16 +140,13 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const getAllUserOnWork = async () => {
     try {
-      if (!isLoading) {
-        const response = await axios.get(
-          `${apiURL}/users-on-work/allUserOnWorks`
-        );
-        if (response.status === 200) {
-          setIsLoading(true);
-          setWorkList(response.data.data);
-        }
-        // return response;
+      const response = await axios.get(
+        `${apiURL}/users-on-work/allUserOnWorks`
+      );
+      if (response.status === 200) {
+        setWorkList(response.data.data);
       }
+      // return response;
     } catch (error: any) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };

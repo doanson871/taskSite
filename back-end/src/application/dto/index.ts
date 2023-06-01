@@ -14,4 +14,7 @@ export class UpdateApplicationDTO {
   @IsString()
   @IsOptional()
   content?: string;
+
+  @IsOptional()
+  status?: any;
 }

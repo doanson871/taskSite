@@ -13,9 +13,10 @@ interface Props {}
 const Navbar: React.FC<Props> = () => {
   const [showNavbar, setShowNavbar] = useState(false);
 
-  const {
-    authState: { account },
-  } = useContext(AuthContext);
+  const { authState, updateProfile } = useContext(AuthContext);
+
+  const account = authState.account;
+  console.log(account);
 
   const { isShowNoti, setIsShowNoti } = useContext(NotiContext);
   const { resetData } = useTasksiteContext();
@@ -58,11 +59,18 @@ const Navbar: React.FC<Props> = () => {
       </div>
       <div className="nav-bar-name d-flex">Task Site</div>
       <div className="nav-noti d-flex">
-        <Badge count={1} overflowCount={10} dot size={"default"}>
+        <Badge
+          overflowCount={10}
+          dot={!account.isReadNotification}
+          size={"default"}
+        >
           <i
             className="bi bi-bell"
             onClick={() => {
               setIsShowNoti(!isShowNoti);
+              if (!isShowNoti) {
+                updateProfile({ isReadNotification: true });
+              }
             }}
             style={{ fontSize: 30 }}
           ></i>

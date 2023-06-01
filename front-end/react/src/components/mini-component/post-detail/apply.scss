@@ -1,0 +1,30 @@
+.apply-item {
+  background-color: #fff;
+  border-radius: 20px;
+  margin-top: 5px;
+  padding: 10px 20px;
+}
+.apply-info {
+  display: flex;
+  justify-content: space-between;
+}
+.apply-profile {
+  margin-right: 5px;
+}
+.apply-name {
+  margin-left: 5px;
+}
+.apply-time {
+  font-size: 14px;
+  color: #828282;
+}
+.apply-content {
+  margin-top: 10px;
+  padding: 0 20px;
+}
+.apply-icon {
+  margin: 10px 0;
+  display: flex;
+  font-size: 30px;
+  justify-content: space-around;
+}

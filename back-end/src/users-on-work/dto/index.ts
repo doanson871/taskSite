@@ -34,4 +34,7 @@ export class UpdateUserOnWorkDTO {
 
   @IsOptional()
   status?: boolean;
+
+  @IsOptional()
+  isReadNotification?: boolean;
 }

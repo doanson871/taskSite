@@ -21,6 +21,7 @@ const Chat: React.FC<Props> = (props) => {
   // console.log(authContextData);
 
   useEffect(() => {
+    if (!idChat) setCurrentConversationId(undefined);
     getConversations();
     // eslint-disable-next-line
   }, []);

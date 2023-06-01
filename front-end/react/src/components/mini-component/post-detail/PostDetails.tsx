@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
-import { Avatar, Button, notification } from "antd";
+import { Avatar, Button, Image, notification } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
 import ApplyModel from "../../model/ApplyModel";
+import Apply from "./Apply";
 interface Props {
   post?: any;
 }
@@ -14,6 +15,7 @@ const PostDetails: React.FC<Props> = () => {
   const { idPost } = useParams();
 
   const [showApply, setShowApply] = useState(false);
+  const [statusPost, setStatusPost] = useState<boolean>(false);
 
   const {
     authState: { account },
@@ -34,18 +36,19 @@ const PostDetails: React.FC<Props> = () => {
   useEffect(() => {
     getPostById(idPost).then((post: any) => {
       setPost(post.data.postJob);
+      setStatusPost(post.data.postJob.status);
     });
   }, []);
 
-  const { changeStatusPost, isOpenApplyModal, setIsOpenApplyModal } =
-    useTasksiteContext();
+  const { changeStatusPost, setIsOpenApplyModal } = useTasksiteContext();
   const [api, contextHolder] = notification.useNotification();
   const user = post?.user;
+  console.log(post);
 
   const openNotification = () => {
     api.open({
       message: `${
-        post?.status ? "Đóng bài viết thành công" : "Mở bài viết thành công"
+        statusPost ? "Đóng bài viết thành công" : "Mở bài viết thành công"
       }`,
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
@@ -54,13 +57,13 @@ const PostDetails: React.FC<Props> = () => {
   const changeStatus = (id: number, status: boolean) => async () => {
     const response = await changeStatusPost(id, status);
     if (response.status === 200) {
+      setStatusPost(!statusPost);
       openNotification();
     }
   };
 
   const handleClickMessage = async () => {
     const data = await createConversation(user.id);
-    console.log(data);
     if (data.statusCode === 200) {
       setCurrentUserChat({
         name: user.name,
@@ -75,9 +78,9 @@ const PostDetails: React.FC<Props> = () => {
     setIsOpenApplyModal(true);
   };
 
-  const handleSeeApply = () => {};
-
-  console.log(post);
+  const handleSeeApply = () => {
+    setShowApply(true);
+  };
 
   return (
     <>
@@ -104,12 +107,7 @@ const PostDetails: React.FC<Props> = () => {
               )}
             </div>
             <div className="image-item">
-              <img
-                src={
-                  "https://th.bing.com/th/id/OIP.F2JR1gcD1m3EAWIqcY2WtwHaEo?w=285&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                }
-                alt=""
-              />
+              <Image src={post?.photoURL} alt="" />
             </div>
             <ul>
               <li>Công việc: {post?.work.name}</li>
@@ -123,8 +121,11 @@ const PostDetails: React.FC<Props> = () => {
             </div>
             {account?.role === "USER" ? (
               <div className="list-btn d-flex justify-content-around">
-                <Button type="primary" onClick={changeStatus(0, post?.status)}>
-                  {post?.status ? "Đóng bài viết " : "Mở bài viết"}
+                <Button
+                  type="primary"
+                  onClick={changeStatus(post?.id, post?.status)}
+                >
+                  {statusPost ? "Đóng bài viết " : "Mở bài viết"}
                 </Button>
 
                 <Button type="primary" onClick={handleSeeApply}>
@@ -139,6 +140,26 @@ const PostDetails: React.FC<Props> = () => {
               </div>
             )}
           </div>
+          {
+            showApply &&
+              (post.Application as Array<any>).map((application, id) => {
+                return (
+                  <Apply
+                    photoURL={application.employee.photoURL}
+                    name={application.employee.name}
+                    content={application.content}
+                    time={application.createdAt}
+                    userId={application.employee.id}
+                    postId={post?.id}
+                    key={id}
+                  />
+                );
+              })
+            // <>
+            // <Apply photoURL={""} name={""} />
+            //   <Apply photoURL={""} name={""} />
+            // </>
+          }
         </div>
         <div className="right-post"></div>
       </div>

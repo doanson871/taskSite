@@ -25,7 +25,7 @@ model User {
   quanhuyen            String?
   age                  Int?
   sex                  String?
-  isReadNotification   Boolean?       @default(false)
+  isReadNotification   Boolean?       @default(true)
   notes                Note[]
   works                UsersOnWorks[]
   postJob              PostJob[]
@@ -102,15 +102,15 @@ model PostJob {
 }
 
 model Application {
-  id         Int      @id @default(autoincrement())
-  employee   User     @relation(fields: [employeeId], references: [id])
+  id         Int         @id @default(autoincrement())
+  employee   User        @relation(fields: [employeeId], references: [id])
   employeeId Int
   content    String?
-  postJob    PostJob  @relation(fields: [postJobId], references: [id])
+  postJob    PostJob     @relation(fields: [postJobId], references: [id])
   postJobId  Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  status     Boolean
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  status     StatusApply @default(PROCESSING)
 
   @@map("applications")
 }
@@ -190,6 +190,12 @@ model Message {
 enum Status {
   PROCESSING
   COMPLETED
+}
+
+enum StatusApply {
+  PROCESSING
+  ACCEPTED
+  REJECTED
 }
 
 enum Role {
