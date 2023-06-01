@@ -4,7 +4,7 @@ import { UseFetchData } from "../hooks/useFetchData";
 
 export const NotiContext = createContext<any>(null);
 
-export interface INotification {}
+// export interface INotification {}
 
 const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isShowNoti, setIsShowNoti] = useState(false);
@@ -12,19 +12,23 @@ const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [notificationList, setNotificaitionList] = useState([]);
 
   const getAllNotifications = async (userId: number) => {
-    if (!isLoading) {
-      const data = await UseFetchData(`${apiURL}/notification`);
-      console.log(data);
-      if (data.statusCode === 200) {
-        setIsLoading(true);
-        setNotificaitionList(data.data);
-      }
+    const data = await UseFetchData(`${apiURL}/notification`);
+    console.log(data);
+    if (data.statusCode === 200) {
+      setIsLoading(true);
+      setNotificaitionList(data.data);
     }
   };
 
-  const createNotification = (payload: INotification) => {
-    socket.connect();
-    socket.emit("newNotification", payload);
+  const createNotification = async (payload: any) => {
+    // socket.connect();
+    // socket.emit("newNotification", payload);
+    const res = await UseFetchData(`${apiURL}/notification`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+
+    return res;
   };
 
   const revcNotification = (payload: any) => {

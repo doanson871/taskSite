@@ -11,6 +11,8 @@ interface Props {}
 const ChatWindow: React.FC<Props> = (props) => {
   const messageEl: any = useRef(null);
 
+  console.log(props);
+
   const {
     authState: {
       account: { id },
@@ -58,6 +60,8 @@ const ChatWindow: React.FC<Props> = (props) => {
     (conversation) => conversation.conversationId === currentConversationId
   )?.messages;
 
+  console.log(messages);
+
   useEffect(() => {
     getConversationMessages(currentConversationId);
     socket.connect();
@@ -94,7 +98,7 @@ const ChatWindow: React.FC<Props> = (props) => {
       </div>
       <div className="chat-window-content">
         <div className="chat-window-message-list" ref={messageEl}>
-          {messages.map((message, id) => {
+          {messages?.map((message, id) => {
             return (
               <Message
                 content={message.content}

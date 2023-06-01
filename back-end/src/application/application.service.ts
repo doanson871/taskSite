@@ -35,7 +35,7 @@ export class ApplicationService {
         message: 'success',
       };
     } catch (error) {
-      throw new NotFoundException('error');
+      throw new NotFoundException(error);
     }
   }
   async updateApplication(

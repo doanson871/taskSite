@@ -33,6 +33,25 @@ export class PostJobService {
       return error;
     }
   }
+
+  async getAllPostJobsByEmployee() {
+    try {
+      const postJobs = await this.prismaService.postJob.findMany({
+        where: {
+          status: true,
+        },
+      });
+      return {
+        statusCode: 200,
+        data: {
+          postJobs: postJobs,
+        },
+      };
+    } catch (error) {
+      return error;
+    }
+  }
+
   async getPostJob(postJobId: number) {
     try {
       const postJob = await this.prismaService.postJob.findUnique({
@@ -61,6 +80,11 @@ export class PostJobService {
           user: true,
           workId: true,
           work: true,
+          photoURL: true,
+          quanhuyen: true,
+          salary: true,
+          status: true,
+          thanhpho: true,
         },
       });
 

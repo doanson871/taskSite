@@ -9,11 +9,9 @@ interface Props {}
 const Chat: React.FC<Props> = (props) => {
   const { idChat } = useParams();
 
-  // console.log(idChat);
-
   const {
     ChatContextData: {
-      getControvations,
+      getConversations,
       currentConversationId,
       setCurrentConversationId,
     },
@@ -23,9 +21,8 @@ const Chat: React.FC<Props> = (props) => {
   // console.log(authContextData);
 
   useEffect(() => {
-    getControvations();
-    if (currentConversationId !== idChat) setCurrentConversationId(idChat);
-     // eslint-disable-next-line
+    getConversations();
+    // eslint-disable-next-line
   }, []);
 
   return (

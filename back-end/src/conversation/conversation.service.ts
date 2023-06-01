@@ -131,7 +131,11 @@ export class ConversationService {
       });
 
       if (otherMember) {
-        throw new ConflictException('duplicate');
+        return {
+          statusCode: 200,
+          message: 'existing',
+          conversationId: otherMember.conversationId,
+        };
       }
 
       const newConversation = await this.prismaService.conversation.create({
@@ -157,6 +161,7 @@ export class ConversationService {
       return {
         statusCode: 200,
         message: 'success',
+        conversationId: newConversation.id,
       };
     } catch (error) {
       return {

@@ -41,7 +41,7 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     chatDispatch({ type: ChatActionKind.UPDATE_LASTMESSSAGE, payload });
   };
 
-  const getControvations = async () => {
+  const getConversations = async () => {
     const data = await UseFetchData(`${apiURL}/conversation`);
     if (data.statusCode === 200) {
       const payload: Array<IConversation> = (data.members as Array<any>).map(
@@ -105,6 +105,18 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     });
   };
 
+  const createConversation = async (userId: number) => {
+    const data = UseFetchData(`${apiURL}/conversation`, {
+      method: "POST",
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    });
+
+    console.log(data);
+    return data;
+  };
+
   const ChatContextData = {
     chatState,
     chatDispatch,
@@ -113,11 +125,12 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     currentUserChat,
     setCurrentUserChat,
     sendMessage,
-    getControvations,
+    getConversations,
     getConversationMessages,
     recvMessage,
     updateLastMessage,
     updateStatusConversation,
+    createConversation,
   };
 
   return (

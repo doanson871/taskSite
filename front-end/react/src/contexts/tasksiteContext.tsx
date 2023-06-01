@@ -3,15 +3,14 @@ import React, { PropsWithChildren, useState } from "react";
 import { useContext } from "react";
 import { apiURL } from "../utils/constant";
 import { AuthContext } from "./authContext";
+import { UseFetchData } from "../hooks/useFetchData";
 
 const TasksiteContext = React.createContext<any>(null);
 export const useTasksiteContext = () => {
   return useContext(TasksiteContext);
 };
 
-export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isOpenApplyModal, setIsOpenApplyModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState<any>([]);
@@ -56,11 +55,22 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
   const getAllPostJob = async () => {
     try {
       if (!isLoading) {
-        const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
-        if (response.status === 200) {
-          setIsLoading(true);
-          setPostList(response.data.data.postJobs);
+        if (account.role === "USER") {
+          const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
+          if (response.status === 200) {
+            setIsLoading(true);
+            setPostList(response.data.data.postJobs);
+          }
+        } else if (account.role === "EMPLOYEE") {
+          const response = await axios.get(
+            `${apiURL}/postJob/allPostJobsByEmployee`
+          );
+          if (response.status === 200) {
+            setIsLoading(true);
+            setPostList(response.data.data.postJobs);
+          }
         }
+
         // return response;
       }
     } catch (error: any) {
@@ -184,6 +194,21 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
       else return { success: false, message: error.message };
     }
   };
+  const getPostById = async (id: number) => {
+    const data = await axios.get(`${apiURL}/postJob/${id}`);
+
+    if (data.status === 200) {
+      return data.data;
+    }
+  };
+
+  const createApply = async (payload: any) => {
+    const data = await UseFetchData(`${apiURL}/application`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return data;
+  };
 
   const value = {
     getAllWorks,
@@ -204,6 +229,8 @@ export const TasksiteContextProvider: React.FC<PropsWithChildren> = ({
     workList,
     deleteUserOnWork,
     updateUserOnWork,
+    getPostById,
+    createApply,
   };
   return (
     <TasksiteContext.Provider value={value}>

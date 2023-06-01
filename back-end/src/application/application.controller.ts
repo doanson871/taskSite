@@ -12,9 +12,12 @@ import {
 import { GetUser } from 'src/auth/decorator';
 import { ApplicationService } from './application.service';
 import { InsertApplicationDTO, UpdateApplicationDTO } from './dto';
-import { MyGateWay } from 'src/gateway/gateway';
+import { MyJwtGuard } from 'src/auth/guard';
+import { Roles } from 'src/utils/roleGuard/role.decorator';
+import { Role } from 'src/utils/roleGuard/role.enum';
+import { RolesGuard } from 'src/utils/roleGuard/roles.gurad';
 
-@UseGuards(MyGateWay)
+@UseGuards(MyJwtGuard)
 @Controller('application')
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
@@ -24,7 +27,9 @@ export class ApplicationController {
     return this.applicationService.getAllApplications(userId);
   }
 
-  @Post('postApplication')
+  @Roles(Role.EMPLOYEE)
+  @UseGuards(RolesGuard)
+  @Post()
   postApplication(
     @GetUser('id') userId: number,
     @Body() insertApplicationDTO: InsertApplicationDTO,

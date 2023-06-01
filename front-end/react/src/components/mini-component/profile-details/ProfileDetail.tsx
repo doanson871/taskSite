@@ -51,6 +51,8 @@ const ProfileDetail: React.FC = (props) => {
       dataSubmit = { ...dataSubmit, photoURL };
     }
 
+    console.log(updateProfile);
+
     const response = await updateProfile(dataSubmit, account);
 
     if (response.status === 200) {
@@ -104,6 +106,7 @@ const ProfileDetail: React.FC = (props) => {
               onChange={(event) => {
                 handleUpdateImage(event);
               }}
+              accept="image/*"
             />
           </div>
         </div>

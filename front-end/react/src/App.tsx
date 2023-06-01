@@ -10,9 +10,9 @@ import Register from "./components/pages/register/Register";
 import ChatContextProvider from "./contexts/chatContext";
 import Profile from "./components/pages/profile/Profile";
 import NotiContextProvider from "./contexts/notiContext";
-import ApplyModel from "./components/model/ApplyModel";
 import Chat from "./components/pages/Chat/chat";
-import Login from "./components/pages/login/Login";
+import Login from "./components/pages/Login/Login";
+import PostDetails from "./components/mini-component/post-detail/PostDetails";
 
 const App = () => {
   return (
@@ -28,9 +28,8 @@ const App = () => {
                   <Route path="/register" element={<Register />} />
                   {/* <Route path="/signup" element={<NewAccount />} />   */}
                   <Route path="/" element={<ProtectedRoute />}>
-                    <Route path="/post" element={<Post />}>
-                      <Route path=":idPost" element={<Post />} />
-                    </Route>
+                    <Route path="/post" element={<Post />} />
+                    <Route path="/post/:idPost" element={<PostDetails />} />
                     <Route path="/joblist" element={<Post />} />
                     <Route path="/message" element={<Chat />}>
                       <Route path=":idChat" element={<Chat />} />
@@ -42,7 +41,6 @@ const App = () => {
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-                <ApplyModel />
               </BrowserRouter>
             </NotiContextProvider>
           </ChatContextProvider>

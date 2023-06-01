@@ -23,8 +23,11 @@ export class UsersOnWorkservice {
   ) {
     const data = await this.prismaService.usersOnWorks.create({
       data: {
-        ...insertUserOnWorkDTO,
+        description: insertUserOnWorkDTO.description,
+        photoURL: insertUserOnWorkDTO.photoURL,
+        priceExpected: insertUserOnWorkDTO.priceExpected,
         userId: userId,
+        workId: insertUserOnWorkDTO.workId,
       },
     });
 
