@@ -6,7 +6,7 @@ import { AuthContext } from "../../../contexts/authContext";
 import "./login.scss";
 import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   // state login and auth context
   const { loginUser } = useContext(AuthContext);
 

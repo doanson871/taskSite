@@ -1,8 +1,7 @@
-import "./login.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/authContext";
 import { Navigate } from "react-router-dom";
-import LoginForm from "./LoginForm";
+import LoginForm from "../../mini-component/login-form/LoginForm";
 
 const Login: React.FC = () => {
   //

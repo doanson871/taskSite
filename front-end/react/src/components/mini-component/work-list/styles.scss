@@ -31,5 +31,8 @@
       display: flex;
       cursor: pointer;
     }
+    th {
+      min-width: 1rem;
+    }
   }
 }

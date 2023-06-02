@@ -77,11 +77,11 @@
     align-items: center;
   }
   .nav-bar {
-    height: 400px;
+    height: 15rem;
     margin: 3em auto;
     .nav-bar-item {
-      font-size: 1.5em;
-      height: 50px;
+      font-size: 1.2em;
+      height: 2rem;
       &:hover .nav-bar-name a {
         color: rgba(0, 0, 0, 0.5) !important;
       }

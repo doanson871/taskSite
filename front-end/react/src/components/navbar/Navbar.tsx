@@ -50,6 +50,7 @@ const Navbar: React.FC<Props> = () => {
     return () => {
       socket.removeListener("");
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -138,8 +139,17 @@ const Navbar: React.FC<Props> = () => {
                   <i className={`${item.icon}`} />
                 </th>
                 <th className="nav-bar-name">
-                  <Link to={item.path} onClick={() => setShowNavbar(false)}>
-                    {item.bossName}
+                  <Link
+                    to={
+                      account.role === "EMPLOYEE"
+                        ? item.employeePath
+                        : item.userPath
+                    }
+                    onClick={() => setShowNavbar(false)}
+                  >
+                    {account.role === "EMPLOYEE"
+                      ? item.employeeName
+                      : item.userName}
                   </Link>
                 </th>
               </tr>
