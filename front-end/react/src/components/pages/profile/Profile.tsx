@@ -30,21 +30,19 @@ const Profile: React.FC = () => {
     FeatureType.Profile
   );
   const listButton = [
-    { name: "Hồ sơ", type: FeatureType.Profile, isShow: true },
+    { name: "Thông tin cá nhân", type: FeatureType.Profile, isShow: true },
+
+    {
+      name: "Công việc mong muốn",
+      type: FeatureType.MyJob,
+      isShow: account.role === "EMPLOYEE",
+    },
     {
       name: "Mật khẩu",
       type: FeatureType.Password,
-      isShow: account.id === idProfile,
-    },
-    { name: "Công việc", type: FeatureType.MyJob, isShow: true },
-    { name: "Giấy tờ", type: FeatureType.MyDocument, isShow: true },
-    {
-      name: "Đăng xuất",
-      type: FeatureType.Logout,
-      isShow: account.id === idProfile || !idProfile,
+      isShow: idProfile === account.id,
     },
   ];
-  useEffect(() => {}, [idProfile]);
   const handleClickButton = (type: FeatureType) => {
     if (type === FeatureType.Logout) {
       resetData();

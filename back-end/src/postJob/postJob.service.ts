@@ -63,6 +63,7 @@ export class PostJobService {
           address: true,
           Application: {
             select: {
+              id: true,
               content: true,
               employee: {
                 select: {
@@ -71,6 +72,7 @@ export class PostJobService {
                   id: true,
                 },
               },
+              status: true,
               createdAt: true,
             },
           },
@@ -193,6 +195,7 @@ export class PostJobService {
         //         gt: '',
         //       },
         // },
+        status: true,
       },
       select: {
         id: true,

@@ -17,7 +17,7 @@ const Post: React.FC<Props> = () => {
   // console.log(listPostJob);
   useEffect(() => {
     getAllPostJob();
-
+    setShowFilter(false);
     // eslint-disable-next-line
   }, []);
 

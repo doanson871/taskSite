@@ -7,6 +7,7 @@ import { NotiContext } from "../../contexts/notiContext";
 interface Props {
   postJobId?: number;
   receiverId?: number;
+  setStatusApply?: any;
 }
 
 const ApplyModel = (props: Props) => {
@@ -39,6 +40,7 @@ const ApplyModel = (props: Props) => {
     const res = await createApply(dataSubmit);
     if (res.statusCode === 200) {
       form.resetFields();
+      props.setStatusApply();
       openNotification();
 
       createNotification({
@@ -61,14 +63,14 @@ const ApplyModel = (props: Props) => {
     <div>
       {contextHolder}
       <Modal
-        title="Don ung tuyen"
+        title="Đơn ứng tuyển"
         onCancel={handleCancel}
         onOk={handleOk}
         open={isOpenApplyModal}
       >
         <Form form={form} layout="vertical">
-          <Form.Item label="Them yeu cau cua ban:" name={"content"}>
-            <Input.TextArea placeholder="Nhap mo ta" />
+          <Form.Item label="Ghi chú" name={"content"}>
+            <Input.TextArea size="large" placeholder="Nhap mo ta" />
           </Form.Item>
         </Form>
       </Modal>

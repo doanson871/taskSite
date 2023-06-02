@@ -212,7 +212,10 @@ const ProfileDetail: React.FC<Props> = (props) => {
           </div>
         </div>
         {!disabled && (
-          <div className="d-flex justify-content-end py-3">
+          <div className="d-flex justify-content-between py-3">
+            <span className="update-button" onClick={() => {}}>
+              Xem giấy tờ
+            </span>
             <span className="update-button" onClick={handleUpdateProfile}>
               Cập nhật hồ sơ
             </span>

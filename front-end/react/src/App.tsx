@@ -12,8 +12,10 @@ import Profile from "./components/pages/profile/Profile";
 import NotiContextProvider from "./contexts/notiContext";
 import Chat from "./components/pages/Chat/chat";
 import PostDetails from "./components/mini-component/post-detail/PostDetails";
-import Login from "./components/pages/login/Login";
+import Login from "./components/pages/Login/Login";
 import EmployeePost from "./components/pages/employee-post/EmployeePost";
+import History from "./components/pages/history/History";
+import Analysis from "./components/pages/analysis/Analysis";
 
 const App = () => {
   return (
@@ -35,7 +37,8 @@ const App = () => {
                     <Route path="/message" element={<Chat />}>
                       <Route path=":idChat" element={<Chat />} />
                     </Route>
-                    <Route path="/notify" element={<Post />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/analysis" element={<Analysis />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/:idProfile" element={<Profile />} />
                     <Route path="/employee/post" element={<EmployeePost />} />

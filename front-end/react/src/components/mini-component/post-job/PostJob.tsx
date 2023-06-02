@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
-import { Image, notification } from "antd";
+import { Button, Image, notification } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -48,7 +48,6 @@ const PostJob: React.FC<Props> = (element) => {
   useEffect(() => {
     const getName = async () => {
       const response = await getJobName(workId);
-      console.log(response);
 
       setjobName(response.data.data.name);
     };
@@ -58,7 +57,7 @@ const PostJob: React.FC<Props> = (element) => {
   return (
     <>
       {contextHolder}
-      <div className="post-job-item">
+      <div className="post-job-item" onClick={handleOnclick}>
         <div className="item-header d-flex justify-content-between">
           <div className="status">
             {status ? (
@@ -82,15 +81,16 @@ const PostJob: React.FC<Props> = (element) => {
           <p className="text">{description}</p>
         </div>
         <div className="list-btn d-flex justify-content-evenly">
-          <div className="button-post" onClick={handleOnclick}>
-            Xem bài viết
-          </div>
-          {account.role === "USER" ? (
-            <div className="button-post" onClick={changeStatus(id, status)}>
+          {account.role === "USER" && (
+            <Button
+              // className="button-post"
+              type="primary"
+              onClick={(e) => {
+                changeStatus(id, status);
+              }}
+            >
               {status ? "Đóng bài viết " : "Mở bài viết"}
-            </div>
-          ) : (
-            <div className="button-post">Ứng tuyển</div>
+            </Button>
           )}
         </div>
       </div>

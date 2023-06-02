@@ -33,3 +33,12 @@
     }
   }
 }
+
+.item-job-info:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.item-job-name {
+  margin-left: 5px;
+}

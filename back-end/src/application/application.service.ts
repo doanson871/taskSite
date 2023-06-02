@@ -5,7 +5,18 @@ import { InsertApplicationDTO, UpdateApplicationDTO } from './dto';
 @Injectable()
 export class ApplicationService {
   constructor(private prismaService: PrismaService) {}
-  async getAllApplications(postId: number) {}
+  async getAllApplications(userId: number) {
+    const applicationList = await this.prismaService.application.findMany({
+      where: {
+        employeeId: userId,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data: applicationList,
+    };
+  }
   async postApplication(
     userId: number,
     insertApplicationDTO: InsertApplicationDTO,

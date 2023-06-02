@@ -1,6 +1,7 @@
 import { Avatar } from "antd";
 import "./noti.scss";
 import { getDOB } from "../../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 export interface INotification {
   isRead?: boolean;
@@ -11,7 +12,10 @@ export interface INotification {
 }
 
 const NotiItem: React.FC<INotification> = (props: INotification) => {
-  const handleclick = () => {};
+  const navigation = useNavigate();
+  const handleclick = () => {
+    navigation(`/post/${props.postId}`);
+  };
 
   return (
     <div

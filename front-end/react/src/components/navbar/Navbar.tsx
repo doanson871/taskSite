@@ -132,27 +132,31 @@ const Navbar: React.FC<Props> = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <table className="nav-bar">
-            {navBarList.map((item, index) => (
-              <tr key={index} className="nav-bar-item">
-                <th className="nav-bar-icon">
-                  <i className={`${item.icon}`} />
-                </th>
-                <th className="nav-bar-name">
-                  <Link
-                    to={
-                      account.role === "EMPLOYEE"
-                        ? item.employeePath
-                        : item.userPath
-                    }
-                    onClick={() => setShowNavbar(false)}
-                  >
-                    {account.role === "EMPLOYEE"
-                      ? item.employeeName
-                      : item.userName}
-                  </Link>
-                </th>
-              </tr>
-            ))}
+            {navBarList.map((item, index) => {
+              return (
+                (item.role === "COMMON" || item.role === account.role) && (
+                  <tr key={index} className="nav-bar-item">
+                    <th className="nav-bar-icon">
+                      <i className={`${item.icon}`} />
+                    </th>
+                    <th className="nav-bar-name">
+                      <Link
+                        to={
+                          account.role === "EMPLOYEE"
+                            ? item.employeePath
+                            : item.userPath
+                        }
+                        onClick={() => setShowNavbar(false)}
+                      >
+                        {account.role === "EMPLOYEE"
+                          ? item.employeeName
+                          : item.userName}
+                      </Link>
+                    </th>
+                  </tr>
+                )
+              );
+            })}
           </table>
         </Offcanvas.Body>
       </Offcanvas>

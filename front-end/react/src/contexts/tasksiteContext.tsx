@@ -204,6 +204,14 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return data;
   };
 
+  const changeStatusApply = async (applyId: number, payload: any) => {
+    const data = await UseFetchData(`${apiURL}/application/${applyId}`, {
+      method: "PATCH",
+      body: JSON.stringify(payload),
+    });
+    return data;
+  };
+
   const addNote = async (noteForm: any) => {
     try {
       const response = await axios.post(`${apiURL}/notes`, noteForm);
@@ -257,6 +265,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     addNote,
     noteList,
     getAllNote,
+    changeStatusApply,
   };
   return (
     <TasksiteContext.Provider value={value}>

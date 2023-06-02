@@ -1,5 +1,6 @@
 import { FilterOutlined, FilterTwoTone } from "@ant-design/icons";
-import './styles.scss'
+import "./styles.scss";
+import { useEffect } from "react";
 
 interface Props {
   element: {
@@ -10,6 +11,7 @@ interface Props {
 }
 const AddPostModal: React.FC<Props> = ({ element }) => {
   const { setShow, isFilter, setShowFilter } = element;
+
   return (
     <div className="add-post d-flex">
       <div className="m-auto">

@@ -11,11 +11,32 @@ import Apply from "./Apply";
 interface Props {
   post?: any;
 }
+
+const Status = {
+  NONE: {
+    text: "",
+    color: "black",
+  },
+  PROCESSING: {
+    text: "đã ứng tuyển",
+    color: "blue",
+  },
+  REJECTED: {
+    text: "từ chối",
+    color: "red",
+  },
+  ACCEPTED: {
+    text: "chấp nhận",
+    color: "green",
+  },
+};
+
 const PostDetails: React.FC<Props> = () => {
   const { idPost } = useParams();
 
   const [showApply, setShowApply] = useState(false);
   const [statusPost, setStatusPost] = useState<boolean>(false);
+  const [statusApply, setStatusApply] = useState<any>(Status.NONE);
 
   const {
     authState: { account },
@@ -37,8 +58,19 @@ const PostDetails: React.FC<Props> = () => {
     getPostById(idPost).then((post: any) => {
       setPost(post.data.postJob);
       setStatusPost(post.data.postJob.status);
+
+      const Apply = (post.data.postJob.Application as Array<any>).find(
+        (e) => e.employee.id === account.id
+      );
+      console.log(Apply);
+
+      if (Apply) {
+        setStatusApply((Status as any)[Apply.status]);
+      }
     });
   }, []);
+
+  console.log(statusApply);
 
   const { changeStatusPost, setIsOpenApplyModal } = useTasksiteContext();
   const [api, contextHolder] = notification.useNotification();
@@ -78,6 +110,10 @@ const PostDetails: React.FC<Props> = () => {
     setIsOpenApplyModal(true);
   };
 
+  const handleSetStatusApply = () => {
+    setStatusApply(Status.PROCESSING);
+  };
+
   const handleSeeApply = () => {
     setShowApply(true);
   };
@@ -89,21 +125,28 @@ const PostDetails: React.FC<Props> = () => {
         <div className="center-post">
           {contextHolder}
           <div className="post-detail-item">
-            <div className="item-header d-flex">
-              <div className="status">
-                <Avatar
-                  src={user?.photoURL || ""}
-                  icon={!user?.photoURL && <i className="bi bi-person"></i>}
-                  size={40}
-                />
+            <div className="item-header d-flex justify-content-between">
+              <div
+                className="d-flex align-items-center item-job-info"
+                onClick={() => {
+                  navigation(`/profile/${user?.id}`);
+                }}
+              >
+                <div className="status">
+                  <Avatar
+                    src={user?.photoURL || ""}
+                    icon={!user?.photoURL && <i className="bi bi-person"></i>}
+                    size={40}
+                  />
+                </div>
+                <div className="item-job-name d-flex">{user?.name}</div>
               </div>
-              <div className="item-job-name d-flex ">{user?.name}</div>
-
-              {account.id !== user?.id && (
-                <Button type="primary" onClick={handleClickMessage}>
-                  {" "}
-                  nhắn tin
-                </Button>
+              {account.role === "EMPLOYEE" && (
+                <div className="">
+                  <span style={{ fontSize: "14px", color: statusApply.color }}>
+                    {`Trạng thái: ${statusApply.text}`}
+                  </span>
+                </div>
               )}
             </div>
             <div className="image-item">
@@ -134,6 +177,9 @@ const PostDetails: React.FC<Props> = () => {
               </div>
             ) : (
               <div className="list-btn d-flex justify-content-around">
+                <Button type="primary" onClick={handleClickMessage}>
+                  Nhắn tin
+                </Button>
                 <Button type="primary" onClick={handleClickApply}>
                   Ứng tuyển
                 </Button>
@@ -145,6 +191,7 @@ const PostDetails: React.FC<Props> = () => {
               (post.Application as Array<any>).map((application, id) => {
                 return (
                   <Apply
+                    id={application.id}
                     photoURL={application.employee.photoURL}
                     name={application.employee.name}
                     content={application.content}
@@ -152,6 +199,7 @@ const PostDetails: React.FC<Props> = () => {
                     userId={application.employee.id}
                     postId={post?.id}
                     key={id}
+                    status={application.status}
                   />
                 );
               })
@@ -163,7 +211,11 @@ const PostDetails: React.FC<Props> = () => {
         </div>
         <div className="right-post"></div>
       </div>
-      <ApplyModel postJobId={post?.id} receiverId={user?.id} />
+      <ApplyModel
+        postJobId={post?.id}
+        receiverId={user?.id}
+        setStatusApply={handleSetStatusApply}
+      />
     </>
   );
 };
