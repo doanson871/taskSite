@@ -12,7 +12,7 @@ import Profile from "./components/pages/profile/Profile";
 import NotiContextProvider from "./contexts/notiContext";
 import Chat from "./components/pages/Chat/chat";
 import PostDetails from "./components/mini-component/post-detail/PostDetails";
-import Login from "./components/pages/login/Login";
+import Login from "./components/pages/Login/Login";
 
 const App = () => {
   return (

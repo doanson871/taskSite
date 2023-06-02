@@ -121,8 +121,15 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     <>
       {contextHolder}
       <Modal
+        style={{
+          top: 0,
+        }}
         show={showModal}
-        onHide={handleClose}
+        onHide={() => {
+          imageURL && URL.revokeObjectURL(imageURL);
+          setImageURL(imageURL);
+          handleClose();
+        }}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
