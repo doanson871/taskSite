@@ -46,7 +46,7 @@ export const navBarList = [
     userName: "Đăng bài",
     employeeName: "Đăng bài",
     userPath: "/post",
-    employeePath: "/note",
+    employeePath: "/employee/post",
     icon: "bi bi-postcard",
   },
   {

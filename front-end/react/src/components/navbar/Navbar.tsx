@@ -16,7 +16,6 @@ const Navbar: React.FC<Props> = () => {
   const { authState, updateProfile } = useContext(AuthContext);
 
   const account = authState.account;
-  console.log(account);
 
   const { isShowNoti, setIsShowNoti } = useContext(NotiContext);
   const { resetData } = useTasksiteContext();

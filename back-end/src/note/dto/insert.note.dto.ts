@@ -10,6 +10,6 @@ export class InsertNoteDTO {
   description?: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   url: string;
 }

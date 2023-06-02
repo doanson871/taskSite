@@ -6,37 +6,7 @@
   .center-post {
     margin-top: 1rem;
     width: 50vw;
-
     min-height: 100px;
-    .add-post {
-      justify-content: space-around;
-      border-radius: 8px;
-      background-color: #fff;
-      padding: 1rem;
-      font-size: 2vmin;
-      gap: 5px;
-      .avatar-post {
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-      }
-      .input-post {
-        display: flex;
-        width: 85%;
-        border-radius: 1rem;
-        background-color: #f0f2f5;
-        padding: 0 1rem;
-        align-items: center;
-        opacity: 60%;
-        min-height: 60px;
-        &:hover {
-          opacity: 85%;
-        }
-      }
-      .image-post {
-        margin: auto 0;
-      }
-    }
     .list-post-jobs {
       gap: 1rem;
       margin-top: 1rem;

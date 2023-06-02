@@ -16,6 +16,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [postList, setPostList] = useState<any>([]);
   const [isFilter, setIsFilter] = useState(false);
   const [workList, setWorkList] = useState<any>([]);
+  const [noteList, setNoteList] = useState<any>([]);
 
   const {
     authState: { account },
@@ -203,6 +204,35 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return data;
   };
 
+  const addNote = async (noteForm: any) => {
+    try {
+      const response = await axios.post(`${apiURL}/notes`, noteForm);
+      if (response.status === 201) {
+        setNoteList([...noteList, response.data.data]);
+        return { statusCode: 200 };
+      } else {
+        return { statusCode: 400 };
+      }
+      // return response;
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getAllNote = async () => {
+    try {
+      const response = await axios.get(`${apiURL}/notes`);
+      if (response.status === 200) {
+        setNoteList(response.data);
+      }
+      // return response;
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
   const value = {
     getAllWorks,
     createNewUserPost,
@@ -224,6 +254,9 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     updateUserOnWork,
     getPostById,
     createApply,
+    addNote,
+    noteList,
+    getAllNote,
   };
   return (
     <TasksiteContext.Provider value={value}>

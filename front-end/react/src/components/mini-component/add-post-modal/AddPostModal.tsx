@@ -1,4 +1,5 @@
 import { FilterOutlined, FilterTwoTone } from "@ant-design/icons";
+import './styles.scss'
 
 interface Props {
   element: {

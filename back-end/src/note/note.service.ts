@@ -41,7 +41,7 @@ export class NoteService {
           userId,
           description: insertNoteDTO.description,
           title: insertNoteDTO.title,
-          url: insertNoteDTO.url,
+          url: insertNoteDTO.url || "",
         },
       });
 

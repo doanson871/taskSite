@@ -4,7 +4,7 @@ import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
 import FilterModal from "../../mini-component/filter/FilterModal";
-import AddPostModal from "./AddPostModal";
+import AddPostModal from "../../mini-component/add-post-modal/AddPostModal";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
@@ -13,7 +13,6 @@ const Post: React.FC<Props> = () => {
   const [showFilter, setShowFilter] = useState(false);
   const handleCloseFilter = () => setShowFilter(false);
   const { postList, getAllPostJob, isFilter } = useTasksiteContext();
-  const [postDetail, setPostDetail] = useState<any>({});
   // const [listPostJob, setListPostJob] = useState<any[]>([]);
   // console.log(listPostJob);
   useEffect(() => {
