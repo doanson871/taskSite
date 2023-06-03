@@ -241,6 +241,16 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const getAllApplications = async () => {
+    const data = await UseFetchData(`${apiURL}/application`);
+    return data;
+  };
+
+  const getInfoPostJob = async () => {
+    const data = await UseFetchData(`${apiURL}/postJob/infoPostJob`);
+    return data;
+  };
+
   const value = {
     getAllWorks,
     createNewUserPost,
@@ -266,6 +276,8 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     noteList,
     getAllNote,
     changeStatusApply,
+    getAllApplications,
+    getInfoPostJob,
   };
   return (
     <TasksiteContext.Provider value={value}>

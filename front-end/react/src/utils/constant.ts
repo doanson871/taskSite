@@ -40,6 +40,28 @@ export enum StatusApply {
   REJECTED,
 }
 
+export const getDataTimeAnalysis = () => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+
+  let newDate = new Date(
+    date.setFullYear(date.getFullYear(), date.getMonth(), 0)
+  );
+
+  const list = [];
+
+  for (let i = 0; i < 4; i++) {
+    const x = new Date(newDate);
+    list.push({
+      totalCost: 0,
+      breakTimePoint: new Date(x.setMonth(x.getMonth() - i)),
+      name: `T${month - i}`,
+    });
+  }
+
+  return list;
+};
+
 export const navBarList = [
   {
     id: 1,
@@ -85,6 +107,15 @@ export const navBarList = [
     employeePath: "/profile",
     icon: "bi bi-person-circle",
     role: "COMMON",
+  },
+  {
+    id: 6,
+    userName: "Thống kê",
+    employeeName: "Thống kê",
+    userPath: "/analysis",
+    employeePath: "/analysis",
+    icon: "bi bi-graph-up",
+    role: "EMPLOYEE",
   },
 ];
 export const getDOB = (dateTest: string) => {

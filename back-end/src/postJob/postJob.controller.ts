@@ -62,6 +62,11 @@ export class PostJobController {
     return this.postJobService.searchPostJobByEmployee(dataSearch);
   }
 
+  @Get('infoPostJob')
+  getTotalInfoPostJob() {
+    return this.postJobService.getTotalInfoPostJob();
+  }
+
   @Roles(Role.USER)
   @UseGuards(RolesGuard)
   @Get('allPostJobs')

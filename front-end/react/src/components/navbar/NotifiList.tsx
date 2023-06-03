@@ -18,7 +18,7 @@ export default function NotifiList(props: Props) {
 
   useEffect(() => {
     getAllNotifications(id);
-  }, [getAllNotifications, id]);
+  }, [id]);
 
   if (notificationList.length === 0) {
     return (

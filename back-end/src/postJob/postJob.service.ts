@@ -108,6 +108,24 @@ export class PostJobService {
     }
   }
 
+  async getTotalInfoPostJob() {
+    const data = await this.prismaService.postJob.findMany({
+      select: {
+        createdAt: true,
+        work: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data: data,
+    };
+  }
+
   async searchPostJobByUser(data: SearchPostJobDTO, userId: number) {
     const postJobSearch = await this.prismaService.postJob.findMany({
       where: {

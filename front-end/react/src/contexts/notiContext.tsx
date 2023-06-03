@@ -13,7 +13,6 @@ const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const getAllNotifications = async (userId: number) => {
     const data = await UseFetchData(`${apiURL}/notification`);
-    console.log(data);
     if (data.statusCode === 200) {
       // setIsLoading(true);
       setNotificaitionList(data.data);

@@ -10,6 +10,22 @@ export class ApplicationService {
       where: {
         employeeId: userId,
       },
+      select: {
+        content: true,
+        createdAt: true,
+        id: true,
+        postJobId: true,
+        status: true,
+        postJob: {
+          select: {
+            work: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return {

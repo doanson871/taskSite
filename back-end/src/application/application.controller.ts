@@ -22,7 +22,7 @@ import { RolesGuard } from 'src/utils/roleGuard/roles.gurad';
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
 
-  @Get('/allApplications')
+  @Get('')
   getAllApplications(@GetUser('id') userId: number) {
     return this.applicationService.getAllApplications(userId);
   }
