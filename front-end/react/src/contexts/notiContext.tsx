@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useState } from "react";
-import { apiURL, socket } from "../utils/constant";
+import { apiURL } from "../utils/constant";
 import { UseFetchData } from "../hooks/useFetchData";
 
 export const NotiContext = createContext<any>(null);

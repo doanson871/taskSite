@@ -24,7 +24,7 @@ const NoteItem: React.FC<Props> = ({ item }) => {
       </div>
       {item?.url && (
         <div className="image-box d-flex">
-          <img src={item?.url}></img>
+          <img alt="" src={item?.url}></img>
         </div>
       )}
       <div className="description">{item?.description}</div>

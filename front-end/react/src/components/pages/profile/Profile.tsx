@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./styles.scss";
 import ProfileDetail from "../../mini-component/profile-details/ProfileDetail";
 import { AuthContext } from "../../../contexts/authContext";
@@ -35,7 +35,7 @@ const Profile: React.FC = () => {
     {
       name: "Công việc mong muốn",
       type: FeatureType.MyJob,
-      isShow: account.role === "EMPLOYEE",
+      isShow: account.role === "EMPLOYEE" && idProfile === account.id,
     },
     {
       name: "Mật khẩu",

@@ -51,7 +51,7 @@ const History: React.FC<Props> = (props: Props) => {
       );
       setList(newList);
     }
-  }, [value]);
+  }, [value, originList]);
 
   return (
     <div className="post d-grid">

@@ -18,7 +18,11 @@ export default function NotifiList(props: Props) {
 
   useEffect(() => {
     getAllNotifications(id);
-  }, [id]);
+  }, []);
+
+  const notifications = (notificationList as Array<any>).sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   if (notificationList.length === 0) {
     return (
@@ -31,20 +35,18 @@ export default function NotifiList(props: Props) {
   }
   return (
     <div className="list-notify">
-      {notificationList
-        .reverse()
-        .map((notification: INotification, id: number) => {
-          return (
-            <NotiItem
-              content={notification.content}
-              isRead={notification.isRead}
-              createdAt={notification.createdAt}
-              photoURL={notification.photoURL}
-              postId={notification.postId}
-              key={id}
-            />
-          );
-        })}
+      {notifications.map((notification: INotification, id: number) => {
+        return (
+          <NotiItem
+            content={notification.content}
+            isRead={notification.isRead}
+            createdAt={notification.createdAt}
+            photoURL={notification.photoURL}
+            postId={notification.postId}
+            key={id}
+          />
+        );
+      })}
       {/* <NotiItem />
       <NotiItem isRead={true} /> */}
     </div>

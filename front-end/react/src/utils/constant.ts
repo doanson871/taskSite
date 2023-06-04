@@ -40,6 +40,9 @@ export enum StatusApply {
   REJECTED,
 }
 
+export var randomColor =
+  "#" + Math.floor(Math.random() * 16777215).toString(16);
+
 export const getDataTimeAnalysis = () => {
   const date = new Date();
   const month = date.getMonth() + 1;

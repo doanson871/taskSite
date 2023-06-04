@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { getDataTimeAnalysis } from "../../../utils/constant";
+import BarChartData from "./BarChart";
 
 const Analysis = () => {
   const { getInfoPostJob, getAllWorks } = useTasksiteContext();
@@ -58,33 +59,43 @@ const Analysis = () => {
   }, []);
 
   return (
-    <div className="graph">
-      <h1 className="graph-title">Biểu đồ đường</h1>
-      <ResponsiveContainer width="80%" height="50%">
-        <LineChart
-          data={listData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          {rawDataWork.map((name: any) => (
-            <Line type="monotone" dataKey={name} stroke="#8884d8" />
-          ))}
+    <>
+      <div className="graph">
+        <h2 className="graph-title">
+          Biểu đồ thống kê số lượng đơn hàng theo mỗi công việc trong 4 tháng
+          gần đây
+        </h2>
+        <ResponsiveContainer width="80%" height="100%">
+          <LineChart
+            data={listData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {rawDataWork.map((name: any) => (
+              <Line
+                type="monotone"
+                dataKey={name}
+                stroke={"#" + Math.floor(Math.random() * 16777215).toString(16)}
+              />
+            ))}
 
-          {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
           <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
           <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <BarChartData />
+    </>
   );
 };
 

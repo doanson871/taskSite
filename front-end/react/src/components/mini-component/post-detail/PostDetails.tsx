@@ -68,7 +68,11 @@ const PostDetails: React.FC<Props> = () => {
         setStatusApply((Status as any)[Apply.status]);
       }
     });
-  }, []);
+
+    return () => {
+      setShowApply(false);
+    };
+  }, [idPost]);
 
   console.log(statusApply);
 
@@ -155,7 +159,9 @@ const PostDetails: React.FC<Props> = () => {
             <ul>
               <li>Công việc: {post?.work.name}</li>
               <li>Địa chỉ: {post?.address}</li>
-              <li>Lương: {post?.salary}</li>
+              <li>
+                Thu nhập: {post?.salary} {"(vnđ)"}
+              </li>
               <li>Quận Huyện: {post?.quanhuyen}</li>
               <li>Thành phố: {post?.thanhpho}</li>
             </ul>
