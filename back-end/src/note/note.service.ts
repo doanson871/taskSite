@@ -34,6 +34,22 @@ export class NoteService {
     }
   }
 
+  async getNotesById(userId: number) {
+    try {
+      console.log(userId);
+
+      const note = await this.prismaService.note.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+
+      return note;
+    } catch (error) {
+      return error;
+    }
+  }
+
   // async insertNote(userId: number, insertNoteDTO: InsertNoteDTO) {
   //   try {
   //     const note = await this.prismaService.note.create({

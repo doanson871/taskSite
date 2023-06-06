@@ -62,7 +62,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     // eslint-disable-next-line
   }, []);
   const listCity = useMemo(() => {
-    let _listCity = ["Hãy chọn thành phố"];
+    let _listCity = [""];
     listAddress.forEach((address) => {
       _listCity.push(address.city);
     });
@@ -70,7 +70,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
     // eslint-disable-next-line
   }, [listAddress]);
   const listDistric = useMemo(() => {
-    let _listDistric = ["Hãy chọn quận"];
+    let _listDistric = [""];
     listAddress.forEach((address) => {
       if (address.city === city) {
         _listDistric = _listDistric.concat(address.district);
@@ -135,7 +135,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tạo bài viết</Modal.Title>
+          <Modal.Title>Tạo công việc</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="post-job container">
@@ -155,7 +155,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
                   className="select-box fs-6"
                   onChange={(e) => {
                     setCity(e.target.value);
-                    setDistric("Hãy chọn quận");
+                    setDistric("");
                   }}
                 >
                   {listCity.map((city) => (
@@ -194,7 +194,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
               </div>
             </div>
             <div className="row mb-2">
-              <div className="col-2 fs-6">Chi phí</div>
+              <div className="col-2 fs-6">Tiền công</div>
               <input
                 type="text"
                 className="col-10 cost box-input"

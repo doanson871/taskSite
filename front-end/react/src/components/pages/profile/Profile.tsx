@@ -6,6 +6,7 @@ import ChangePassword from "../../mini-component/change-password/ChangePassword"
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import WorkList from "../../mini-component/work-list/WorkList";
 import { useParams } from "react-router-dom";
+import CenterPost from "../employee-post/CenterPost";
 
 enum FeatureType {
   Profile,
@@ -22,7 +23,6 @@ const Profile: React.FC = () => {
   } = useContext(AuthContext);
 
   const { idProfile } = useParams();
-  console.log(idProfile);
   const { logOut } = useContext(AuthContext);
   const { resetData } = useTasksiteContext();
   const [profileType, setProfileType] = useState<FeatureType>(
@@ -34,12 +34,18 @@ const Profile: React.FC = () => {
     {
       name: "Công việc mong muốn",
       type: FeatureType.MyJob,
-      isShow: !idProfile || (account.role === "EMPLOYEE" && idProfile === account.id),
+      isShow:
+        account.role === "EMPLOYEE" && (!idProfile || idProfile === account.id),
+    },
+    {
+      name: "Bài đăng",
+      type: FeatureType.MyDocument,
+      isShow: idProfile || account.role !== "USER",
     },
     {
       name: "Mật khẩu",
       type: FeatureType.Password,
-      isShow: !idProfile || (idProfile === account.id),
+      isShow: !idProfile || idProfile === account.id,
     },
   ];
   const handleClickButton = (type: FeatureType) => {
@@ -58,6 +64,9 @@ const Profile: React.FC = () => {
         )}
         {profileType === FeatureType.Password && <ChangePassword />}
         {profileType === FeatureType.MyJob && <WorkList />}
+        {profileType === FeatureType.MyDocument && (
+          <CenterPost idProfile={parseInt(idProfile as string)} />
+        )}
       </div>
       <div className="right-profile d-flex">
         <span></span>

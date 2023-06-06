@@ -32,6 +32,11 @@ export class NoteController {
     return this.noteService.getNoteById(noteId);
   }
 
+  @Get('user/:id')
+  getNotesById(@Param('id', ParseIntPipe) userId: number) {
+    return this.noteService.getNotesById(userId);
+  }
+
   @Post()
   insertNote(
     @GetUser('id') userId: number,

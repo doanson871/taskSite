@@ -82,7 +82,7 @@ const History: React.FC<Props> = (props: Props) => {
             <List.Item
               actions={[
                 <Link to={`/post/${item.postJobId}`} key="list-loadmore-more">
-                  more
+                  xem
                 </Link>,
               ]}
             >

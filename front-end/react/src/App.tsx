@@ -15,7 +15,7 @@ import PostDetails from "./components/mini-component/post-detail/PostDetails";
 import EmployeePost from "./components/pages/employee-post/EmployeePost";
 import History from "./components/pages/history/History";
 import Analysis from "./components/pages/analysis/Analysis";
-import Login from "./components/pages/login/Login";
+import Login from "./components/pages/Login/Login";
 import AvailableWorks from "./components/pages/available-works/AvailableWorks";
 
 const App = () => {
@@ -43,7 +43,10 @@ const App = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/:idProfile" element={<Profile />} />
                     <Route path="/employee/post" element={<EmployeePost />} />
-                    <Route path="/availableWorks" element={<AvailableWorks />} />
+                    <Route
+                      path="/availableWorks"
+                      element={<AvailableWorks />}
+                    />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>

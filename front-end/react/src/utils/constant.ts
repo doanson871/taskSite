@@ -68,7 +68,7 @@ export const getDataTimeAnalysis = () => {
 export const navBarList = [
   {
     id: 1,
-    userName: "Đăng bài",
+    userName: "Đăng việc",
     employeeName: "Đăng bài",
     userPath: "/post",
     employeePath: "/employee/post",

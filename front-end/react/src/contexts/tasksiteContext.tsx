@@ -266,11 +266,18 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const getAllNote = async () => {
+  const getAllNote = async (idProfile?: number | undefined) => {
     try {
-      const response = await axios.get(`${apiURL}/notes`);
-      if (response.status === 200) {
-        setNoteList(response.data);
+      if (idProfile) {
+        const response = await axios.get(`${apiURL}/notes/user/${idProfile}`);
+        if (response.status === 200) {
+          setNoteList(response.data);
+        }
+      } else {
+        const response = await axios.get(`${apiURL}/notes`);
+        if (response.status === 200) {
+          setNoteList(response.data);
+        }
       }
       // return response;
     } catch (error: any) {
