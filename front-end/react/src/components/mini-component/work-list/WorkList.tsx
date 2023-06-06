@@ -17,7 +17,7 @@ const WorkList: React.FC = () => {
   useEffect(() => {
     const handle = async () => {
       const promiseList = workList.map((work: any) => {
-        const response = getJobName(work.workId);
+        const response = getJobName(+work.workId);
         return response;
       });
       const list = await Promise.all(promiseList);

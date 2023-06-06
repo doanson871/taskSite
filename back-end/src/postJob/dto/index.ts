@@ -2,7 +2,7 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class InsertPostJobDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   address: string;
 
   @IsNumber()

@@ -11,7 +11,6 @@ const NoteItem: React.FC<Props> = ({ item }) => {
   const { authState } = useContext(AuthContext);
 
   const account = authState.account;
-  console.log(item, account);
   return (
     <div className="note-item">
       <div className="header-note d-flex">

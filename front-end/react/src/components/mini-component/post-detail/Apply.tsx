@@ -28,9 +28,6 @@ interface props {
 const Apply: React.FC<props> = (props) => {
   const navigation = useNavigate();
   const [statusApply, setStatusApply] = useState(props.status);
-
-  console.log(props.status);
-
   const {
     ChatContextData: {
       createConversation,
@@ -62,7 +59,6 @@ const Apply: React.FC<props> = (props) => {
 
   const handleClickMessage = async () => {
     const data = await createConversation(props.userId);
-    console.log(data);
 
     if (data.statusCode === 200) {
       setCurrentUserChat({
@@ -76,8 +72,6 @@ const Apply: React.FC<props> = (props) => {
 
   const handleReject = async () => {
     const data = await changeStatusApply(props.id, { status: "REJECTED" });
-    console.log(data);
-
     if (data.statusCode === 200) {
       createNoti("Đơn ứng tuyển của bạn bị từ chối");
       openNotification();

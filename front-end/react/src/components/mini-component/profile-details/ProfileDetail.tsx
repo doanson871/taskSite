@@ -3,7 +3,6 @@ import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
 import { Avatar, notification } from "antd";
 import { initialGender, initialRole } from "../../../utils/constant";
-import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { SmileOutlined } from "@ant-design/icons";
 import { UseUploadImage } from "../../../hooks/useUploadImg";
 interface Props {
@@ -41,7 +40,6 @@ const ProfileDetail: React.FC<Props> = (props) => {
   useEffect(() => {
     if (props.idProfile && props.idProfile !== account.id) {
       getInfoUserById(props.idProfile).then((data: any) => {
-        console.log(data);
         if (data.statusCode === 200) {
           setAccountForm(data.data);
           setDisabled(true);
@@ -53,11 +51,8 @@ const ProfileDetail: React.FC<Props> = (props) => {
       setDisabled(false);
       setImageURL(account.photoURL);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idProfile]);
-
-  console.log(disabled);
-
-  console.log(accountForm);
 
   const openNotification = () => {
     api.open({
@@ -73,8 +68,6 @@ const ProfileDetail: React.FC<Props> = (props) => {
       setAccountForm({ ...accountForm, photoURL });
       dataSubmit = { ...dataSubmit, photoURL };
     }
-
-    console.log(updateProfile);
 
     const response = await updateProfile(dataSubmit, account);
 
@@ -204,10 +197,10 @@ const ProfileDetail: React.FC<Props> = (props) => {
               disabled={disabled}
               type="text"
               className="form-control"
-              value={accountForm.quanhuyen}
-              onChange={(e) =>
-                setAccountForm({ ...accountForm, quanhuyen: e.target.value })
-              }
+              // value={accountForm.quanhuyen}
+              // onChange={(e) =>
+              //   setAccountForm({ ...accountForm, quanhuyen: e.target.value })
+              // }
             />
           </div>
         </div>

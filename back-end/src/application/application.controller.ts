@@ -40,6 +40,17 @@ export class ApplicationController {
     );
   }
 
+  @Post(':id')
+  postApplicationDefault(
+    @Param('id', ParseIntPipe) userId: number,
+    @Body() insertApplicationDTO: InsertApplicationDTO,
+  ) {
+    return this.applicationService.postApplication(
+      userId,
+      insertApplicationDTO,
+    );
+  }
+
   @Patch(':id')
   updateApplication(
     @Param('id', ParseIntPipe) ApplicationId: number,

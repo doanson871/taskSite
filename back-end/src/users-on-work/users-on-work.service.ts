@@ -5,10 +5,22 @@ import { InsertUserOnWorkDTO, UpdateUserOnWorkDTO } from './dto';
 @Injectable()
 export class UsersOnWorkservice {
   constructor(private prismaService: PrismaService) {}
-  async getAllUserOnWorks(userId: number) {
+  async getAllUserOnWorksById(userId: number) {
     const data = await this.prismaService.usersOnWorks.findMany({
       where: {
         userId: userId,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+  async getAllUserOnWorks() {
+    const data = await this.prismaService.usersOnWorks.findMany({
+      where: {
+        status: true,
       },
     });
 

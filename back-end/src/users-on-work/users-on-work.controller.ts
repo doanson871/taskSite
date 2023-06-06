@@ -19,9 +19,14 @@ import { InsertUserOnWorkDTO, UpdateUserOnWorkDTO } from './dto';
 export class UsersOnWorkController {
   constructor(private userOnWorkService: UsersOnWorkservice) {}
 
+  @Get('/allUserOnWorksById')
+  getAllUserOnWorksById(@GetUser('id') userId: number) {
+    return this.userOnWorkService.getAllUserOnWorksById(userId);
+  }
+
   @Get('/allUserOnWorks')
-  getAllUserOnWorks(@GetUser('id') userId: number) {
-    return this.userOnWorkService.getAllUserOnWorks(userId);
+  getAllUserOnWorks() {
+    return this.userOnWorkService.getAllUserOnWorks();
   }
 
   @Post('postUserOnWork')

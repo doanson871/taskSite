@@ -1,12 +1,6 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../../contexts/authContext";
 import "./styles.scss";
 
 const ChangePassword: React.FC = () => {
-  const {
-    authState: { account },
-  } = useContext(AuthContext);
-  console.log(account);
   return (
     <div className="profile-details">
       <h3 className="my-3">

@@ -19,8 +19,6 @@ const BarChartData = () => {
     Promise.all([getAllApplications(), getAllWorks()]).then(
       ([listApplications, works]) => {
         const applications = listApplications.data;
-        console.log(applications, works);
-
         const data = [];
         const object: any = {};
         for (let i = 0; i < works.length; i++) {
@@ -46,8 +44,6 @@ const BarChartData = () => {
           object[applications[i].postJob.work.name].total++;
         }
 
-        console.log(object);
-
         for (let value in object) {
           if (
             object[value].accpeted === 0 &&
@@ -58,11 +54,10 @@ const BarChartData = () => {
           }
           data.push(object[value]);
         }
-        console.log(data);
-
         setDataList(data);
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

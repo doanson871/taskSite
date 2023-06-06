@@ -94,8 +94,6 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
         seen: false,
       }),
     }).then((data) => {
-      console.log(data);
-
       if (data.statusCode === 200) {
         chatDispatch({
           type: ChatActionKind.UPDATE_STATUS_CONVERSATION,
@@ -112,8 +110,6 @@ const ChatContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
         userId: userId,
       }),
     });
-
-    console.log(data);
     return data;
   };
 

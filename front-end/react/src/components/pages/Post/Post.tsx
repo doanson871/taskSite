@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import AddPostJob from "../../mini-component/add-post-job/AddPostJob";
 import PostJob from "../../mini-component/post-job/PostJob";
 import FilterModal from "../../mini-component/filter/FilterModal";
 import AddPostModal from "../../mini-component/add-post-modal/AddPostModal";
+import { AuthContext } from "../../../contexts/authContext";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const { authState } = useContext(AuthContext);
+
+  const account = authState.account;
 
   const [showFilter, setShowFilter] = useState(false);
   const handleCloseFilter = () => setShowFilter(false);
   const { postList, getAllPostJob, isFilter } = useTasksiteContext();
-  // const [listPostJob, setListPostJob] = useState<any[]>([]);
-  // console.log(listPostJob);
   useEffect(() => {
     getAllPostJob();
     setShowFilter(false);
@@ -27,13 +29,15 @@ const Post: React.FC<Props> = () => {
         <div className="left-post"></div>
         <div className="center-post">
           <>
-            <AddPostModal
-              element={{
-                setShow: setShow,
-                setShowFilter: setShowFilter,
-                isFilter: isFilter,
-              }}
-            />
+            {account.role !== "EMPLOYEE" && (
+              <AddPostModal
+                element={{
+                  setShow: setShow,
+                  setShowFilter: setShowFilter,
+                  isFilter: isFilter,
+                }}
+              />
+            )}
             <div className="list-post-jobs d-flex">
               {postList.map((postJob: any) => (
                 <PostJob

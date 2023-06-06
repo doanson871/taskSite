@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from "react";
-import { getDOB } from "../../utils/constant";
+import { useEffect, useContext } from "react";
 import "./noti.scss";
 import NotiItem, { INotification } from "./NotiItem";
 import { NotiContext } from "../../contexts/notiContext";
@@ -18,6 +17,7 @@ export default function NotifiList(props: Props) {
 
   useEffect(() => {
     getAllNotifications(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const notifications = (notificationList as Array<any>).sort(

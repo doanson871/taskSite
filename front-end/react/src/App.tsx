@@ -12,10 +12,11 @@ import Profile from "./components/pages/profile/Profile";
 import NotiContextProvider from "./contexts/notiContext";
 import Chat from "./components/pages/Chat/chat";
 import PostDetails from "./components/mini-component/post-detail/PostDetails";
-import Login from "./components/pages/Login/Login";
 import EmployeePost from "./components/pages/employee-post/EmployeePost";
 import History from "./components/pages/history/History";
 import Analysis from "./components/pages/analysis/Analysis";
+import Login from "./components/pages/login/Login";
+import AvailableWorks from "./components/pages/available-works/AvailableWorks";
 
 const App = () => {
   return (
@@ -32,8 +33,8 @@ const App = () => {
                   {/* <Route path="/signup" element={<NewAccount />} />   */}
                   <Route path="/" element={<ProtectedRoute />}>
                     <Route path="/post" element={<Post />} />
+                    <Route path="/listPost" element={<Post />} />
                     <Route path="/post/:idPost" element={<PostDetails />} />
-                    <Route path="/joblist" element={<Post />} />
                     <Route path="/message" element={<Chat />}>
                       <Route path=":idChat" element={<Chat />} />
                     </Route>
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/profile/:idProfile" element={<Profile />} />
                     <Route path="/employee/post" element={<EmployeePost />} />
+                    <Route path="/availableWorks" element={<AvailableWorks />} />
                   </Route>
                   <Route path="*" element={<NotFound />} />
                 </Routes>

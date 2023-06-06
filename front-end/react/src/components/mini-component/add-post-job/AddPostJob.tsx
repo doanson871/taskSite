@@ -194,7 +194,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
               </div>
             </div>
             <div className="row mb-2">
-              <div className="col-2 fs-6">Lương</div>
+              <div className="col-2 fs-6">Chi phí</div>
               <input
                 type="text"
                 className="col-10 cost box-input"

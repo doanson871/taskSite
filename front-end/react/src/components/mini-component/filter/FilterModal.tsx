@@ -68,7 +68,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
       console.log(error);
     }
   };
-  const uploadImage = () => {};
   const filterJob = async () => {
     const filterForm = {
       workId: workId,
@@ -78,7 +77,6 @@ const FilterModal: React.FC<Props> = ({ showModal, handleClose }) => {
     };
     setIsFilter(checkData());
     try {
-      console.log(queryString.stringify(filterForm));
       const query = queryString.stringify(filterForm);
       filterPostJobs(query);
 

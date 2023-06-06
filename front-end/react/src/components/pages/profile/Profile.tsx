@@ -23,7 +23,6 @@ const Profile: React.FC = () => {
 
   const { idProfile } = useParams();
   console.log(idProfile);
-
   const { logOut } = useContext(AuthContext);
   const { resetData } = useTasksiteContext();
   const [profileType, setProfileType] = useState<FeatureType>(
@@ -35,12 +34,12 @@ const Profile: React.FC = () => {
     {
       name: "Công việc mong muốn",
       type: FeatureType.MyJob,
-      isShow: account.role === "EMPLOYEE" && idProfile === account.id,
+      isShow: !idProfile || (account.role === "EMPLOYEE" && idProfile === account.id),
     },
     {
       name: "Mật khẩu",
       type: FeatureType.Password,
-      isShow: idProfile === account.id,
+      isShow: !idProfile || (idProfile === account.id),
     },
   ];
   const handleClickButton = (type: FeatureType) => {
@@ -60,7 +59,7 @@ const Profile: React.FC = () => {
         {profileType === FeatureType.Password && <ChangePassword />}
         {profileType === FeatureType.MyJob && <WorkList />}
       </div>
-      <div className="right-profile d-grid">
+      <div className="right-profile d-flex">
         <span></span>
         <div className="list-button">
           {listButton.map((button) => {

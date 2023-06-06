@@ -36,7 +36,6 @@ const ApplyModel = (props: Props) => {
     const data = form.getFieldValue([]);
 
     const dataSubmit = { ...data, ...props };
-    console.log(dataSubmit);
     const res = await createApply(dataSubmit);
     if (res.statusCode === 200) {
       form.resetFields();

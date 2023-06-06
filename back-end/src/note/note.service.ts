@@ -34,21 +34,39 @@ export class NoteService {
     }
   }
 
-  async insertNote(userId: number, insertNoteDTO: InsertNoteDTO) {
-    try {
-      const note = await this.prismaService.note.create({
-        data: {
-          userId,
-          description: insertNoteDTO.description,
-          title: insertNoteDTO.title,
-          url: insertNoteDTO.url || "",
-        },
-      });
+  // async insertNote(userId: number, insertNoteDTO: InsertNoteDTO) {
+  //   try {
+  //     const note = await this.prismaService.note.create({
+  //       data: {
+  //         userId: userId,
+  //         description: insertNoteDTO.description,
+  //         title: insertNoteDTO.title,
+  //         url: insertNoteDTO.url || '',
+  //       },
+  //     });
 
-      return note;
-    } catch (error) {
-      return error;
-    }
+  //     return note;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return error.code;
+  //   }
+  // }
+
+  async insertNote(userId: number, insertNoteDTO: InsertNoteDTO) {
+    const note = await this.prismaService.note.create({
+      data: {
+        userId: userId,
+        description: insertNoteDTO.description,
+        title: insertNoteDTO.title,
+        url: insertNoteDTO.url || '',
+      },
+    });
+
+    return {
+      statusCode: 200,
+      message: 'OK',
+      data: note,
+    };
   }
 
   async updateNoteById(noteId: number, updateNoteDTO: UpdateNoteDTO) {

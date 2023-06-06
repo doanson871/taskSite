@@ -1,9 +1,10 @@
-import { Switch, notification } from "antd";
-import React, { useEffect, useState } from "react";
+import { Switch, notification, Image } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import "./styles.scss";
 import { SmileOutlined, WarningTwoTone } from "@ant-design/icons";
+import { UseUploadImage } from "../../../hooks/useUploadImg";
 interface Props {
   show: boolean;
   handleClose: () => void;
@@ -26,13 +27,29 @@ const AddWork: React.FC<Props> = ({
   const [status, setstatus] = useState<boolean>(true);
   // const [photo, setphoto] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
+  const refFile: any = useRef();
+  const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageURL, setImageURL] = useState<string>("");
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = (e.target as any).files[0];
+    setImageUpload(file);
 
+    if (file) {
+      setImageURL(URL.createObjectURL(file));
+    }
+  };
+  useEffect(() => {
+    return () => {
+      imageURL && URL.revokeObjectURL(imageURL);
+    };
+  }, [imageURL]);
   useEffect(() => {
     if (item) {
       setjob(item?.workId);
       setsalary(item?.priceExpected);
       setdescription(item?.description);
       setstatus(item?.status);
+      setImageURL(item?.photoURL);
     }
     // eslint-disable-next-line
   }, [item]);
@@ -60,20 +77,41 @@ const AddWork: React.FC<Props> = ({
     }
   };
   const handlePost = async () => {
-    const { statusCode } = await postUserOnWork({
+    let workForm = {
       description,
       priceExpected: salary,
       status,
       workId: job,
-    });
-
-    if (statusCode === 200) {
-      openNotification();
-      handleClose();
-    } else {
-      failAddPost();
-      handleClose();
+      photoURL: "",
     }
+    try {
+      const photoURL: string | undefined = await UseUploadImage(imageUpload);
+      if (photoURL) {
+        workForm = { ...workForm, photoURL };
+      }
+
+      const { statusCode } = await postUserOnWork(workForm);
+      if (statusCode === 200) {
+        resetData();
+        openNotification();
+        handleClose();
+      } else {
+        resetData();
+        failAddPost();
+        handleClose();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const resetData = () => {
+    setjob(0);
+    setsalary("0");
+    setdescription("");
+    setstatus(true);
+    setImageURL("");
+    setImageUpload(null);
   };
 
   const handleUpdate = async () => {
@@ -160,12 +198,30 @@ const AddWork: React.FC<Props> = ({
                 onChange={(e) => setdescription(e.target.value)}
               />
             </div>
+            <div>
+              <Image
+                width={200}
+                src={imageURL}
+                fallback="https://raw.githubusercontent.com/koehlersimon/fallback/master/Resources/Public/Images/placeholder.jpg"
+              ></Image>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={() => {
+              refFile.current.click();
+            }}>
             Thêm ảnh
           </Button>
+          <input
+            type="file"
+            className="d-none"
+            ref={refFile}
+            onChange={(e) => {
+              handleUploadImage(e);
+            }}
+            accept="image/*"
+          />
           <Button variant="secondary" onClick={handleClose}>
             Đóng
           </Button>

@@ -11,8 +11,6 @@ interface Props {}
 const ChatWindow: React.FC<Props> = (props) => {
   const messageEl: any = useRef(null);
 
-  console.log(props);
-
   const {
     authState: {
       account: { id },

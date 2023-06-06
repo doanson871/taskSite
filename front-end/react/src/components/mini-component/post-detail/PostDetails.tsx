@@ -62,8 +62,6 @@ const PostDetails: React.FC<Props> = () => {
       const Apply = (post.data.postJob.Application as Array<any>).find(
         (e) => e.employee.id === account.id
       );
-      console.log(Apply);
-
       if (Apply) {
         setStatusApply((Status as any)[Apply.status]);
       }
@@ -72,14 +70,12 @@ const PostDetails: React.FC<Props> = () => {
     return () => {
       setShowApply(false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idPost]);
-
-  console.log(statusApply);
 
   const { changeStatusPost, setIsOpenApplyModal } = useTasksiteContext();
   const [api, contextHolder] = notification.useNotification();
   const user = post?.user;
-  console.log(post);
 
   const openNotification = () => {
     api.open({

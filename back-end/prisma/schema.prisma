@@ -25,7 +25,8 @@ model User {
   quanhuyen            String?
   age                  Int?
   sex                  String?
-  isReadNotification   Boolean?       @default(true)
+  isReadNotification   Boolean?       @default(false)
+  address              String?
   notes                Note[]
   works                UsersOnWorks[]
   postJob              PostJob[]
@@ -87,7 +88,7 @@ model PostJob {
   userId      Int
   work        Work          @relation(fields: [workId], references: [id])
   workId      Int
-  address     String
+  address     String?
   thanhpho    String?
   quanhuyen   String?
   salary      Int?
@@ -158,7 +159,7 @@ model Member {
   user           User         @relation(fields: [userId], references: [id])
   conversationId Int
   conversation   Conversation @relation(fields: [conversationId], references: [id])
-  seen           Boolean      @default(true)
+  seen           Boolean      @default(false)
 
   @@map("members")
 }

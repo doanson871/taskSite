@@ -33,13 +33,14 @@ const History: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     getAllApplications().then((res: any) => {
-      console.log(res);
       if (res.statusCode === 200) {
         setOriginList(res.data);
         setList(res.data);
         setIsLoading(true);
       }
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

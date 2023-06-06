@@ -248,7 +248,7 @@ export class PostJobService {
     const postJob = await this.prismaService.postJob.create({
       data: {
         userId: userId,
-        address: insertPostJobDTO.address,
+        address: insertPostJobDTO.address ?? '',
         workId: insertPostJobDTO.workId,
         descrition: insertPostJobDTO.descrition,
         salary: insertPostJobDTO.salary,

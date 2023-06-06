@@ -48,7 +48,7 @@ export class ApplicationService {
         throw new NotFoundException('error');
       }
 
-      await this.prismaService.application.create({
+      const response = await this.prismaService.application.create({
         data: {
           content: insertApplicationDTO.content,
           postJobId: insertApplicationDTO.postJobId,
@@ -59,6 +59,7 @@ export class ApplicationService {
 
       return {
         statusCode: 200,
+        data: response,
         message: 'success',
       };
     } catch (error) {

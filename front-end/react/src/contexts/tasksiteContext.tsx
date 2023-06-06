@@ -17,6 +17,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isFilter, setIsFilter] = useState(false);
   const [workList, setWorkList] = useState<any>([]);
   const [noteList, setNoteList] = useState<any>([]);
+  const [availableWorks, setAvailableworks] = useState<any>([]);
 
   const {
     authState: { account },
@@ -27,6 +28,20 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setPostList([]);
     setIsFilter(false);
     setWorkList([]);
+  };
+
+  const getUserById = async (id: number) => {
+    try {
+      const response = await axios.get(`${apiURL}/users/${id}`);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return { statusCode: response.status };
+      }
+    } catch (error: any) {
+      if (error.response?.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
   };
 
   const getAllWorks = async () => {
@@ -41,10 +56,10 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const createNewUserPost = async (postForm: any) => {
     try {
       const response = await axios.post(`${apiURL}/postjob`, postForm);
-
+      console.log("context", response);
       if (response.status === 201) {
         setPostList([...postList, response.data.data]);
-        return { status: 200 };
+        return { status: 200, data: response.data.data };
       }
       // return response;
     } catch (error: any) {
@@ -76,7 +91,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const getJobName = async (id: string) => {
+  const getJobName = async (id: number) => {
     try {
       const response = await axios.get(`${apiURL}/work/${id}/details`);
       return response;
@@ -142,7 +157,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const getAllUserOnWork = async () => {
     try {
       const response = await axios.get(
-        `${apiURL}/users-on-work/allUserOnWorks`
+        `${apiURL}/users-on-work/allUserOnWorksById`
       );
       if (response.status === 200) {
         setWorkList(response.data.data);
@@ -202,6 +217,29 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
       body: JSON.stringify(payload),
     });
     return data;
+  };
+
+  const createApplyDefault = async (payload: any, userId: number) => {
+    const data = await UseFetchData(`${apiURL}/application/${userId}`, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+    return data;
+  };
+
+  const getAllAvailJob = async () => {
+    try {
+      const response = await axios.get(
+        `${apiURL}/users-on-work/allUserOnWorks`
+      );
+      if (response.status === 200) {
+        setAvailableworks(response.data.data);
+      }
+      // return response;
+    } catch (error: any) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
   };
 
   const changeStatusApply = async (applyId: number, payload: any) => {
@@ -278,6 +316,10 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     changeStatusApply,
     getAllApplications,
     getInfoPostJob,
+    getAllAvailJob,
+    availableWorks,
+    getUserById,
+    createApplyDefault,
   };
   return (
     <TasksiteContext.Provider value={value}>
