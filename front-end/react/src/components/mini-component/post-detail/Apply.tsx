@@ -73,7 +73,7 @@ const Apply: React.FC<props> = (props) => {
   const handleReject = async () => {
     const data = await changeStatusApply(props.id, { status: "REJECTED" });
     if (data.statusCode === 200) {
-      createNoti("Đơn ứng tuyển của bạn bị từ chối");
+      createNoti(`Đơn ứng tuyển của bạn bị từ chối`);
       openNotification();
       setStatusApply(data.data.status);
     }

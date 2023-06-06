@@ -6,6 +6,7 @@ import PostJob from "../../mini-component/post-job/PostJob";
 import FilterModal from "../../mini-component/filter/FilterModal";
 import AddPostModal from "../../mini-component/add-post-modal/AddPostModal";
 import { AuthContext } from "../../../contexts/authContext";
+import Filter from "../../mini-component/filter-only/Filter";
 interface Props {}
 const Post: React.FC<Props> = () => {
   const [show, setShow] = useState(false);
@@ -31,6 +32,15 @@ const Post: React.FC<Props> = () => {
           <>
             {account.role !== "EMPLOYEE" && (
               <AddPostModal
+                element={{
+                  setShow: setShow,
+                  setShowFilter: setShowFilter,
+                  isFilter: isFilter,
+                }}
+              />
+            )}
+            {account.role === "EMPLOYEE" && (
+              <Filter
                 element={{
                   setShow: setShow,
                   setShowFilter: setShowFilter,

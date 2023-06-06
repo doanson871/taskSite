@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
-import { Avatar } from "antd";
+import { Avatar, notification } from "antd";
 import { ChatContext } from "../../../contexts/chatContext";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/authContext";
+import { SmileOutlined } from "@ant-design/icons";
+import { NotiContext } from "../../../contexts/notiContext";
 
 interface Props {
   item: any;
@@ -25,6 +27,8 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
       setCurrentUserChat,
     },
   } = useContext(ChatContext);
+  const { createNotification } = useContext(NotiContext);
+  const [api, contextHolder] = notification.useNotification();
   const { authState } = useContext(AuthContext);
 
   const account = authState.account;
@@ -56,6 +60,21 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
       navigation(`/message/${data.conversationId}`);
     }
   };
+  const openNotification = () => {
+    api.open({
+      message: "Đã tuyển thành công",
+      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
+  };
+
+  const createNoti = (reciveId: number, postID: number, content: string) => {
+    createNotification({
+      reciverId: reciveId,
+      content: content,
+      postId: postID,
+    });
+  };
+
   const handleApply = async () => {
     const postForm = {
       address: account.address || "",
@@ -76,12 +95,22 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
           },
           user.id
         );
-        console.log(response);
         if (response.statusCode === 200) {
-          await changeStatusApply(response.data.id, {
-            content: "toi muon lam viec nay",
-            status: "ACCEPTED",
-          });
+          const { statusCode, data } = await changeStatusApply(
+            response.data.id,
+            {
+              content: "toi muon lam viec nay",
+              status: "ACCEPTED",
+            }
+          );
+          if (statusCode === 200) {
+            openNotification();
+            createNoti(
+              data.employeeId,
+              data.id,
+              `${account.name} đã tuyển bạn cho công việc ${item?.description}`
+            );
+          }
         }
       }
     } catch (error) {
@@ -90,32 +119,35 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
   };
 
   return (
-    <div className="availble-work-item">
-      <div className="work-header d-flex">
-        <div>
-          <Avatar
-            src={user?.photoURL || ""}
-            icon={!user?.photoURL && <i className="bi bi-person"></i>}
-            className="avatar-details"
-          />{" "}
-          {" " + user?.name}
+    <>
+      {contextHolder}
+      <div className="availble-work-item">
+        <div className="work-header d-flex">
+          <div>
+            <Avatar
+              src={user?.photoURL || ""}
+              icon={!user?.photoURL && <i className="bi bi-person"></i>}
+              className="avatar-details"
+            />{" "}
+            {" " + user?.name}
+          </div>
+          <span>{job}</span>
         </div>
-        <span>{job}</span>
-      </div>
-      <div className="work-image">
-        <img className="image" src={item.photoURL} alt="" />
-      </div>
-      <div>Thu nhập mong muốn: {item?.priceExpected}</div>
-      <div className="work-description">Mô tả: {item?.description}</div>
-      <div className="work-footer">
-        <div className="btn" onClick={handleMessage}>
-          Nhắn tin
+        <div className="work-image">
+          <img className="image" src={item.photoURL} alt="" />
         </div>
-        <div className="btn" onClick={handleApply}>
-          Tuyển
+        <div>Thu nhập mong muốn: {item?.priceExpected}</div>
+        <div className="work-description">Mô tả: {item?.description}</div>
+        <div className="work-footer">
+          <div className="btn" onClick={handleMessage}>
+            Nhắn tin
+          </div>
+          <div className="btn" onClick={handleApply}>
+            Tuyển
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

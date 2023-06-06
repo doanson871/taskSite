@@ -182,7 +182,11 @@ const PostDetails: React.FC<Props> = () => {
                 <Button type="primary" onClick={handleClickMessage}>
                   Nhắn tin
                 </Button>
-                <Button type="primary" onClick={handleClickApply}>
+                <Button
+                  type="primary"
+                  onClick={handleClickApply}
+                  disabled={statusApply.text !== ""}
+                >
                   Ứng tuyển
                 </Button>
               </div>
@@ -217,6 +221,7 @@ const PostDetails: React.FC<Props> = () => {
         postJobId={post?.id}
         receiverId={user?.id}
         setStatusApply={handleSetStatusApply}
+        postJobName={post?.work.name}
       />
     </>
   );

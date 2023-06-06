@@ -3,16 +3,20 @@ import { useTasksiteContext } from "../../contexts/tasksiteContext";
 import { SmileOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import { NotiContext } from "../../contexts/notiContext";
+import { AuthContext } from "../../contexts/authContext";
 
 interface Props {
   postJobId?: number;
   receiverId?: number;
   setStatusApply?: any;
+  postJobName: string;
 }
 
 const ApplyModel = (props: Props) => {
   const { createNotification } = useContext(NotiContext);
+  const { authState } = useContext(AuthContext);
 
+  const account = authState.account;
   const [form] = Form.useForm();
   const { isOpenApplyModal, setIsOpenApplyModal, createApply } =
     useTasksiteContext();
@@ -44,7 +48,7 @@ const ApplyModel = (props: Props) => {
 
       createNotification({
         reciverId: props.receiverId,
-        content: "Đã ứng tuyển",
+        content: `${account.name} đã ứng tuyển vào công việc ${props.postJobName}`,
         postId: props.postJobId,
       });
     } else {
