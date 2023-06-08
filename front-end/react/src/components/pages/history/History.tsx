@@ -20,7 +20,10 @@ const History: React.FC<Props> = (props: Props) => {
   const [originList, setOriginList] = useState([]);
   const [list, setList] = useState([]);
 
-  const handleString = (string: string) => {
+  const handleString = (string: string | undefined) => {
+    if (!string) {
+      return "";
+    }
     if (string.length < 30) {
       return string;
     }

@@ -58,13 +58,19 @@ export class WorkService {
   async postWorkMany(insertWorkManyDTO: any) {
     const manyWork = await this.prismaService.work.createMany({
       data: [
-        { name: 'rua bat' },
-        { name: 'lai xe' },
-        { name: 'trong tre' },
-        { name: 'quet nha' },
-        { name: 'xay dung' },
-        { name: 'son tuong' },
-        { name: 'shipper' },
+        { name: 'dọn nhà' },
+        { name: 'lái xe' },
+        { name: 'trông trẻ' },
+        { name: 'chăm sóc thú cưng' },
+        { name: 'sửa chữa máy tính' },
+        { name: 'sửa điều hòa' },
+        { name: 'sửa xe máy' },
+        { name: 'phụ bán hàng' },
+        { name: 'bảo vệ' },
+        { name: 'nhân viên sale' },
+        { name: 'phát tờ rơi' },
+        { name: 'gia sư' },
+        { name: 'giúp việc' },
         ...insertWorkManyDTO.data,
       ],
     });

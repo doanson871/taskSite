@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
-import { Avatar, notification } from "antd";
+import { Avatar, Image, notification } from "antd";
 import { ChatContext } from "../../../contexts/chatContext";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/authContext";
@@ -134,7 +134,7 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
           <span>{job}</span>
         </div>
         <div className="work-image">
-          <img className="image" src={item.photoURL} alt="" />
+          <Image width={400} src={item.photoURL} alt="" />
         </div>
         <div>Thu nhập mong muốn: {item?.priceExpected}</div>
         <div className="work-description">Mô tả: {item?.description}</div>

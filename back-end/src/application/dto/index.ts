@@ -2,7 +2,7 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class InsertApplicationDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   content: string;
 
   @IsNumber()

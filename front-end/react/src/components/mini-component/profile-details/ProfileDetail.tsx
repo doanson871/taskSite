@@ -68,7 +68,7 @@ const ProfileDetail: React.FC<Props> = (props) => {
       setAccountForm({ ...accountForm, photoURL });
       dataSubmit = { ...dataSubmit, photoURL };
     }
-
+    dataSubmit.age = parseInt(accountForm.age);
     const response = await updateProfile(dataSubmit, account);
 
     if (response.status === 200) {
@@ -183,7 +183,7 @@ const ProfileDetail: React.FC<Props> = (props) => {
               disabled={disabled}
               type="text"
               className="form-control"
-              value={accountForm.age}
+              value={parseInt(accountForm.age)}
               onChange={(e) =>
                 setAccountForm({ ...accountForm, age: e.target.value })
               }
@@ -205,10 +205,7 @@ const ProfileDetail: React.FC<Props> = (props) => {
           </div>
         </div>
         {!disabled && (
-          <div className="d-flex justify-content-between py-3">
-            <span className="update-button" onClick={() => {}}>
-              Xem giấy tờ
-            </span>
+          <div className="d-flex justify-content-end py-3">
             <span className="update-button" onClick={handleUpdateProfile}>
               Cập nhật hồ sơ
             </span>

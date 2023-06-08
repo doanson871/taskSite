@@ -3,6 +3,7 @@ import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import "./styles.scss";
 import { Image } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getDOB } from "../../../utils/constant";
 
 interface Props {
   element: {
@@ -12,11 +13,12 @@ interface Props {
     description: string;
     status: boolean;
     workId: number;
+    time: any;
   };
 }
 const PostJob: React.FC<Props> = (element) => {
   const { getJobName } = useTasksiteContext();
-  const { address, description, status, workId, id, photoUrl } =
+  const { address, description, status, workId, id, photoUrl, time } =
     element.element;
   const [jobName, setjobName] = React.useState<string>("");
 
@@ -63,6 +65,12 @@ const PostJob: React.FC<Props> = (element) => {
       </div>
       <div className="description-item">
         <p className="text">{description}</p>
+      </div>
+      <div
+        className="d-flex justify-content-end"
+        style={{ fontWeight: "bold" }}
+      >
+        {getDOB(time)}
       </div>
     </div>
   );

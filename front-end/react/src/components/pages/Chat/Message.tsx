@@ -6,6 +6,8 @@ import { AuthContext } from "../../../contexts/authContext";
 interface Props {
   content: string;
   userId?: number;
+  photoURL?: string;
+  name?: string;
 }
 
 // const formDate = (seconds) => {
@@ -47,8 +49,8 @@ const Message: React.FC<Props> = (props) => {
     >
       {props.userId !== id && (
         <div>
-          <Avatar size={"small"} src={""}>
-            C
+          <Avatar size={"small"} src={props.photoURL}>
+            {props.name?.charAt(0)?.toUpperCase()}
           </Avatar>
         </div>
       )}

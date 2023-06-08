@@ -130,6 +130,11 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
           setImageURL(imageURL);
           handleClose();
         }}
+        onShow={() => {
+          imageURL && URL.revokeObjectURL(imageURL);
+          setImageURL("");
+          setImageUpload(null);
+        }}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -212,11 +217,7 @@ const AddPostJob: React.FC<Props> = ({ showModal, handleClose }) => {
               />
             </div>
             <div>
-              <Image
-                width={200}
-                src={imageURL}
-                fallback="https://raw.githubusercontent.com/koehlersimon/fallback/master/Resources/Public/Images/placeholder.jpg"
-              ></Image>
+              <Image width={200} src={imageURL}></Image>
             </div>
           </div>
         </Modal.Body>

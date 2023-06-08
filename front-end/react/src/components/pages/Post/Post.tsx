@@ -58,6 +58,7 @@ const Post: React.FC<Props> = () => {
                     description: postJob.descrition,
                     status: postJob.status,
                     workId: postJob.workId,
+                    time: postJob.createdAt,
                   }}
                 />
               ))}

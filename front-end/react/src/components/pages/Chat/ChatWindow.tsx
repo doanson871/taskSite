@@ -102,6 +102,8 @@ const ChatWindow: React.FC<Props> = (props) => {
                 content={message.content}
                 key={id}
                 userId={message.userId}
+                photoURL={currentUserChat.photoURL}
+                name={currentUserChat.name}
               />
             );
           })}

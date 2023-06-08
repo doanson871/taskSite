@@ -12,6 +12,19 @@ export class NoteService {
         where: {
           userId,
         },
+        select: {
+          createdAt: true,
+          description: true,
+          title: true,
+          id: true,
+          url: true,
+          userId: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
       });
 
       return notes;
@@ -41,6 +54,19 @@ export class NoteService {
       const note = await this.prismaService.note.findMany({
         where: {
           userId: userId,
+        },
+        select: {
+          createdAt: true,
+          description: true,
+          title: true,
+          id: true,
+          url: true,
+          userId: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
         },
       });
 

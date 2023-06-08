@@ -23,7 +23,11 @@
           font-weight: 600;
         }
       }
-
+      .work-image {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+      }
       .work-image img {
         width: 100%;
         height: auto;
