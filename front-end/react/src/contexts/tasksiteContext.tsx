@@ -73,6 +73,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
         const response = await axios.get(`${apiURL}/postJob/allPostJobs`);
         if (response.status === 200) {
           setPostList(response.data.data.postJobs);
+          return response.data.data.postJobs;
         }
       } else if (account.role === "EMPLOYEE") {
         const response = await axios.get(
@@ -80,6 +81,7 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
         );
         if (response.status === 200) {
           setPostList(response.data.data.postJobs);
+          return response.data.data.postJobs;
         }
       }
 

@@ -24,7 +24,7 @@ const NoteItem: React.FC<Props> = ({ item }) => {
               marginRight: "10px",
             }}
           />
-          <span>{item?.user.name}</span>
+          <span>{item?.user?.name}</span>
         </div>
         <span>{item?.title}</span>
       </div>

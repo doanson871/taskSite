@@ -95,12 +95,12 @@ export const navBarList = [
   },
   {
     id: 4,
-    userName: "Các đơn đã ứng tuyển",
+    userName: "Lịch sử tuyển dụng",
     employeeName: "Các đơn đã ứng tuyển",
     userPath: "/history",
     employeePath: "/history",
     icon: "bi bi-clock-history",
-    role: "EMPLOYEE",
+    role: "COMMON",
   },
   {
     id: 5,

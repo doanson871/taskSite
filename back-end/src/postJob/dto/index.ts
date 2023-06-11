@@ -27,6 +27,9 @@ export class InsertPostJobDTO {
 
   @IsOptional()
   photoURL?: string;
+
+  @IsOptional()
+  status?: boolean;
 }
 
 export class UpdatePostJobDTO {

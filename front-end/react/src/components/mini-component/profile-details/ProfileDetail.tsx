@@ -38,10 +38,10 @@ const ProfileDetail: React.FC<Props> = (props) => {
     }
   };
 
-  useEffect(() => {
-    setCity(account.thanhpho);
-    setDistric(account.quanhuyen);
-  }, [account]);
+  // useEffect(() => {
+  //   setCity(account.thanhpho);
+  //   setDistric(account.quanhuyen);
+  // }, [account]);
 
   useEffect(() => {
     return () => {
@@ -75,12 +75,16 @@ const ProfileDetail: React.FC<Props> = (props) => {
           setAccountForm(data.data);
           setDisabled(true);
           setImageURL(data.data.photoURL);
+          setCity(data.data.thanhpho);
+          setDistric(data.data.quanhuyen);
         }
       });
     } else {
       setAccountForm(account);
       setDisabled(false);
       setImageURL(account.photoURL);
+      setCity(account.thanhpho);
+      setDistric(account.quanhuyen);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.idProfile]);

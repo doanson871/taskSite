@@ -83,6 +83,7 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
       quanhuyen: account.quanhuyen,
       salary: +item?.priceExpected,
       photoURL: item?.photoURL,
+      status: false,
     };
     try {
       const { status, data } = await createNewUserPost(postForm);

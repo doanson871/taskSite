@@ -22,6 +22,30 @@ export class PostJobService {
         where: {
           userId: userId,
         },
+        select: {
+          Application: {
+            select: {
+              status: true,
+              employee: {
+                select: {
+                  photoURL: true,
+                  name: true,
+                  id: true,
+                },
+              },
+              createdAt: true,
+            },
+          },
+          address: true,
+          createdAt: true,
+          descrition: true,
+          photoURL: true,
+          quanhuyen: true,
+          workId: true,
+          status: true,
+          id: true,
+          thanhpho: true,
+        },
       });
       return {
         statusCode: 200,
@@ -39,6 +63,18 @@ export class PostJobService {
       const postJobs = await this.prismaService.postJob.findMany({
         where: {
           status: true,
+        },
+        select: {
+          Application: true,
+          address: true,
+          createdAt: true,
+          descrition: true,
+          photoURL: true,
+          quanhuyen: true,
+          thanhpho: true,
+          workId: true,
+          status: true,
+          id: true,
         },
       });
       return {
@@ -255,6 +291,7 @@ export class PostJobService {
         thanhpho: insertPostJobDTO.thanhpho ?? '',
         quanhuyen: insertPostJobDTO.quanhuyen ?? '',
         photoURL: insertPostJobDTO.photoURL ?? '',
+        status: insertPostJobDTO.status ?? true,
       },
     });
 
