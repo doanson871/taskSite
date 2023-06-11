@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useState } from "react";
-import { apiURL } from "../utils/constant";
+import { apiURL, socket } from "../utils/constant";
 import { UseFetchData } from "../hooks/useFetchData";
 
 export const NotiContext = createContext<any>(null);
@@ -8,20 +8,23 @@ export const NotiContext = createContext<any>(null);
 
 const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [isShowNoti, setIsShowNoti] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [notificationList, setNotificaitionList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [notificationList, setNotificaitionList] = useState<Array<any>>([]);
 
-  const getAllNotifications = async (userId: number) => {
-    const data = await UseFetchData(`${apiURL}/notification`);
-    if (data.statusCode === 200) {
-      // setIsLoading(true);
-      setNotificaitionList(data.data);
+  const getAllNotifications = async () => {
+    if (!isLoading) {
+      const data = await UseFetchData(`${apiURL}/notification`);
+      if (data.statusCode === 200) {
+        setIsLoading(true);
+        setNotificaitionList(data.data);
+      }
     }
   };
 
   const createNotification = async (payload: any) => {
-    // socket.connect();
-    // socket.emit("newNotification", payload);
+    socket.connect();
+    socket.emit("newNotification", payload);
+
     const res = await UseFetchData(`${apiURL}/notification`, {
       method: "POST",
       body: JSON.stringify(payload),
@@ -31,7 +34,16 @@ const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const revcNotification = (payload: any) => {
-    console.log(payload);
+    setNotificaitionList([...notificationList, payload]);
+  };
+
+  const updateNotification = async (id: number) => {
+    const res = await UseFetchData(`${apiURL}/notification/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({}),
+    });
+
+    return res;
   };
 
   const value = {
@@ -42,6 +54,9 @@ const NotiContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setNotificaitionList,
     revcNotification,
     createNotification,
+    isLoading,
+    setIsLoading,
+    updateNotification,
   };
   return <NotiContext.Provider value={value}>{children}</NotiContext.Provider>;
 };

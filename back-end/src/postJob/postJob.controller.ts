@@ -30,7 +30,6 @@ export class PostJobController {
     @Query() data: SearchPostJobDTO,
     @GetUser('id') userId: number,
   ) {
-    console.log(data);
     const dataSearch: SearchPostJobDTO = {
       thanhpho: '',
       workId: undefined,
@@ -40,7 +39,6 @@ export class PostJobController {
       ...data,
     };
 
-    console.log(dataSearch);
     return this.postJobService.searchPostJobByUser(dataSearch, userId);
   }
 
@@ -48,7 +46,6 @@ export class PostJobController {
   @UseGuards(RolesGuard)
   @Get('searchByEmployee')
   searchPostJobByEmployee(@Query() data: SearchPostJobDTO) {
-    console.log(data);
     const dataSearch: SearchPostJobDTO = {
       thanhpho: '',
       workId: undefined,
@@ -58,7 +55,6 @@ export class PostJobController {
       ...data,
     };
 
-    console.log(dataSearch);
     return this.postJobService.searchPostJobByEmployee(dataSearch);
   }
 

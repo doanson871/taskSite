@@ -17,7 +17,8 @@ const Navbar: React.FC<Props> = () => {
 
   const account = authState.account;
 
-  const { isShowNoti, setIsShowNoti } = useContext(NotiContext);
+  const { isShowNoti, setIsShowNoti, revcNotification } =
+    useContext(NotiContext);
   const { resetData } = useTasksiteContext();
   const [showFeature, setShowFeature] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -44,16 +45,22 @@ const Navbar: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    socket.on(`onNoti-user${account.id}`, (data) => {});
-
+    socket.on(`onNewNotification-user${account.id}`, (data) => {
+      revcNotification(data);
+      updateProfile({ isReadNotification: false });
+    });
     return () => {
-      socket.removeListener("");
+      socket.removeListener(`onNewNotification-user${account.id}`);
     };
     // eslint-disable-next-line
   }, []);
 
   return (
-    <div className={`header d-grid ${account.role === 'EMPLOYEE' && 'employee-header'}`}>
+    <div
+      className={`header d-grid ${
+        account.role === "EMPLOYEE" && "employee-header"
+      }`}
+    >
       <div className="icon-menu d-flex">
         <i className="bi bi-list" onClick={() => setShowNavbar(true)}></i>
       </div>

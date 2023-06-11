@@ -26,7 +26,6 @@ const SideBar: React.FC<Props> = (props) => {
 
     conversations.forEach((conversation) => {
       socket.on(`onLastMessageRoom${conversation.conversationId}`, (data) => {
-        console.log(data.data);
         updateLastMessage(data.data);
 
         if (currentConversationId !== conversation.conversationId) {

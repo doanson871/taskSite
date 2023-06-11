@@ -3,6 +3,7 @@ import "./noti.scss";
 import NotiItem, { INotification } from "./NotiItem";
 import { NotiContext } from "../../contexts/notiContext";
 import { AuthContext } from "../../contexts/authContext";
+import { Empty } from "antd";
 
 interface Props {}
 
@@ -13,11 +14,17 @@ export default function NotifiList(props: Props) {
     },
   } = useContext(AuthContext);
 
-  const { notificationList, getAllNotifications } = useContext(NotiContext);
+  const { notificationList, getAllNotifications, setIsLoading } =
+    useContext(NotiContext);
 
   useEffect(() => {
-    getAllNotifications(id);
+    if (id) {
+      getAllNotifications();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      setIsLoading(false);
+    };
   }, []);
 
   const notifications = (notificationList as Array<any>).sort(
@@ -28,7 +35,7 @@ export default function NotifiList(props: Props) {
     return (
       <>
         <div className="item-notify">
-          <h4 className="noti-content">Không có thông báo</h4>
+          <Empty />
         </div>
       </>
     );
@@ -41,8 +48,9 @@ export default function NotifiList(props: Props) {
             content={notification.content}
             isRead={notification.isRead}
             createdAt={notification.createdAt}
-            photoURL={notification.photoURL}
+            sender={notification.sender}
             postId={notification.postId}
+            id={notification.id}
             key={id}
           />
         );

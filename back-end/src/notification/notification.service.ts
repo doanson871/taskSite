@@ -18,6 +18,7 @@ export class NotificationService {
           sender: {
             select: {
               photoURL: true,
+              name: true,
             },
           },
           postId: true,
@@ -51,5 +52,21 @@ export class NotificationService {
     } catch (error) {
       return new ForbiddenException('error');
     }
+  }
+
+  async updateNoti(notiId: number) {
+    const noti = await this.prismaService.notification.update({
+      where: {
+        id: notiId,
+      },
+      data: {
+        isRead: true,
+      },
+    });
+
+    return {
+      statusCode: 200,
+      message: 'success',
+    };
   }
 }

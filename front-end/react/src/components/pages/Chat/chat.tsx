@@ -4,6 +4,7 @@ import SideBar from "./SideBar";
 import ChatWindow from "./ChatWindow";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../../../contexts/chatContext";
+import { MessageOutlined } from "@ant-design/icons";
 interface Props {}
 
 const Chat: React.FC<Props> = (props) => {
@@ -33,7 +34,10 @@ const Chat: React.FC<Props> = (props) => {
       </div>
       <div className="chat-chatwindow">
         {currentConversationId === undefined ? (
-          <>Hay chon chat</>
+          <div className="chat-empty">
+            <MessageOutlined className="chat-empty-icon" />
+            <span className="chat-empty-text">Hãy chọn ai đó để chat....</span>
+          </div>
         ) : (
           <ChatWindow />
         )}

@@ -106,6 +106,6 @@ export class MyGateWay implements OnModuleInit {
 
   @SubscribeMessage('newNotification')
   onNewNotification(@MessageBody() body: any) {
-    console.log(body);
+    this.server.emit(`onNewNotification-user${body.reciverId}`, body);
   }
 }

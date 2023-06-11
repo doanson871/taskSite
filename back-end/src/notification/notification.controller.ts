@@ -1,4 +1,13 @@
-import { Body, Controller, Patch, Post, UseGuards, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Patch,
+  Post,
+  UseGuards,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { MyJwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorator';
@@ -23,5 +32,7 @@ export class NotificationController {
   }
 
   @Patch(':id')
-  updateNoti() {}
+  updateNoti(@Param('id', ParseIntPipe) notiId: number) {
+    return this.notificationService.updateNoti(notiId);
+  }
 }
