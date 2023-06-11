@@ -25,6 +25,7 @@ export default function NotifiList(props: Props) {
     return () => {
       setIsLoading(false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const notifications = (notificationList as Array<any>).sort(

@@ -47,7 +47,7 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
     };
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [item]);
   const handleMessage = async () => {
     const data = await createConversation(user.id);
     if (data.statusCode === 200) {

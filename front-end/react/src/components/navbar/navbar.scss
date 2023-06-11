@@ -8,10 +8,23 @@
   top: 0;
   z-index: 100;
   &.employee-header {
-    background-color: #c7eae3;
+    background-color: #4A4A4A;
     color: #fff;
     .bi-bell {
       color: #fff;
+    }
+    .item-notify {
+      padding: 12px 12px;
+      display: flex;
+      background-color: #8D949E;
+    }
+    
+    .item-notify-read {
+      background-color: #CCCCCC;
+    }
+    
+    .item-notify:hover {
+      background-color: #CCCCCC;
     }
   }
   .icon-menu {

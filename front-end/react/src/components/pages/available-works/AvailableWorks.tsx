@@ -9,6 +9,7 @@ const AvailableWorks: React.FC = () => {
   const { getAllAvailJob, availableWorks, getUserById } = useTasksiteContext();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [list, setList] = useState<any>([]);
+  const [filteredList, setFilteredList] = useState<any>(list);
   const [filterForm, setFilterForm] = useState<any>({
     workId: 0,
     salary: 0,
@@ -38,12 +39,35 @@ const AvailableWorks: React.FC = () => {
         return data;
       });
       let result = await Promise.all(_list);
-      
+
       setList(result);
     };
     getListJob();
     // eslint-disable-next-line
   }, [availableWorks, filterForm]);
+
+  // set filter list by filter form
+  useEffect(() => {
+    let _list = list;
+    if (filterForm.workId !== 0) {
+      _list = _list.filter((item: any) => item.workId === filterForm.workId);
+    }
+    if (filterForm.salary !== 0) {
+      _list = _list.filter((item: any) => {
+        return +item.priceExpected > +filterForm.salary;
+      });
+    }
+    if (filterForm.city !== "") {
+      _list = _list.filter((item: any) => item.thanhpho === filterForm.city);
+    }
+    if (filterForm.distric !== "") {
+      _list = _list.filter(
+        (item: any) => item.quanhuyen === filterForm.distric
+      );
+    }
+    setFilteredList(_list);
+    // eslint-disable-next-line
+  }, [filterForm, list]);
   return (
     <div className="list-available-work">
       <div className="filter" onClick={() => setShowFilter(true)}>
@@ -55,7 +79,7 @@ const AvailableWorks: React.FC = () => {
         setFilterForm={setFilterForm}
       />
       <div className="list-item d-flex">
-        {list.map((item: any) => (
+        {filteredList.map((item: any) => (
           <AvailableItem item={item} />
         ))}
       </div>

@@ -103,8 +103,6 @@ const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
     try {
       const response = await axios.patch(`${apiURL}/users/update`, accountForm);
       if (response.status === 200) {
-        // return response.data;
-        console.log(response.data);
         authDispatch({
           type: AuthActionKind.UPDATE,
           payload: accountForm,
