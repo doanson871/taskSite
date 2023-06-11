@@ -4,10 +4,17 @@
   min-height: calc(100vh - 4rem);
   min-height: 100%;
   background-color: #f0f2f5;
+  .filter {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    cursor: pointer;
+  }
   .list-item {
     width: 50%;
     margin: 0 auto;
-    padding: 1rem 0;
     flex-direction: column-reverse;
     gap: 1rem;
     .availble-work-item {
@@ -18,6 +25,10 @@
         border-bottom: 1px solid;
         padding-bottom: 0.5rem;
         justify-content: space-between;
+        & .header-item:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
         span {
           text-transform: uppercase;
           font-weight: 600;

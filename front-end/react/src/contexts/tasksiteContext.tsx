@@ -56,7 +56,6 @@ const TasksiteContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const createNewUserPost = async (postForm: any) => {
     try {
       const response = await axios.post(`${apiURL}/postjob`, postForm);
-      console.log("context", response);
       if (response.status === 201) {
         setPostList([...postList, response.data.data]);
         return { status: 200, data: response.data.data };

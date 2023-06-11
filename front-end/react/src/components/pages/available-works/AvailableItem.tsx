@@ -41,7 +41,6 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
         setUser(response.data);
       }
       const jobName = await getJobName(+item.workId);
-
       if (jobName.status === 200) {
         setJob(jobName.data.data.name);
       }
@@ -123,7 +122,10 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
       {contextHolder}
       <div className="availble-work-item">
         <div className="work-header d-flex">
-          <div>
+          <div
+            className="header-item"
+            onClick={() => navigation(`/profile/${item.userId}`)}
+          >
             <Avatar
               src={user?.photoURL || ""}
               icon={!user?.photoURL && <i className="bi bi-person"></i>}
@@ -136,8 +138,39 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
         <div className="work-image">
           <Image width={400} src={item.photoURL} alt="" />
         </div>
-        <div>Thu nhập mong muốn: {item?.priceExpected}</div>
-        <div className="work-description">Mô tả: {item?.description}</div>
+        <div>
+          <span className="fw-bolder">Thu nhập mong muốn: </span>
+          {item?.priceExpected}
+        </div>
+        <div>
+          <span className="fw-bolder">Thành phố: </span>
+          {item.thanhpho ? (
+            item.thanhpho
+          ) : (
+            <span style={{ color: "blue" }}>Chưa cập nhật</span>
+          )}
+        </div>
+        <div>
+          <span className="fw-bolder">Quận Huyện: </span>
+          {item.quanhuyen ? (
+            item.quanhuyen
+          ) : (
+            <span style={{ color: "blue" }}>Chưa cập nhật</span>
+          )}
+        </div>
+        <div>
+          <span className="fw-bolder">Số điện thoại: </span>
+          {item.phoneNumber ? (
+            item.phoneNumber
+          ) : (
+            <span style={{ color: "blue" }}>Chưa cập nhật</span>
+          )}
+        </div>
+        <div className="work-description">
+          {" "}
+          <span className="fw-bolder">Mô tả: </span>
+          {item?.description}
+        </div>
         <div className="work-footer">
           <div className="btn" onClick={handleMessage}>
             Nhắn tin

@@ -20,6 +20,7 @@ const CenterPost: React.FC<Props> = ({ idProfile }) => {
   const [isFilter, setShowFilter] = useState(false);
   useEffect(() => {
     getAllNote(idProfile);
+    // eslint-disable-next-line
   }, [idProfile]);
 
   return (

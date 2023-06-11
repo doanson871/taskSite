@@ -77,7 +77,7 @@ export const navBarList = [
   },
   {
     id: 2,
-    userName: "Công việc có sẵn",
+    userName: "Nhân công có sẵn",
     employeeName: "Tìm việc",
     userPath: "/availableWorks",
     employeePath: "/listPost",

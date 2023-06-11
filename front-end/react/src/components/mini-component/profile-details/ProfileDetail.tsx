@@ -1,10 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import "./styles.scss";
 import { AuthContext } from "../../../contexts/authContext";
 import { Avatar, notification } from "antd";
-import { initialGender, initialRole } from "../../../utils/constant";
+import {
+  initialGender,
+  initialRole,
+  listAddress,
+} from "../../../utils/constant";
 import { SmileOutlined } from "@ant-design/icons";
 import { UseUploadImage } from "../../../hooks/useUploadImg";
+import { Form } from "react-bootstrap";
 interface Props {
   data?: any;
   idProfile: number;
@@ -18,6 +23,8 @@ const ProfileDetail: React.FC<Props> = (props) => {
 
   const [accountForm, setAccountForm] = useState(account);
   const [disabled, setDisabled] = useState(false);
+  const [city, setCity] = useState<string>("");
+  const [distric, setDistric] = useState<string>("");
 
   const [imageUpload, setImageUpload] = useState<any>(null);
   const [imageURL, setImageURL] = useState<string>(accountForm.photoURL);
@@ -32,10 +39,34 @@ const ProfileDetail: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
+    setCity(account.thanhpho);
+    setDistric(account.quanhuyen);
+  }, [account]);
+
+  useEffect(() => {
     return () => {
       imageURL && URL.revokeObjectURL(imageURL);
     };
   }, [imageURL]);
+
+  const listCity = useMemo(() => {
+    let _listCity = [""];
+    listAddress.forEach((address) => {
+      _listCity.push(address.city);
+    });
+    return _listCity;
+    // eslint-disable-next-line
+  }, [listAddress]);
+
+  const listDistric = useMemo(() => {
+    let _listDistric = [""];
+    listAddress.forEach((address) => {
+      if (address.city === city) {
+        _listDistric = _listDistric.concat(address.district);
+      }
+    });
+    return _listDistric;
+  }, [city]);
 
   useEffect(() => {
     if (props.idProfile && props.idProfile !== account.id) {
@@ -69,6 +100,8 @@ const ProfileDetail: React.FC<Props> = (props) => {
       dataSubmit = { ...dataSubmit, photoURL };
     }
     dataSubmit.age = parseInt(accountForm.age);
+    dataSubmit.thanhpho = city;
+    dataSubmit.quanhuyen = distric;
     const response = await updateProfile(dataSubmit, account);
 
     if (response.status === 200) {
@@ -162,6 +195,41 @@ const ProfileDetail: React.FC<Props> = (props) => {
         </div>
         <div className="row justify-content-between">
           <div className="col-5 my-2">
+            Thành phố
+            <Form.Select
+              disabled={disabled}
+              aria-label="Default select example"
+              className="select-box fs-6"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+                setDistric("");
+              }}
+            >
+              {listCity.map((city) => (
+                <option value={city}>{city}</option>
+              ))}
+            </Form.Select>
+          </div>
+          <div className="col-5 my-2">
+            Quận
+            <Form.Select
+              disabled={disabled}
+              aria-label="Default select example"
+              className="select-box fs-6"
+              onChange={(e) => {
+                setDistric(e.target.value);
+              }}
+              value={distric}
+            >
+              {listDistric.map((distric) => (
+                <option value={distric}>{distric}</option>
+              ))}
+            </Form.Select>
+          </div>
+        </div>
+        <div className="row justify-content-between">
+          <div className="col-5 my-2">
             Giới tính
             <select
               disabled={disabled}
@@ -183,7 +251,7 @@ const ProfileDetail: React.FC<Props> = (props) => {
               disabled={disabled}
               type="text"
               className="form-control"
-              value={parseInt(accountForm.age)}
+              value={accountForm.age}
               onChange={(e) =>
                 setAccountForm({ ...accountForm, age: e.target.value })
               }
@@ -197,10 +265,10 @@ const ProfileDetail: React.FC<Props> = (props) => {
               disabled={disabled}
               type="text"
               className="form-control"
-              // value={accountForm.quanhuyen}
-              // onChange={(e) =>
-              //   setAccountForm({ ...accountForm, quanhuyen: e.target.value })
-              // }
+              value={accountForm.address}
+              onChange={(e) =>
+                setAccountForm({ ...accountForm, address: e.target.value })
+              }
             />
           </div>
         </div>

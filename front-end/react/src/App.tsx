@@ -15,8 +15,8 @@ import PostDetails from "./components/mini-component/post-detail/PostDetails";
 import EmployeePost from "./components/pages/employee-post/EmployeePost";
 import History from "./components/pages/history/History";
 import Analysis from "./components/pages/analysis/Analysis";
-import Login from "./components/pages/Login/Login";
 import AvailableWorks from "./components/pages/available-works/AvailableWorks";
+import Login from "./components/pages/login/Login";
 
 const App = () => {
   return (
