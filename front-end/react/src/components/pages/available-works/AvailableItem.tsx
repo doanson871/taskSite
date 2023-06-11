@@ -61,7 +61,7 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
   };
   const openNotification = () => {
     api.open({
-      message: "Đã tuyển thành công",
+      message: "Đã tuyển thành công. Đang điều hướng tới trang nhắn tin",
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     });
   };
@@ -104,10 +104,13 @@ const AvailableItem: React.FC<Props> = ({ item }) => {
           );
           if (statusCode === 200) {
             openNotification();
+            setTimeout(() => {
+              handleMessage();
+            }, 2000);
             createNoti(
               data.employeeId,
               data.id,
-              `${account.name} đã tuyển bạn cho công việc ${item?.description}`
+              `${account.name} đã tuyển bạn cho công việc ${job}`
             );
           }
         }

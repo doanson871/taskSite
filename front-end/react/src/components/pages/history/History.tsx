@@ -3,6 +3,7 @@ import { List, Radio, Skeleton } from "antd";
 import { useTasksiteContext } from "../../../contexts/tasksiteContext";
 import { Link } from "react-router-dom";
 import { getDOB } from "../../../utils/constant";
+import './history.scss';
 
 interface Props {}
 

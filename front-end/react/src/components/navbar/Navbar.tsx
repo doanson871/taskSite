@@ -53,7 +53,7 @@ const Navbar: React.FC<Props> = () => {
   }, []);
 
   return (
-    <div className={`header d-grid`}>
+    <div className={`header d-grid ${account.role === 'EMPLOYEE' && 'employee-header'}`}>
       <div className="icon-menu d-flex">
         <i className="bi bi-list" onClick={() => setShowNavbar(true)}></i>
       </div>
